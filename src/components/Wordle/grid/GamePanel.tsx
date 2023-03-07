@@ -8,12 +8,6 @@ import { WordleGrid } from "./WordleGrid"
 //   // guesses: string[][]
 // }
 
-const guesses: string[][] = [
-  ["A", "B", "C", "D", "E"],
-  ["A", "B", "C", "D", "E"],
-  ["A", "B", "C", "D", "E"],
-]
-
 type gameState = 'Not Started' | 'Capturing' | 'Predicting';
 
 export const GamePanel = () => {
