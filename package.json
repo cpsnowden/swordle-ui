@@ -1,5 +1,6 @@
 {
   "name": "sign-game-ui-react",
+  "homepage": "https://cpsnowden.github.io/sign-game-ui-react",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
