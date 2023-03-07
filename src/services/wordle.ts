@@ -1,5 +1,6 @@
 export type CharStatus = 'absent' | 'present' | 'correct'
 
+// Move to api
 export const calculateStatus = (solution: string, guess: string[]): CharStatus[] => {
   const splitSolution = solution.split('')
 

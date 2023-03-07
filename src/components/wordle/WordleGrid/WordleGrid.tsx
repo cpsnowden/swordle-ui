@@ -20,7 +20,8 @@ export const WordleGrid: React.FC<WordleGridProps> = ({
   isRevealing,
   gameStatus
 }) => {
-  const emptyRows = Array(numberOfAttempts - guesses.length - 1).fill(0);
+  const nEmptyRows = numberOfAttempts - guesses.length - 1;
+  const emptyRows = nEmptyRows > 1 ? Array(numberOfAttempts - guesses.length - 1).fill(0): [];
   return (
     <>
       {guesses.map((guess, i) => (
@@ -31,7 +32,7 @@ export const WordleGrid: React.FC<WordleGridProps> = ({
           isRevealing={isRevealing && guesses.length - 1 === i}
         />
       ))}
-      {guesses.length < 6 && (
+      {guesses.length < numberOfAttempts && (
         <CurrentRow guess={currentGuess} solution={solution} gameStatus={gameStatus}/>
       )}
       {emptyRows.map((_, i) => (
