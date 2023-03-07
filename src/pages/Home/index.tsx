@@ -3,7 +3,7 @@ import { Container } from "@mui/material";
 const Home = () => {
   return (
     <Container>
-      Game Placeholder
+      Home Page Placeholder
     </Container>
   )
 }
