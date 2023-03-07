@@ -6,6 +6,6 @@ const Home = () => {
       Home Page Placeholder
     </Container>
   )
-}
+};
 
 export default Home;

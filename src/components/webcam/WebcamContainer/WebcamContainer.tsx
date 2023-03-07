@@ -6,7 +6,7 @@ const videoConstraints = {
   facingMode: "user"
 };
 
-interface WebcamContainerProps {
+export interface WebcamContainerProps {
   fps: number;
   enableCapture: boolean;
   onFrameCapture: (frame: string) => void;

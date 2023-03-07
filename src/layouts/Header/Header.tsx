@@ -1,8 +1,12 @@
 import { AppBar, Box, Container, Link, Toolbar, Typography } from "@mui/material"
-import { routes } from "routes";
+import { PageInfo } from "pages";
 import { Link as RouterLink } from "react-router-dom";
 
-const AppHeader = () => {
+export interface HeaderProps {
+  pages: PageInfo[]
+}
+
+export const Header: React.FC<HeaderProps> = ({pages}) => {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -25,17 +29,17 @@ const AppHeader = () => {
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {
-                routes.map(route => (
+                pages.map(page => (
                   <Link
-                    key={route.path}
+                    key={page.name}
                     color="inherit"
                     variant="h6"
                     underline="none"
                     sx={{ fontSize: 16, color: 'common.white', ml: 3, }}
-                    to={route.path!}
+                    to={page.path!}
                     component={RouterLink}
                   >
-                  {route.name}
+                  {page.name}
                   </Link>
                 ))
               }
@@ -45,5 +49,3 @@ const AppHeader = () => {
     </AppBar>
   )
 };
-
-export default AppHeader;

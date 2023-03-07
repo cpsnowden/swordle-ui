@@ -1,6 +1,6 @@
-import { CompletedRow } from 'components/Wordle/grid/CompletedRow';
-import { CurrentRow } from 'components/Wordle/grid/CurrentRow';
-import { EmptyRow } from 'components/Wordle/grid/EmptyRow';
+import { CompletedRow } from 'components/wordle/CompletedRow/CompletedRow';
+import { CurrentRow } from 'components/wordle/CurrentRow/CurrentRow';
+import { EmptyRow } from 'components/wordle/EmptyRow/EmptyRow';
 import { GameStatus } from 'services/statuses';
 
 export interface WordleGridProps {

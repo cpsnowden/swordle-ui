@@ -1,8 +1,8 @@
 import { Button, Grid } from "@mui/material"
-import { WebcamContainer } from "components/Video/WebcamContainer"
+import { WebcamContainer } from "components/webcam/WebcamContainer/WebcamContainer"
 import { useEffect, useState } from "react"
 import { GameStatus } from "services/statuses"
-import { WordleGrid } from "components/Wordle/grid/WordleGrid"
+import { WordleGrid } from "components/wordle/WordleGrid/WordleGrid"
 import { LetterPrediction, predict_letter } from "services/api"
 
 export interface GamePanelProps {

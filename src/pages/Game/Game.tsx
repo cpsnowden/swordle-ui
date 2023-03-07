@@ -1,5 +1,5 @@
 import { Container } from "@mui/material";
-import { GamePanel } from "components/Wordle/GamePanel";
+import { GamePanel } from "components/wordle/WordleContainer/WordleContainer";
 
 const Game = () => {
   return (

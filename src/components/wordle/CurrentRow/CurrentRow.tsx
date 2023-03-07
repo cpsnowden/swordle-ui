@@ -1,6 +1,6 @@
 import { CircularProgress } from '@mui/material'
 import { GameStatus } from 'services/statuses'
-import { Cell } from 'components/Wordle/grid/Cell'
+import { Cell } from 'components/wordle/Cell/Cell'
 import VideocamIcon from '@mui/icons-material/Videocam';
 import { red } from '@mui/material/colors';
 

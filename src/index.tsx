@@ -4,7 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { RouterProvider } from 'react-router-dom';
-import { hashRouter } from 'routes';
+import { hashRouter } from 'pages';
 import theme from 'theme';
 
 const root = ReactDOM.createRoot(
