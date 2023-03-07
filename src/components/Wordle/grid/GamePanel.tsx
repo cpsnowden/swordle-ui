@@ -1,23 +1,18 @@
-import { Button, CircularProgress, Grid, Skeleton } from "@mui/material"
+import { Button, Grid } from "@mui/material"
 import axios from "axios"
 import { WebcamContainer } from "components/Video/WebcamContainer"
 import { useState } from "react"
-import { WordleGrid } from "./WordleGrid"
+import { GameStatus } from "services/statuses"
+import { WordleGrid } from "components/Wordle/grid/WordleGrid"
 
-// export interface GamePanelProps {
-//   // guesses: string[][]
-// }
-
-type gameState = 'Not Started' | 'Capturing' | 'Predicting';
+const solution = 'apple';
 
 export const GamePanel = () => {
 
-  const [gameState, setGameState] = useState<gameState>('Not Started');
+  const [gameState, setGameState] = useState<GameStatus>('Not Started');
 
   const [previousGuesses, setPreviousGuesses] = useState<string[][]>([]);
   const [currentGuess, setCurrentGuess] = useState<string[]>([])
-
-  const [isRevealing, setIsRevealing] = useState(false)
 
   const [frameBatch, setFrameBatch] = useState<string[]>([]);
 
@@ -26,9 +21,9 @@ export const GamePanel = () => {
   }
 
   const handleTryGuess = () => {
-    setIsRevealing(true)
+    setGameState('Validating')
     setTimeout(() => {
-      setIsRevealing(false)
+      setGameState('Not Started')
     }, 350 * 5)
 
     setPreviousGuesses(previousGuesses => [...previousGuesses, currentGuess])
@@ -56,21 +51,19 @@ export const GamePanel = () => {
   return (
     <Grid container alignItems="center"  direction="row" justifyContent="center">
     <Grid item xs={6}>
-      { gameState === 'Not Started' && <Skeleton variant="rectangular" width={1280 / 2.5} height={720 / 2.5} /> }
-      { gameState === 'Capturing' && <WebcamContainer onFrameCapture={onFrameCapture} fps={5} enableCapture={true}/> }
-      { gameState === 'Predicting' && <CircularProgress/>}
+      <WebcamContainer onFrameCapture={onFrameCapture} fps={5} enableCapture={gameState==='Capturing'}/>
     </Grid>
     <Grid item xs={6}>
       <div className="mx-auto flex w-full grow flex-col px-1 pt-2 pb-8 sm:px-6 md:max-w-7xl lg:px-8 short:pb-2 short:pt-2">
         <div className="flex grow flex-col justify-center pb-6 short:pb-2">
-          <WordleGrid solution='apple' currentGuess={currentGuess} guesses={previousGuesses} isRevealing={isRevealing} numberOfAttempts={6} />
+          <WordleGrid solution={solution} currentGuess={currentGuess} guesses={previousGuesses} isRevealing={gameState=== 'Validating'} numberOfAttempts={6} gameStatus={gameState}/>
         </div>
       </div>
     </Grid>
     <Grid item xs={6}>
-      <Button variant="contained" onClick={handleGameStart}>Start</Button>
-      <Button variant="contained" onClick={() => handleSubmitLetterFrames(frameBatch)}>Submit Letter</Button>
-      <Button variant="contained" onClick={handleTryGuess}>Try Guess</Button>
+      {gameState === 'Not Started' && <Button variant="contained" onClick={handleGameStart}>Start Row</Button>}
+      {gameState === 'Capturing' && <Button variant="contained" onClick={() => handleSubmitLetterFrames(frameBatch)} disabled={currentGuess.length >= solution.length}>Submit Letter</Button>}
+      {currentGuess.length === solution.length && <Button variant="contained" onClick={handleTryGuess} >Try Guess</Button>}
     </Grid>
   </Grid>
 

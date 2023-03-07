@@ -3,7 +3,7 @@ import classnames from 'classnames'
 import { CharStatus } from 'services/statuses'
 
 interface CellProps {
-  value?: string
+  value?: string | React.ReactNode
   status?: CharStatus
   isRevealing?: boolean
   isCompleted?: boolean
