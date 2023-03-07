@@ -32,7 +32,7 @@ export const WordleGrid: React.FC<WordleGridProps> = ({
         />
       ))}
       {guesses.length < 6 && (
-        <CurrentRow guess={currentGuess} className={''} solutionLength={solution.length} gameStatus={gameStatus}/>
+        <CurrentRow guess={currentGuess} solution={solution} gameStatus={gameStatus}/>
       )}
       {emptyRows.map((_, i) => (
         <EmptyRow key={i} solutionLength={solution.length}/>

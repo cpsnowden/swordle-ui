@@ -1,20 +1,18 @@
 import { CircularProgress } from '@mui/material'
 import { GameStatus } from 'services/statuses'
-import { Cell } from './Cell'
+import { Cell } from 'components/Wordle/grid/Cell'
 import VideocamIcon from '@mui/icons-material/Videocam';
 import { red } from '@mui/material/colors';
 
-
-interface CurrentRowProps {
+export interface CurrentRowProps {
+  solution: string,
   guess: string[]
-  className: string
-  solutionLength: number
   gameStatus: GameStatus
 }
 
-export const CurrentRow: React.FC<CurrentRowProps> = ({ guess, solutionLength, className, gameStatus }) => {
-
-  const emptyCells = Array(solutionLength - guess.length).fill(0).map((_, i) => {
+export const CurrentRow: React.FC<CurrentRowProps> = ({ guess, solution, gameStatus }) => {
+  const emptyCells = Array(solution.length - guess.length).fill(0).map((_, i) => {
+    // The current working cell
     if (i === 0) {
       switch (gameStatus) {
         case 'Capturing':
@@ -26,7 +24,7 @@ export const CurrentRow: React.FC<CurrentRowProps> = ({ guess, solutionLength, c
     return (<Cell key={i}/>)
   })
   return (
-    <div className={`flex justify-center mb-1 ${className}`}>
+    <div className="flex justify-center mb-1">
       {guess.map((letter, i) => (
         <Cell key={i} value={letter} />
       ))}

@@ -1,7 +1,7 @@
-import Home from "pages/Home";
-import Game from "pages/Game"
+import Home from "routes/Home";
+import Game from "routes/Game"
 import { createHashRouter, RouteObject } from "react-router-dom";
-import PageTemplate from "pages/PageTemplate";
+import PageTemplate from "routes/PageTemplate";
 
 type EnhancedRoute = RouteObject & {
   name: string

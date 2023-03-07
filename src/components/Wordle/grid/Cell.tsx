@@ -1,8 +1,7 @@
 import classnames from 'classnames'
+import { CharStatus } from 'services/wordle'
 
-import { CharStatus } from 'services/statuses'
-
-interface CellProps {
+export interface CellProps {
   value?: string | React.ReactNode
   status?: CharStatus
   isRevealing?: boolean
