@@ -7,16 +7,18 @@ interface CompletedRowProps {
 
 export const CompletedRow: React.FC<CompletedRowProps> = ({ guess, isRevealing }) => {
   return (
-    <div className="mb-1 flex justify-center">
-      {guess.map((letter, i) => (
-        <Cell
-          key={i}
-          value={letter}
-          position={i}
-          isRevealing={isRevealing}
-          isCompleted
-        />
-      ))}
-    </div>
+    <>
+      <div className="mb-1 flex justify-center">
+        {guess.map((letter, i) => (
+          <Cell
+            key={i}
+            value={letter}
+            position={i}
+            isRevealing={isRevealing}
+            isCompleted
+          />
+        ))}
+      </div>
+    </>
   )
 }
