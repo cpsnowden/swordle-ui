@@ -15,7 +15,7 @@ interface CurrentRowProps {
 export const CurrentRow: React.FC<CurrentRowProps> = ({ guess, solutionLength, className, gameStatus }) => {
 
   const emptyCells = Array(solutionLength - guess.length).fill(0).map((_, i) => {
-    if (i == 0) {
+    if (i === 0) {
       switch (gameStatus) {
         case 'Capturing':
           return (<Cell key={i} value={<VideocamIcon sx={{ color: red[500] }}/>}/>)
