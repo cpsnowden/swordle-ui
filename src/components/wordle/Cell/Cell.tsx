@@ -1,5 +1,6 @@
 import classnames from 'classnames'
 import { CharStatus } from 'services/wordle'
+import './Cell.css'
 
 export interface CellProps {
   value?: string | React.ReactNode
