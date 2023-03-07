@@ -4,7 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { RouterProvider } from 'react-router-dom';
-import { hashRouter } from 'pages';
+import { router } from 'pages';
 import theme from 'theme';
 
 const root = ReactDOM.createRoot(
@@ -14,7 +14,7 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <RouterProvider router={hashRouter}/>
+      <RouterProvider router={router}/>
     </ThemeProvider>
 </React.StrictMode>
 );

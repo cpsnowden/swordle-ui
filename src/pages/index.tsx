@@ -8,9 +8,7 @@ export type PageInfo = {
   path: string
 }
 
-type EnhancedRoute = RouteObject & PageInfo;
-
-const routes: EnhancedRoute[] = [
+const routes: (RouteObject & PageInfo)[] = [
     {
       name: 'Home',
       path: '/',
@@ -23,16 +21,14 @@ const routes: EnhancedRoute[] = [
     },
 ];
 
-const routesWithLayout: RouteObject[] = [
+const router = createHashRouter([
   {
     element: <PageTemplate/>,
     children: routes
   }
-];
-
-const hashRouter = createHashRouter(routesWithLayout)
+])
 
 export {
-  hashRouter,
+  router,
   routes
 }

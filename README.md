@@ -1,3 +1,8 @@
+# Sign Game
+
+Accessed the latest deployed version at https://cpsnowden.github.io/sign-game-ui-react/#/game
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
