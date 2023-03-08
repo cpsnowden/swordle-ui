@@ -67,10 +67,7 @@ export const WordlePanel: React.FC<GamePanelProps> = ({
           spacing={2}
     >
     <Grid item xs={6}>
-      {/* TODO Sort out this Tailwind CSS */}
-      <div className="mx-auto flex w-full grow flex-col px-1 md:max-w-7xl lg:px-8">
-        <WordleGrid solution={solution} currentGuess={currentGuess} guesses={previousGuesses} isRevealing={gameState=== 'Validating'} numberOfAttempts={6} gameStatus={gameState}/>
-      </div>
+      <WordleGrid solution={solution} currentGuess={currentGuess} guesses={previousGuesses} isRevealing={gameState=== 'Validating'} numberOfAttempts={6} gameStatus={gameState}/>
     </Grid>
     <Grid item xs={6}>
       <WebcamContainer onFrameCapture={handleFrameCapture} fps={fps} enableCapture={gameState==='Capturing'}/>
