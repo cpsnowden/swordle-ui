@@ -11,7 +11,6 @@ export const Header: React.FC<HeaderProps> = () => {
           <Typography
             variant="h6"
             noWrap
-            component="a"
             sx={{
               flexGrow: 1,
               textAlign: 'center',

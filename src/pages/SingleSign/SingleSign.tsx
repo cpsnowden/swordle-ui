@@ -52,11 +52,8 @@ export const SingleSign = () => {
             >
               {prediction ? prediction : '?'}
             </Typography>
-
           </Paper>
         </Box>
-
-        {/* </Box> */}
       </Grid>
       <Grid item xs={6}>
         <WebcamContainer onFrameCapture={handleFrameCapture} fps={5} enableCapture={gameState === 'Capturing'} />
