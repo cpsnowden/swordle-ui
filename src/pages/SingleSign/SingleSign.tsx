@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from "@mui/material"
+import { Box, Button, Grid, Paper, Typography } from "@mui/material"
 import WebcamContainer from "components/webcam/WebcamContainer"
 import { useState } from "react";
 import { LetterPrediction, predict_letter } from "services/api";
@@ -15,6 +15,7 @@ export const SingleSign = () => {
   }
 
   const handleStartRecording = () => {
+    setCurrentPrediction(null);
     setFrameBatch([]);
     setGameState('Capturing')
   }
@@ -37,7 +38,25 @@ export const SingleSign = () => {
     columns={{xs: 6, md:12}}
     spacing={2}>
     <Grid item xs={6}>
-      Prediction {prediction}
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <Paper elevation={3} sx={{width: 128, height: 128}}>
+          <Typography
+                variant="h1"
+                sx={{
+                  textAlign: 'center',
+                  fontFamily: 'monospace',
+                  fontWeight: 600,
+                  color: 'inherit',
+                  textDecoration: 'none',
+                }}
+              >
+                {prediction ? prediction : '?'}
+          </Typography>
+
+      </Paper>
+  </Box>
+
+    {/* </Box> */}
     </Grid>
     <Grid item xs={6}>
       <WebcamContainer onFrameCapture={handleFrameCapture} fps={5} enableCapture={gameState==='Capturing'}/>
