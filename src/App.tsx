@@ -1,3 +1,4 @@
+import { Container } from "@mui/material";
 import AppFooter from "layouts/Footer";
 import Header from "layouts/Header";
 import { pages } from "pages";
@@ -11,7 +12,9 @@ export const App = () => {
 
   return (<>
     <Header />
-      {page.element}
+      <Container className="mt-3 mb-3">
+        {page.element}
+      </Container>
     <AppFooter pages={pages} selectedPageIndex={selectedPageIndex} onSelectPage={setSelectedPage}/>
   </>)
 };

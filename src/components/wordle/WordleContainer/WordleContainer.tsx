@@ -59,7 +59,13 @@ export const WordlePanel: React.FC<GamePanelProps> = ({
   }, [currentGuess, solution])
 
   return (
-    <Grid container alignItems="center"  direction="row" justifyContent="center" columns={{xs: 6, md:12}} spacing={2}>
+    <Grid container
+          alignItems="center"
+          direction="row"
+          justifyContent="center"
+          columns={{xs: 6, md:12}}
+          spacing={2}
+    >
     <Grid item xs={6}>
       {/* TODO Sort out this Tailwind CSS */}
       <div className="mx-auto flex w-full grow flex-col px-1 md:max-w-7xl lg:px-8">

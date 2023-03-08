@@ -1,6 +1,6 @@
 import Home from "pages/About";
 import Wordle from "pages/Wordle"
-import Flashcard from "./Flashcard";
+import SingleSign from "./SingleSign";
 import InfoIcon from '@mui/icons-material/Info';
 import SwipeDown from '@mui/icons-material/SwipeDown'
 import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
@@ -19,8 +19,8 @@ export const pages: PageInfo[] = [
       icon: <InfoIcon />
     },
     {
-      name: 'SignleSign',
-      element: <Flashcard/>,
+      name: 'SingleSign',
+      element: <SingleSign/>,
       icon: <SwipeDown/>
     },
     {
