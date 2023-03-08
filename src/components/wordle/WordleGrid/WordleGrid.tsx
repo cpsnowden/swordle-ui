@@ -21,7 +21,7 @@ export const WordleGrid: React.FC<WordleGridProps> = ({
   gameStatus
 }) => {
   const nEmptyRows = numberOfAttempts - guesses.length - 1;
-  const emptyRows = nEmptyRows > 1 ? Array(numberOfAttempts - guesses.length - 1).fill(0): [];
+  const emptyRows = nEmptyRows > 0  ? Array(nEmptyRows).fill(0): [];
   return (
     <>
       {guesses.map((guess, i) => (

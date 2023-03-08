@@ -1,3 +1,3 @@
-import { Footer } from "./Footer";
+import { FooterMenu } from "./Footer";
 
-export default Footer;
+export default FooterMenu;

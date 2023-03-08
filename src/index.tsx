@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import { RouterProvider } from 'react-router-dom';
-import { router } from 'pages';
 import theme from 'theme';
+import { App } from 'App';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,7 +13,7 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <RouterProvider router={router}/>
+      <App/>
     </ThemeProvider>
 </React.StrictMode>
 );

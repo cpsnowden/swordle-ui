@@ -1,34 +1,31 @@
-import Home from "pages/Home";
-import Game from "pages/Game"
-import { createHashRouter, RouteObject } from "react-router-dom";
-import PageTemplate from "layouts/PageLayout";
+import Home from "pages/About";
+import Wordle from "pages/Wordle"
+import Flashcard from "./Flashcard";
+import InfoIcon from '@mui/icons-material/Info';
+import SwipeDown from '@mui/icons-material/SwipeDown'
+import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
+
 
 export type PageInfo = {
   name: string,
-  path: string
+  element?: React.ReactNode;
+  icon: React.ReactNode
 }
 
-const routes: (RouteObject & PageInfo)[] = [
+export const pages: PageInfo[] = [
     {
-      name: 'Home',
-      path: '/',
+      name: 'About',
       element: <Home/>,
+      icon: <InfoIcon />
     },
     {
-      name: 'Game',
-      path: '/game',
-      element: <Game/>,
+      name: 'SignleSign',
+      element: <Flashcard/>,
+      icon: <SwipeDown/>
+    },
+    {
+      name: 'SWordle',
+      element: <Wordle/>,
+      icon: <VideogameAssetIcon/>
     },
 ];
-
-const router = createHashRouter([
-  {
-    element: <PageTemplate/>,
-    children: routes
-  }
-])
-
-export {
-  router,
-  routes
-}
