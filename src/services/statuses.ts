@@ -1,1 +1,5 @@
-export type GameStatus = 'Not Started' | 'Capturing' | 'Predicting' | 'Validating';
+export type GameStatus =
+  | "Not Started"
+  | "Capturing"
+  | "Predicting"
+  | "Validating";

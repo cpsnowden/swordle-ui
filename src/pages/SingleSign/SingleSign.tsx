@@ -31,48 +31,48 @@ export const SingleSign = () => {
   }
 
   return (
-  <Grid container
-    alignItems="center"
-    direction="row"
-    justifyContent="center"
-    columns={{xs: 6, md:12}}
-    spacing={2}>
-    <Grid item xs={6}>
-      <Box display="flex" justifyContent="center" alignItems="center">
-        <Paper elevation={3} sx={{width: 128, height: 128}}>
-          <Typography
-                variant="h1"
-                sx={{
-                  textAlign: 'center',
-                  fontFamily: 'monospace',
-                  fontWeight: 600,
-                  color: 'inherit',
-                  textDecoration: 'none',
-                }}
-              >
-                {prediction ? prediction : '?'}
-          </Typography>
+    <Grid container
+      alignItems="center"
+      direction="row"
+      justifyContent="center"
+      columns={{ xs: 6, md: 12 }}
+      spacing={2}>
+      <Grid item xs={6}>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <Paper elevation={3} sx={{ width: 128, height: 128 }}>
+            <Typography
+              variant="h1"
+              sx={{
+                textAlign: 'center',
+                fontFamily: 'monospace',
+                fontWeight: 600,
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              {prediction ? prediction : '?'}
+            </Typography>
 
-      </Paper>
-  </Box>
+          </Paper>
+        </Box>
 
-    {/* </Box> */}
+        {/* </Box> */}
+      </Grid>
+      <Grid item xs={6}>
+        <WebcamContainer onFrameCapture={handleFrameCapture} fps={5} enableCapture={gameState === 'Capturing'} />
+      </Grid>
+      <Grid item xs={6}>
+        <Box textAlign='center'>
+          {gameState === 'Not Started' &&
+            <Button variant="contained" onClick={handleStartRecording} size="large">
+              Record
+            </Button>}
+          {gameState === 'Capturing' &&
+            <Button variant="contained" onClick={() => handleSubmitLetterFrames(frameBatch)} size="large">
+              Submit
+            </Button>}
+        </Box>
+      </Grid>
     </Grid>
-    <Grid item xs={6}>
-      <WebcamContainer onFrameCapture={handleFrameCapture} fps={5} enableCapture={gameState==='Capturing'}/>
-    </Grid>
-    <Grid item xs={6}>
-    <Box textAlign='center'>
-      {gameState === 'Not Started' &&
-      <Button variant="contained" onClick={handleStartRecording} size="large">
-        Record
-      </Button>}
-      {gameState === 'Capturing' &&
-      <Button variant="contained" onClick={() => handleSubmitLetterFrames(frameBatch)} size="large">
-        Submit
-      </Button>}
-    </Box>
-    </Grid>
-  </Grid>
   );
 }
