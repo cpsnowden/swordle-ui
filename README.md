@@ -2,6 +2,11 @@
 
 The production deployed version is at https://cpsnowden.github.io/sign-game-ui-react
 
+- About Page
+- SWordle Win/Loose
+- Refactor SWordle and SingleSign given similarities
+- Create settings dialog for FPS/Buffer Size
+
 # Development
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
