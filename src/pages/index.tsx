@@ -1,34 +1,67 @@
-import Home from "pages/Home";
-import Game from "pages/Game"
-import { createHashRouter, RouteObject } from "react-router-dom";
-import PageTemplate from "layouts/PageLayout";
+import Home from "pages/About";
+import Wordle from "pages/Wordle"
+import SingleSign from "./SingleSign";
+import AppFooter from "layouts/Footer";
+import Header from "layouts/Header";
+import InfoIcon from '@mui/icons-material/Info';
+import SwipeDown from '@mui/icons-material/SwipeDown'
+import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
+import { createHashRouter, Outlet, RouteObject, useLocation, Navigate } from "react-router-dom";
+import { Container } from "@mui/material";
+
 
 export type PageInfo = {
   name: string,
+  element?: React.ReactNode;
+  icon: React.ReactNode,
   path: string
 }
 
-const routes: (RouteObject & PageInfo)[] = [
-    {
-      name: 'Home',
-      path: '/',
-      element: <Home/>,
-    },
-    {
-      name: 'Game',
-      path: '/game',
-      element: <Game/>,
-    },
+const pages: (PageInfo & RouteObject)[] = [
+  {
+    name: 'SingleSign',
+    element: <SingleSign />,
+    icon: <SwipeDown />,
+    path: '/single-sign'
+  },
+  {
+    name: 'SWordle',
+    element: <Wordle />,
+    icon: <VideogameAssetIcon />,
+    path: '/swordle',
+  },
+  {
+    name: 'About',
+    element: <Home />,
+    icon: <InfoIcon />,
+    path: '/'
+  },
 ];
 
-const router = createHashRouter([
+
+const Layout = () => {
+  const match = useLocation();
+  const page = pages.findIndex((item) => item.path === match.pathname)
+  return (
+    <>
+      <Header />
+      <Container className="mt-3 mb-3">
+        <Outlet />
+      </Container>
+      <AppFooter pages={pages} selectedPageIndex={page} />
+    </>
+  )
+}
+
+export const router = createHashRouter([
   {
-    element: <PageTemplate/>,
-    children: routes
+    element: <Layout />,
+    children: [
+      ...pages,
+      {
+        path: '*',
+        element: <Navigate to='/' />
+      }
+    ]
   }
 ])
-
-export {
-  router,
-  routes
-}

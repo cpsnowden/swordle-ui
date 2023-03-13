@@ -1,0 +1,16 @@
+/* TODO Move to Inline */
+
+.timer {
+  font-family: "Montserrat";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timer-text {
+  color: #aaa;
+}
+
+.timer-value {
+  font-size: 40px;
+}

@@ -1,47 +1,39 @@
-import React from "react";
-import { useCallback, useEffect } from "react"
+import { Button } from "@mui/material";
+import React, { useRef, useState } from "react";
+import { useCallback } from "react"
 import Webcam from "react-webcam"
 
 const videoConstraints = {
+  width: 1280,
+  height: 720,
   facingMode: "user"
 };
 
 export interface WebcamContainerProps {
-  fps: number;
-  enableCapture: boolean;
-  onFrameCapture: (frame: string) => void;
 }
 
-export const WebcamContainer: React.FC<WebcamContainerProps> = ({
-    onFrameCapture,
-    enableCapture,
-    fps
-  }) => {
-  const videoRef = React.useRef<null | Webcam>(null)
+export const WebcamContainer: React.FC<WebcamContainerProps> = ({ }) => {
+  const [img, setImg] = useState<string | null>(null);
+  const videoRef = useRef<Webcam | null>(null)
 
   const captureFrame = useCallback(() => {
     if (videoRef.current) {
       const imageSrc = videoRef.current.getScreenshot();
-      if (imageSrc) {
-        onFrameCapture(imageSrc);
-      }
+      setImg(imageSrc);
     }
-  }, [videoRef, onFrameCapture]);
-
-  useEffect(() => {
-    if (enableCapture) {
-      const timer = setInterval(() => {
-            captureFrame()
-        }, 1000 / fps);
-      return () => clearInterval(timer);
-    }
-  }, [enableCapture, fps, captureFrame])
+  }, [videoRef]);
 
   return (
     <div className="video-container">
-        <Webcam videoConstraints={videoConstraints} ref={(el) => {
-          videoRef.current = el;
-        }}/>
+      {
+        img === null ? (
+          // TODO check sizing and responsi
+          <Webcam audio={false} videoConstraints={videoConstraints} ref={videoRef} />
+        ) : (
+          <img src={img} />
+        )
+      }
+      <Button variant="contained" onClick={captureFrame} size="large">Capture</Button>
     </div>
   )
 }
