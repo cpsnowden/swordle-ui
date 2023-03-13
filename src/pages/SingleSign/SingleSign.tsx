@@ -3,6 +3,7 @@ import { useCallback, useRef, useState } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 import Webcam from "react-webcam";
 import { LetterPrediction, predict_letter } from "services/api";
+import { videoConstraints } from "services/params";
 import './SingleSign.css'
 
 
@@ -12,17 +13,11 @@ export type GameStatus =
   | "Predicting"
   | "User Check";
 
-const videoConstraints = {
-  width: 1280,
-  height: 720,
-  facingMode: "user"
-};
-
-const countDownSettings = {
-  countStart: 3,
-  countStop: 0,
-  intervalMs: 1000
-}
+// const countDownSettings = {
+//   countStart: 3,
+//   countStop: 0,
+//   intervalMs: 1000
+// }
 
 interface PredictionPanelProps {
   children?: React.ReactNode
@@ -55,20 +50,19 @@ const PredictionPanel: React.FC<PredictionPanelProps> = ({ children }) => (
 )
 
 export const SingleSign = () => {
-  // const [count, { startCountdown, resetCountdown }] = useCountdown(countDownSettings)
   const [countDownKey, setCountdownKey] = useState(0);
   const resetCountDown = () => setCountdownKey(prev => prev + 1);
 
   const [gameState, setGameState] = useState<GameStatus>('Not Started');
   const [prediction, setCurrentPrediction] = useState<string | null>();
 
-  const [img, setImg] = useState<string | null>(null);
+  // const [img, setImg] = useState<string | null>(null);
   const videoRef = useRef<Webcam | null>(null)
 
   const [error, setError] = useState<string | null>(null);
 
   const startCaptureCountdown = () => {
-    setImg(null)
+    // setImg(null)
     resetCountDown()
     setGameState('Letter Countdown')
   }
@@ -97,7 +91,7 @@ export const SingleSign = () => {
 
   const submitPrediction2 = useCallback(() => {
     const src = videoRef.current?.getScreenshot() || null;
-    setImg(src)
+    // setImg(src)
     if (src) {
       setGameState('Predicting')
       submitPrediction(src)
@@ -153,7 +147,7 @@ export const SingleSign = () => {
               {gameState === 'Not Started' && 'Start'}
               {gameState === 'User Check' && 'Next Letter'}
               {gameState === 'Predicting' && 'Predicting...'}
-              {gameState == 'Letter Countdown' && `Wait for it...`}
+              {gameState === 'Letter Countdown' && `Wait for it...`}
             </Button>
           </Box>
         </Grid>

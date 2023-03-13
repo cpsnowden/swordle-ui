@@ -7,7 +7,8 @@ export interface CellProps {
   status?: CharStatus
   isRevealing?: boolean
   isCompleted?: boolean
-  position?: number
+  position?: number,
+  current?: boolean
 }
 
 export const Cell: React.FC<CellProps> = ({
@@ -16,6 +17,7 @@ export const Cell: React.FC<CellProps> = ({
   isRevealing,
   isCompleted,
   position = 0,
+  current = false
 }) => {
   const isFilled = value && !isCompleted
   const shouldReveal = isRevealing && isCompleted
@@ -28,8 +30,9 @@ export const Cell: React.FC<CellProps> = ({
     'w-14 h-14 text-4xl',
     'border-solid border-2 flex items-center justify-center mx-0.5 font-bold rounded text-white',
     {
-      'border-slate-600': !status,
-      'border-slate-100': value && !status,
+      'border-indigo-600': current,
+      'border-slate-600': !status && !current,
+      'border-slate-100': value && !status && !current,
       'absent shadowed bg-slate-700 text-white border-slate-700': status === 'absent',
       'correct shadowed bg-green-500 text-white border-green-500': status === 'correct',
       'present shadowed bg-yellow-500 text-white border-yellow-500': status === 'present',

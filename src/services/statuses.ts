@@ -1,5 +1,6 @@
 export type GameStatus =
   | "Not Started"
-  | "Capturing"
+  | "Letter Countdown"
   | "Predicting"
+  | "User Check"
   | "Validating";
