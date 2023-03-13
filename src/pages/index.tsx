@@ -1,6 +1,6 @@
 import About from "pages/About";
 import Wordle from "pages/Wordle";
-import SingleSign from "./SingleSign";
+import SingleSign from "pages/SingleSign";
 import AppFooter from "layouts/Footer";
 import Header from "layouts/Header";
 import InfoIcon from "@mui/icons-material/Info";
