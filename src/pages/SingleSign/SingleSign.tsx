@@ -1,40 +1,21 @@
-import { Alert, Box, Button, Grid, Snackbar, Typography } from "@mui/material"
-import { useCallback, useRef, useState } from "react";
+import { Box, Button, Grid, Typography } from "@mui/material"
+import AlertSnackbar from "components/AlertSnackbar";
+import { useRef, useState } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 import Webcam from "react-webcam";
 import { LetterPrediction, predict_letter } from "services/api";
 import { videoConstraints } from "services/params";
 import './SingleSign.css'
 
-
-export type GameStatus =
+type GameStatus =
   | "Not Started"
   | "Letter Countdown"
   | "Predicting"
   | "User Check";
 
-// const countDownSettings = {
-//   countStart: 3,
-//   countStop: 0,
-//   intervalMs: 1000
-// }
-
 interface PredictionPanelProps {
   children?: React.ReactNode
 }
-
-interface ErrorAlertProps {
-  error: string | null,
-  onClose: () => void,
-}
-
-const ErrorAlert: React.FC<ErrorAlertProps> = ({ error, onClose }) => (
-  <Snackbar open={!!error} autoHideDuration={5000} onClose={onClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-    <Alert severity="error" sx={{ width: '100%' }}>
-      {error}
-    </Alert>
-  </Snackbar>
-);
 
 const PredictionPanel: React.FC<PredictionPanelProps> = ({ children }) => (
   <Typography
@@ -56,13 +37,11 @@ export const SingleSign = () => {
   const [gameState, setGameState] = useState<GameStatus>('Not Started');
   const [prediction, setCurrentPrediction] = useState<string | null>();
 
-  // const [img, setImg] = useState<string | null>(null);
   const videoRef = useRef<Webcam | null>(null)
 
   const [error, setError] = useState<string | null>(null);
 
   const startCaptureCountdown = () => {
-    // setImg(null)
     resetCountDown()
     setGameState('Letter Countdown')
   }
@@ -89,16 +68,15 @@ export const SingleSign = () => {
     }
   }
 
-  const submitPrediction2 = useCallback(() => {
+  const handleLetterCountdownComplete = () => {
     const src = videoRef.current?.getScreenshot() || null;
-    // setImg(src)
     if (src) {
       setGameState('Predicting')
       submitPrediction(src)
     } else {
       console.log('No image captured')
     }
-  }, [videoRef])
+  };
 
   const countDownChild: (props: TimeProps) => React.ReactNode = gameState === 'Letter Countdown' ?
     ({ remainingTime }) => (
@@ -115,7 +93,7 @@ export const SingleSign = () => {
 
   return (
     <div className="video-container">
-      <ErrorAlert error={error} onClose={() => setError(null)} />
+      <AlertSnackbar error={error} onClose={() => setError(null)} />
       <Grid container
         alignItems="center"
         direction="row"
@@ -130,7 +108,7 @@ export const SingleSign = () => {
               duration={1.5}
               colors={['#004777', '#F7B801', '#A30000', '#A30000']}
               colorsTime={[1.5, 1, 0.5, 0]}
-              onComplete={submitPrediction2}
+              onComplete={handleLetterCountdownComplete}
             >
               {countDownChild}
             </CountdownCircleTimer>

@@ -1,6 +1,6 @@
 import { CircularProgress } from '@mui/material'
 import { GameStatus } from 'services/statuses'
-import { Cell } from 'components/wordle/Cell/Cell'
+import { Cell } from 'pages/Wordle/grid/Cell/Cell'
 
 export interface CurrentRowProps {
   solution: string,

@@ -1,4 +1,4 @@
-import { Cell } from 'components/wordle/Cell/Cell'
+import { Cell } from 'pages/Wordle/grid/Cell/Cell'
 import { calculateStatus } from 'services/wordle'
 
 export interface CompletedRowProps {

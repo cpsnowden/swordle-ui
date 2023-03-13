@@ -1,30 +1,17 @@
-import { Alert, Box, Button, Dialog, DialogTitle, Grid, Snackbar } from "@mui/material"
+import { Box, Button, Dialog, DialogTitle, Grid, Snackbar } from "@mui/material"
 import { useCallback, useEffect, useRef, useState } from "react"
-import { WordleGrid } from "components/wordle/WordleGrid/WordleGrid"
+import { WordleGrid } from "pages/Wordle/grid/WordleGrid/WordleGrid"
 import { LetterPrediction, predict_letter } from "services/api"
 import Webcam from "react-webcam"
 import { videoConstraints } from "services/params"
 import { GameStatus } from "services/statuses"
 import { useCountdown } from "usehooks-ts"
 import ConfettiExplosion from "react-confetti-explosion"
+import AlertSnackbar from "components/AlertSnackbar"
 
 export interface WordlePanelProps {
   solution?: string
 }
-
-interface ErrorAlertProps {
-  error: string | null,
-  onClose: () => void,
-}
-
-const ErrorAlert: React.FC<ErrorAlertProps> = ({ error, onClose }) => (
-  <Snackbar open={!!error} autoHideDuration={5000} onClose={onClose} anchorOrigin={{ vertical: 'top', horizontal: 'left' }}>
-    <Alert severity="error" variant="filled" sx={{ width: '100%' }}>
-      {error}
-    </Alert>
-  </Snackbar>
-);
-
 
 type FinishState = 'WIN' | 'LOSE'
 
@@ -116,20 +103,18 @@ export const WordlePanel: React.FC<WordlePanelProps> = ({
 
   useEffect(() => {
     if (count === 0) {
-      console.log("Submitting prediction")
       submitPrediction()
     }
   }, [count, submitPrediction])
 
   const handleRetryLetter = () => {
-    console.log("I should retry the letter")
     setCurrentGuess(currentGuess => currentGuess.slice(0, currentGuess.length - 1))
     startCaptureCountdown()
   }
 
   return (
     <>
-      <ErrorAlert error={error} onClose={() => setError(null)} />
+      <AlertSnackbar error={error} onClose={() => setError(null)} />
       <Dialog
         open={!!finishState}
       >
