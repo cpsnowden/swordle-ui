@@ -1,25 +1,22 @@
 import { CompletedRow } from 'pages/Wordle/grid/CompletedRow/CompletedRow';
 import { CurrentRow } from 'pages/Wordle/grid/CurrentRow/CurrentRow';
 import { EmptyRow } from 'pages/Wordle/grid/EmptyRow/EmptyRow';
-import { GameStatus } from 'services/statuses';
-
 export interface WordleGridProps {
   solution: string
   guesses: string[][]
   currentGuess: string[]
+  currentLetter?: string
   numberOfAttempts: number
   isRevealing?: boolean
-  gameStatus: GameStatus
 }
 
 export const WordleGrid: React.FC<WordleGridProps> = ({
   solution,
   guesses,
   currentGuess,
+  currentLetter,
   numberOfAttempts,
-  isRevealing,
-  gameStatus
-}) => {
+  isRevealing }) => {
   const nEmptyRows = numberOfAttempts - guesses.length - 1;
   const emptyRows = nEmptyRows > 0 ? Array(nEmptyRows).fill(0) : [];
   return (
@@ -33,7 +30,7 @@ export const WordleGrid: React.FC<WordleGridProps> = ({
         />
       ))}
       {guesses.length < numberOfAttempts && (
-        <CurrentRow guess={currentGuess} solution={solution} gameStatus={gameStatus} />
+        <CurrentRow guess={currentGuess} solution={solution} currentLetter={currentLetter} />
       )}
       {emptyRows.map((_, i) => (
         <EmptyRow key={i} solutionLength={solution.length} />

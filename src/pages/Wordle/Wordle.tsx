@@ -1,15 +1,23 @@
 import { Box, Button, Dialog, DialogTitle, Grid } from "@mui/material"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { WordleGrid } from "pages/Wordle/grid/WordleGrid/WordleGrid"
 import { LetterPrediction, predict_letter } from "services/api"
 import Webcam from "react-webcam"
 import { videoConstraints } from "services/params"
-import { GameStatus } from "services/statuses"
 import { useCountdown } from "usehooks-ts"
 import ConfettiExplosion from "react-confetti-explosion"
 import AlertSnackbar from "components/AlertSnackbar"
 
 type FinishState = 'WIN' | 'LOSE'
+
+type GameStatus =
+  | "Not Started"
+  | "Letter Countdown"
+  | "Predicting"
+  | "User Check"
+  | "Retry"
+  | "Validating";
+
 
 interface GameCompleteDialogProps {
   finishState?: FinishState,
@@ -33,7 +41,7 @@ export const Wordle: React.FC<WordleProps> = ({
 }) => {
 
   const [finishState, setFinishState] = useState<FinishState>();
-  const [gameState, setGameState] = useState<GameStatus>('User Check');
+  const [gameState, setGameState] = useState<GameStatus>('Not Started');
   const [count, { startCountdown, resetCountdown }] = useCountdown({
     countStart: 2,
     countStop: 0,
@@ -41,6 +49,7 @@ export const Wordle: React.FC<WordleProps> = ({
   })
   const [previousGuesses, setPreviousGuesses] = useState<string[][]>([]);
   const [currentGuess, setCurrentGuess] = useState<string[]>([])
+  const [currentLetter, setCurrentLetter] = useState<string>()
 
   const videoRef = useRef<Webcam | null>(null)
 
@@ -56,11 +65,11 @@ export const Wordle: React.FC<WordleProps> = ({
       return
     }
     if (prediction.predictionStatus === 'success') {
-      setCurrentGuess(currentGuess => [...currentGuess, prediction.prediction.toUpperCase()])
+      setCurrentLetter(prediction.prediction.toUpperCase())
       setGameState('User Check')
     } else if (prediction.predictionStatus === 'no_hand_detected') {
       setError('No hand detected, try again...')
-      setGameState('User Check')
+      setGameState('Retry')
     } else {
       setError("Something has gone wrong, try again...")
     }
@@ -72,15 +81,25 @@ export const Wordle: React.FC<WordleProps> = ({
     setGameState('Letter Countdown')
   }
 
-  const submitPrediction = () => {
+  const handleStartRow = () => {
+    startCaptureCountdown()
+  }
+
+  const handleNextLetter = () => {
+    setCurrentLetter(undefined)
+    setCurrentGuess(currentGuess => [...currentGuess, currentLetter!])
+    startCaptureCountdown()
+  }
+
+  const submitPrediction = useCallback(() => {
     const src = videoRef.current?.getScreenshot() || null;
     if (src) {
       setGameState('Predicting')
       submitToPredictionApi(src)
     } else {
-      console.log('No image captured')
+      console.log('No image captured!')
     }
-  }
+  }, [videoRef])
 
   const validateGuess = () => {
     setGameState('Validating')
@@ -90,14 +109,12 @@ export const Wordle: React.FC<WordleProps> = ({
     setPreviousGuesses(previousGuesses => [...previousGuesses, currentGuess])
 
     if (previousGuesses.length === 6 - 1) {
-      console.log("Checking if you've won")
       checkIfWon()
     }
     setCurrentGuess([])
   }
 
   const handleRetryLetter = () => {
-    setCurrentGuess(currentGuess => currentGuess.slice(0, currentGuess.length - 1))
     startCaptureCountdown()
   }
 
@@ -113,7 +130,7 @@ export const Wordle: React.FC<WordleProps> = ({
     if (count === 0 && gameState === 'Letter Countdown') {
       submitPrediction()
     }
-  }, [count, gameState])
+  }, [count, gameState, submitPrediction])
 
   return (
     <>
@@ -127,7 +144,7 @@ export const Wordle: React.FC<WordleProps> = ({
         spacing={2}
       >
         <Grid item xs={6}>
-          <WordleGrid solution={solution} currentGuess={currentGuess} guesses={previousGuesses} isRevealing={gameState === 'Validating'} numberOfAttempts={6} gameStatus={gameState} />
+          <WordleGrid solution={solution} currentGuess={currentGuess} guesses={previousGuesses} isRevealing={gameState === 'Validating'} numberOfAttempts={6} currentLetter={currentLetter} />
         </Grid>
         <Grid item xs={6}>
           <Webcam audio={false} videoConstraints={videoConstraints} ref={videoRef} />
@@ -135,22 +152,31 @@ export const Wordle: React.FC<WordleProps> = ({
         <Grid item xs={6}>
           <Box textAlign='center'>
             {
-              gameState === 'User Check' &&
+              (gameState === 'User Check' || gameState === 'Retry') &&
               <Button variant="contained" onClick={handleRetryLetter} size="large">
                 Retry
               </Button>
             }
             {
-              currentGuess.length < solution.length &&
-              <Button variant="contained" onClick={startCaptureCountdown}
-                disabled={gameState === 'Predicting' || gameState === 'Letter Countdown'}
-                size="large">
-                {gameState === 'Not Started' && 'Start Row'}
-                {gameState === 'User Check' && 'Next Letter'}
+              currentGuess.length < solution.length && gameState === 'User Check' &&
+              <Button variant="contained" onClick={handleNextLetter} size="large">
+                Next Letter
+              </Button>
+            }
+            {
+              currentGuess.length < solution.length && gameState === 'Not Started' &&
+              <Button variant="contained" onClick={handleStartRow} size="large">
+                Start Row
+              </Button>
+            }
+            {
+              currentGuess.length < solution.length && (gameState === 'Predicting' || gameState === 'Letter Countdown') &&
+              <Button variant="contained" size="large" disabled>
                 {gameState === 'Predicting' && 'Predicting...'}
                 {gameState === 'Letter Countdown' && `Taking screenshot in ${count}`}
               </Button>
             }
+
             {
               currentGuess.length === solution.length &&
               <Button variant="contained" onClick={validateGuess} size="large">
