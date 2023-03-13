@@ -127,9 +127,9 @@ export const SingleSign = () => {
             <CountdownCircleTimer
               key={countDownKey}
               isPlaying={gameState === 'Letter Countdown'}
-              duration={3}
+              duration={1.5}
               colors={['#004777', '#F7B801', '#A30000', '#A30000']}
-              colorsTime={[3, 2, 1, 0]}
+              colorsTime={[1.5, 1, 0.5, 0]}
               onComplete={submitPrediction2}
             >
               {countDownChild}

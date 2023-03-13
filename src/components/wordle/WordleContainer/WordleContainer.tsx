@@ -35,20 +35,14 @@ export const WordlePanel: React.FC<WordlePanelProps> = ({
   const [finishState, setFinishState] = useState<FinishState>();
 
   const [count, { startCountdown, resetCountdown }] = useCountdown({
-    countStart: 1,
+    countStart: 2,
     countStop: 0,
     intervalMs: 1000,
   })
 
   const [gameState, setGameState] = useState<GameStatus>('User Check');
-  const [previousGuesses, setPreviousGuesses] = useState<string[][]>([
-    ["A", "A", "A", "A", "A"],
-    ["A", "A", "A", "A", "A"],
-    ["A", "A", "A", "A", "A"],
-    ["A", "A", "A", "A", "A"],
-    ["A", "A", "A", "A", "A"],
-  ]);
-  const [currentGuess, setCurrentGuess] = useState<string[]>(["A", "P", "P", "L"])
+  const [previousGuesses, setPreviousGuesses] = useState<string[][]>([]);
+  const [currentGuess, setCurrentGuess] = useState<string[]>([])
 
   // const [img, setImg] = useState<string | null>(null);
   const videoRef = useRef<Webcam | null>(null)
