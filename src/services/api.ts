@@ -7,11 +7,9 @@ export interface LetterPrediction {
 }
 
 // TODO error handling
-export const predict_letter = (
-  frames: string[],
-  onSuccess: (prediction: LetterPrediction) => void
-): void => {
-  axios
-    .post<LetterPrediction>(LETTER_PREDICTION_URL, { frames: frames })
-    .then((response) => onSuccess(response.data));
+export const predict_letter = async (
+  frames: string[]): Promise<LetterPrediction> => {
+  return axios
+    .post<LetterPrediction>(LETTER_PREDICTION_URL, { frames: frames, })
+    .then((response) => response.data)
 };

@@ -15,10 +15,10 @@ export interface WebcamContainerProps {
 }
 
 export const WebcamContainer: React.FC<WebcamContainerProps> = ({
-    onFrameCapture,
-    enableCapture,
-    fps
-  }) => {
+  onFrameCapture,
+  enableCapture,
+  fps
+}) => {
   const videoRef = React.useRef<null | Webcam>(null)
 
   const captureFrame = useCallback(() => {
@@ -33,17 +33,17 @@ export const WebcamContainer: React.FC<WebcamContainerProps> = ({
   useEffect(() => {
     if (enableCapture) {
       const timer = setInterval(() => {
-            captureFrame()
-        }, 1000 / fps);
+        captureFrame()
+      }, 1000 / fps);
       return () => clearInterval(timer);
     }
   }, [enableCapture, fps, captureFrame])
-
+  // screenshotFormat="image/jpeg"
   return (
     <div className="video-container">
-        <Webcam videoConstraints={videoConstraints} ref={(el) => {
-          videoRef.current = el;
-        }}/>
+      <Webcam videoConstraints={videoConstraints} ref={(el) => {
+        videoRef.current = el;
+      }} />
     </div>
   )
 }

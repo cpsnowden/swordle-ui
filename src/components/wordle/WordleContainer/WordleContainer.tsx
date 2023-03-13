@@ -12,9 +12,9 @@ export interface GamePanelProps {
 }
 
 export const WordlePanel: React.FC<GamePanelProps> = ({
-    solution = 'APPLE',
-    frameBufferSize = 20,
-    fps = 5
+  solution = 'APPLE',
+  frameBufferSize = 20,
+  fps = 5
 }) => {
 
   const [gameState, setGameState] = useState<GameStatus>('Not Started');
@@ -31,18 +31,35 @@ export const WordlePanel: React.FC<GamePanelProps> = ({
     setGameState('Capturing')
   }
 
-  const handlePredictionResponse = (prediction: LetterPrediction) => {
-    setCurrentGuess(currentGuess => [...currentGuess, prediction.prediction.toUpperCase()])
+  // const handlePredictionResponse = (prediction: LetterPrediction) => {
+  //   setCurrentGuess(currentGuess => [...currentGuess, prediction.prediction.toUpperCase()])
+  //   setGameState('Not Started')
+  // }
+
+  // const handleSubmitLetterFrames = (frameBatch: string[]) => {
+  //   setGameState('Predicting')
+  //   predict_letter(frameBatch, handlePredictionResponse)
+  // }
+
+
+  const handleSubmitLetterFrames = async (frameBatch: string[]) => {
+    setGameState('Predicting')
+    try {
+      const prediction = await predict_letter(frameBatch)
+      setCurrentGuess(currentGuess => [...currentGuess, prediction.prediction.toUpperCase()])
+    } catch (predictionError: any) {
+      if (predictionError.detail) {
+        console.log(predictionError.detail);
+      } else {
+        console.log("Something has gone wrong")
+      }
+    }
     setGameState('Not Started')
   }
 
-  const handleSubmitLetterFrames = (frameBatch: string[]) => {
-    setGameState('Predicting')
-    predict_letter(frameBatch, handlePredictionResponse)
-  }
 
   useEffect(() => {
-    if (currentGuess.length === solution.length ) {
+    if (currentGuess.length === solution.length) {
       setGameState('Validating')
       setTimeout(() => {
         setGameState('Not Started')
@@ -52,7 +69,7 @@ export const WordlePanel: React.FC<GamePanelProps> = ({
       setCurrentGuess([])
 
       if (currentGuess === solution.split(",")) {
-       //You've won
+        //You've won
       }
       //Handle you've lost
     }
@@ -60,32 +77,32 @@ export const WordlePanel: React.FC<GamePanelProps> = ({
 
   return (
     <Grid container
-          alignItems="center"
-          direction="row"
-          justifyContent="center"
-          columns={{xs: 6, md:12}}
-          spacing={2}
+      alignItems="center"
+      direction="row"
+      justifyContent="center"
+      columns={{ xs: 6, md: 12 }}
+      spacing={2}
     >
-    <Grid item xs={6}>
-      <WordleGrid solution={solution} currentGuess={currentGuess} guesses={previousGuesses} isRevealing={gameState=== 'Validating'} numberOfAttempts={6} gameStatus={gameState}/>
+      <Grid item xs={6}>
+        <WordleGrid solution={solution} currentGuess={currentGuess} guesses={previousGuesses} isRevealing={gameState === 'Validating'} numberOfAttempts={6} gameStatus={gameState} />
+      </Grid>
+      <Grid item xs={6}>
+        <WebcamContainer onFrameCapture={handleFrameCapture} fps={fps} enableCapture={gameState === 'Capturing'} />
+      </Grid>
+      <Grid item xs={6}>
+        <Box textAlign='center'>
+          {gameState === 'Not Started' &&
+            <Button variant="contained" onClick={handleStartRecording} size="large">
+              Record
+            </Button>}
+          {gameState === 'Capturing' &&
+            <Button variant="contained" onClick={() => handleSubmitLetterFrames(frameBatch)} size="large">
+              Submit
+            </Button>
+          }
+        </Box>
+      </Grid>
     </Grid>
-    <Grid item xs={6}>
-      <WebcamContainer onFrameCapture={handleFrameCapture} fps={fps} enableCapture={gameState==='Capturing'}/>
-    </Grid>
-    <Grid item xs={6}>
-      <Box textAlign='center'>
-        {gameState === 'Not Started' &&
-        <Button variant="contained" onClick={handleStartRecording} size="large">
-          Record
-        </Button>}
-        {gameState === 'Capturing' &&
-        <Button variant="contained" onClick={() => handleSubmitLetterFrames(frameBatch)} size="large">
-          Submit
-        </Button>
-        }
-      </Box>
-    </Grid>
-  </Grid>
 
   )
 }

@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Paper, Typography } from "@mui/material"
+import { Alert, Box, Button, Grid, Paper, Snackbar, Typography } from "@mui/material"
 import WebcamContainer from "components/webcam/WebcamContainer"
 import { useState } from "react";
 import { LetterPrediction, predict_letter } from "services/api";
@@ -6,6 +6,7 @@ import { GameStatus } from "services/statuses";
 
 export const SingleSign = () => {
 
+  const [error, setError] = useState<string | null>();
   const [gameState, setGameState] = useState<GameStatus>('Not Started');
   const [frameBatch, setFrameBatch] = useState<string[]>([]);
   const [prediction, setCurrentPrediction] = useState<string | null>();
@@ -20,14 +21,21 @@ export const SingleSign = () => {
     setGameState('Capturing')
   }
 
-  const handlePredictionResponse = (prediction: LetterPrediction) => {
-    setCurrentPrediction(prediction.prediction.toUpperCase())
-    setGameState('Not Started')
-  }
-
-  const handleSubmitLetterFrames = (frameBatch: string[]) => {
+  const handleSubmitLetterFrames = async (frameBatch: string[]) => {
     setGameState('Predicting')
-    predict_letter(frameBatch, handlePredictionResponse)
+    try {
+      const prediction = await predict_letter(frameBatch)
+      setCurrentPrediction(prediction.prediction.toUpperCase())
+    } catch (predictionError: any) {
+      // https://github.com/axios/axios/issues/3612
+      console.log(predictionError)
+      if (predictionError.detail) {
+        setError(predictionError.detail);
+      } else {
+        setError("Something has gone wrong")
+      }
+    }
+    setGameState('Not Started')
   }
 
   return (
@@ -37,17 +45,21 @@ export const SingleSign = () => {
       justifyContent="center"
       columns={{ xs: 6, md: 12 }}
       spacing={2}>
+      <Snackbar open={!!error} autoHideDuration={2000} onClose={() => setError(null)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+        <Alert severity="error" sx={{ width: '100%' }}>
+          {error}
+        </Alert>
+      </Snackbar>
       <Grid item xs={6}>
         <Box display="flex" justifyContent="center" alignItems="center">
           <Paper elevation={3} sx={{ width: 128, height: 128 }}>
             <Typography
               variant="h1"
+              align="center"
               sx={{
-                textAlign: 'center',
                 fontFamily: 'monospace',
                 fontWeight: 600,
-                color: 'inherit',
-                textDecoration: 'none',
               }}
             >
               {prediction ? prediction : '?'}
