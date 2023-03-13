@@ -1,7 +1,6 @@
-import { AppBar, Container, Toolbar, Typography } from "@mui/material"
+import { AppBar, Container, Toolbar, Typography } from "@mui/material";
 
-export interface HeaderProps {
-}
+export interface HeaderProps {}
 
 export const Header: React.FC<HeaderProps> = () => {
   return (
@@ -13,12 +12,12 @@ export const Header: React.FC<HeaderProps> = () => {
             noWrap
             sx={{
               flexGrow: 1,
-              textAlign: 'center',
-              fontFamily: 'monospace',
+              textAlign: "center",
+              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
             }}
           >
             SWordle
@@ -26,5 +25,5 @@ export const Header: React.FC<HeaderProps> = () => {
         </Toolbar>
       </Container>
     </AppBar>
-  )
+  );
 };

@@ -1,15 +1,20 @@
-import { Cell } from 'pages/Wordle/grid/Cell/Cell'
+import { Cell } from "pages/Wordle/grid/Cell/Cell";
+import { mapRange } from "services/utils";
 
 export interface CurrentRowProps {
-  solution: string,
-  guess: string[],
-  currentLetter?: string,
+  solution: string;
+  guess: string[];
+  currentLetter?: string;
 }
 
-export const CurrentRow: React.FC<CurrentRowProps> = ({ guess, solution, currentLetter }) => {
-  const emptyCells = (solution.length - 1 - guess.length) > 0 ? Array(solution.length - 1 - guess.length)
-    .fill(0)
-    .map((_, i) => (<Cell key={i} />)) : []
+export const CurrentRow: React.FC<CurrentRowProps> = ({
+  guess,
+  solution,
+  currentLetter,
+}) => {
+  const emptyCells = mapRange(solution.length - 1 - guess.length, (i) => (
+    <Cell key={i} />
+  ));
   return (
     <div className="flex justify-center mb-1">
       {guess.map((letter, i) => (
@@ -18,5 +23,5 @@ export const CurrentRow: React.FC<CurrentRowProps> = ({ guess, solution, current
       <Cell key="current" value={currentLetter} current />
       {emptyCells}
     </div>
-  )
-}
+  );
+};
