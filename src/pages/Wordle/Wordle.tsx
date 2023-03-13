@@ -86,9 +86,13 @@ export const Wordle: React.FC<WordleProps> = ({ solution = "APPLE" }) => {
     startCaptureCountdown();
   };
 
-  const handleNextLetter = () => {
+  const confirmLetter = () => {
     setCurrentLetter(undefined);
     setCurrentGuess((currentGuess) => [...currentGuess, currentLetter!]);
+  };
+
+  const handleNextLetter = () => {
+    confirmLetter();
     startCaptureCountdown();
   };
 
@@ -102,11 +106,13 @@ export const Wordle: React.FC<WordleProps> = ({ solution = "APPLE" }) => {
     }
   }, [videoRef]);
 
-  const validateGuess = () => {
+  const validateGuess = (currentGuess: string[]) => {
+    confirmLetter();
     setGameState("Validating");
     setTimeout(() => {
       setGameState("Not Started");
     }, 350 * 5);
+    //Current guess is missing
     setPreviousGuesses((previousGuesses) => [...previousGuesses, currentGuess]);
 
     if (previousGuesses.length === 6 - 1) {
@@ -173,7 +179,7 @@ export const Wordle: React.FC<WordleProps> = ({ solution = "APPLE" }) => {
                 Retry
               </Button>
             )}
-            {currentGuess.length < solution.length &&
+            {currentGuess.length < solution.length - 1 &&
               gameState === "User Check" && (
                 <Button
                   variant="contained"
@@ -203,11 +209,16 @@ export const Wordle: React.FC<WordleProps> = ({ solution = "APPLE" }) => {
                 </Button>
               )}
 
-            {currentGuess.length === solution.length && (
-              <Button variant="contained" onClick={validateGuess} size="large">
-                Validate
-              </Button>
-            )}
+            {currentGuess.length === solution.length - 1 &&
+              gameState === "User Check" && (
+                <Button
+                  variant="contained"
+                  onClick={() => validateGuess(currentGuess)}
+                  size="large"
+                >
+                  Validate
+                </Button>
+              )}
           </Box>
         </Grid>
       </Grid>

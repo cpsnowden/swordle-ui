@@ -2,11 +2,9 @@
 
 The production deployed version is at https://cpsnowden.github.io/sign-game-ui-react
 
-- SWordle Win/Loose
-- Refactor SWordle and SingleSign given similarities
 - About Page
 - Web cam size on iphone
-- Create settings dialog for FPS/Buffer Size
+- Cleanup typography on single sign
 
 # Development
 
