@@ -45,7 +45,7 @@ export const WordlePanel: React.FC<GamePanelProps> = ({
   const handleSubmitLetterFrames = async (frameBatch: string[]) => {
     setGameState('Predicting')
     try {
-      const prediction = await predict_letter(frameBatch)
+      const prediction = await predict_letter(frameBatch[0])
       setCurrentGuess(currentGuess => [...currentGuess, prediction.prediction.toUpperCase()])
     } catch (predictionError: any) {
       if (predictionError.detail) {
@@ -87,7 +87,7 @@ export const WordlePanel: React.FC<GamePanelProps> = ({
         <WordleGrid solution={solution} currentGuess={currentGuess} guesses={previousGuesses} isRevealing={gameState === 'Validating'} numberOfAttempts={6} gameStatus={gameState} />
       </Grid>
       <Grid item xs={6}>
-        <WebcamContainer onFrameCapture={handleFrameCapture} fps={fps} enableCapture={gameState === 'Capturing'} />
+        <WebcamContainer />
       </Grid>
       <Grid item xs={6}>
         <Box textAlign='center'>

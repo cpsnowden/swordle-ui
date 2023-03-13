@@ -21,7 +21,7 @@ export const Header: React.FC<HeaderProps> = () => {
               textDecoration: 'none',
             }}
           >
-            FiNNger Spell
+            SWordle
           </Typography>
         </Toolbar>
       </Container>

@@ -19,12 +19,6 @@ export type PageInfo = {
 
 const pages: (PageInfo & RouteObject)[] = [
   {
-    name: 'About',
-    element: <Home />,
-    icon: <InfoIcon />,
-    path: '/'
-  },
-  {
     name: 'SingleSign',
     element: <SingleSign />,
     icon: <SwipeDown />,
@@ -35,6 +29,12 @@ const pages: (PageInfo & RouteObject)[] = [
     element: <Wordle />,
     icon: <VideogameAssetIcon />,
     path: '/swordle',
+  },
+  {
+    name: 'About',
+    element: <Home />,
+    icon: <InfoIcon />,
+    path: '/'
   },
 ];
 

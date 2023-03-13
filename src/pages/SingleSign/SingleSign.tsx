@@ -1,87 +1,163 @@
-import { Alert, Box, Button, Grid, Paper, Snackbar, Typography } from "@mui/material"
-import WebcamContainer from "components/webcam/WebcamContainer"
-import { useState } from "react";
+import { Alert, Box, Button, Grid, Snackbar, Typography } from "@mui/material"
+import { useCallback, useRef, useState } from "react";
+import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
+import Webcam from "react-webcam";
 import { LetterPrediction, predict_letter } from "services/api";
-import { GameStatus } from "services/statuses";
+import './SingleSign.css'
+
+
+export type GameStatus =
+  | "Not Started"
+  | "Letter Countdown"
+  | "Predicting"
+  | "User Check";
+
+const videoConstraints = {
+  width: 1280,
+  height: 720,
+  facingMode: "user"
+};
+
+const countDownSettings = {
+  countStart: 3,
+  countStop: 0,
+  intervalMs: 1000
+}
+
+interface PredictionPanelProps {
+  children?: React.ReactNode
+}
+
+interface ErrorAlertProps {
+  error: string | null,
+  onClose: () => void,
+}
+
+const ErrorAlert: React.FC<ErrorAlertProps> = ({ error, onClose }) => (
+  <Snackbar open={!!error} autoHideDuration={5000} onClose={onClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+    <Alert severity="error" sx={{ width: '100%' }}>
+      {error}
+    </Alert>
+  </Snackbar>
+);
+
+const PredictionPanel: React.FC<PredictionPanelProps> = ({ children }) => (
+  <Typography
+    variant="h2"
+    align="center"
+    sx={{
+      fontFamily: 'monospace',
+      fontWeight: 400,
+    }}
+  >
+    {children}
+  </Typography>
+)
 
 export const SingleSign = () => {
+  // const [count, { startCountdown, resetCountdown }] = useCountdown(countDownSettings)
+  const [countDownKey, setCountdownKey] = useState(0);
+  const resetCountDown = () => setCountdownKey(prev => prev + 1);
 
-  const [error, setError] = useState<string | null>();
   const [gameState, setGameState] = useState<GameStatus>('Not Started');
-  const [frameBatch, setFrameBatch] = useState<string[]>([]);
   const [prediction, setCurrentPrediction] = useState<string | null>();
 
-  const handleFrameCapture = (frame: string) => {
-    setFrameBatch(prevFrames => [...prevFrames.slice(prevFrames.length - 20 - 1), frame])
+  const [img, setImg] = useState<string | null>(null);
+  const videoRef = useRef<Webcam | null>(null)
+
+  const [error, setError] = useState<string | null>(null);
+
+  const startCaptureCountdown = () => {
+    setImg(null)
+    resetCountDown()
+    setGameState('Letter Countdown')
   }
 
-  const handleStartRecording = () => {
-    setCurrentPrediction(null);
-    setFrameBatch([]);
-    setGameState('Capturing')
-  }
-
-  const handleSubmitLetterFrames = async (frameBatch: string[]) => {
-    setGameState('Predicting')
+  const submitPrediction = async (img: string) => {
+    let prediction: LetterPrediction;
     try {
-      const prediction = await predict_letter(frameBatch)
-      setCurrentPrediction(prediction.prediction.toUpperCase())
+      prediction = await predict_letter(img);
     } catch (predictionError: any) {
-      // https://github.com/axios/axios/issues/3612
-      console.log(predictionError)
-      if (predictionError.detail) {
-        setError(predictionError.detail);
-      } else {
-        setError("Something has gone wrong")
-      }
+      setError("Something has gone wrong, try again...")
+      setCurrentPrediction(null)
+      setGameState('User Check')
+      return
     }
-    setGameState('Not Started')
+    if (prediction.predictionStatus === 'success') {
+      setCurrentPrediction(prediction.prediction.toUpperCase())
+      setGameState('User Check')
+    } else if (prediction.predictionStatus === 'no_hand_detected') {
+      setError('No hand detected, try again...')
+      setGameState('User Check')
+      setCurrentPrediction(null)
+    } else {
+      setError("Something has gone wrong, try again...")
+    }
   }
+
+  const submitPrediction2 = useCallback(() => {
+    const src = videoRef.current?.getScreenshot() || null;
+    setImg(src)
+    if (src) {
+      setGameState('Predicting')
+      submitPrediction(src)
+    } else {
+      console.log('No image captured')
+    }
+  }, [videoRef])
+
+  const countDownChild: (props: TimeProps) => React.ReactNode = gameState === 'Letter Countdown' ?
+    ({ remainingTime }) => (
+      <div className="timer">
+        <div className="timer-text">Taking photo in</div>
+        <div className="timer-value">{remainingTime}</div>
+      </div>
+    ) :
+    () => (
+      <PredictionPanel>
+        {prediction}
+      </PredictionPanel>
+    )
 
   return (
-    <Grid container
-      alignItems="center"
-      direction="row"
-      justifyContent="center"
-      columns={{ xs: 6, md: 12 }}
-      spacing={2}>
-      <Snackbar open={!!error} autoHideDuration={2000} onClose={() => setError(null)}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-        <Alert severity="error" sx={{ width: '100%' }}>
-          {error}
-        </Alert>
-      </Snackbar>
-      <Grid item xs={6}>
-        <Box display="flex" justifyContent="center" alignItems="center">
-          <Paper elevation={3} sx={{ width: 128, height: 128 }}>
-            <Typography
-              variant="h1"
-              align="center"
-              sx={{
-                fontFamily: 'monospace',
-                fontWeight: 600,
-              }}
+    <div className="video-container">
+      <ErrorAlert error={error} onClose={() => setError(null)} />
+      <Grid container
+        alignItems="center"
+        direction="row"
+        justifyContent="center"
+        columns={{ xs: 6, md: 12 }}
+        spacing={2}>
+        <Grid item xs={6}>
+          <Box display="flex" justifyContent="center" alignItems="center">
+            <CountdownCircleTimer
+              key={countDownKey}
+              isPlaying={gameState === 'Letter Countdown'}
+              duration={3}
+              colors={['#004777', '#F7B801', '#A30000', '#A30000']}
+              colorsTime={[3, 2, 1, 0]}
+              onComplete={submitPrediction2}
             >
-              {prediction ? prediction : '?'}
-            </Typography>
-          </Paper>
-        </Box>
+              {countDownChild}
+            </CountdownCircleTimer>
+          </Box>
+        </Grid>
+        <Grid item xs={6}>
+          <Webcam audio={false} videoConstraints={videoConstraints} ref={videoRef} />
+        </Grid>
+        <Grid item xs={6}>
+          <Box textAlign='center'>
+            <Button variant="contained" onClick={startCaptureCountdown}
+              disabled={gameState === 'Predicting' || gameState === 'Letter Countdown'}
+              size="large">
+              {gameState === 'Not Started' && 'Start'}
+              {gameState === 'User Check' && 'Next Letter'}
+              {gameState === 'Predicting' && 'Predicting...'}
+              {gameState == 'Letter Countdown' && `Wait for it...`}
+            </Button>
+          </Box>
+        </Grid>
       </Grid>
-      <Grid item xs={6}>
-        <WebcamContainer onFrameCapture={handleFrameCapture} fps={5} enableCapture={gameState === 'Capturing'} />
-      </Grid>
-      <Grid item xs={6}>
-        <Box textAlign='center'>
-          {gameState === 'Not Started' &&
-            <Button variant="contained" onClick={handleStartRecording} size="large">
-              Record
-            </Button>}
-          {gameState === 'Capturing' &&
-            <Button variant="contained" onClick={() => handleSubmitLetterFrames(frameBatch)} size="large">
-              Submit
-            </Button>}
-        </Box>
-      </Grid>
-    </Grid>
-  );
+    </div>
+  )
 }
