@@ -1,13 +1,17 @@
-import { Cell } from 'components/wordle/Cell/Cell'
-import { calculateStatus } from 'services/wordle'
+import Cell from "pages/Wordle/grid/Cell";
+import { calculateStatus } from "services/wordle";
 
 export interface CompletedRowProps {
-  solution: string
-  guess: string[]
-  isRevealing?: boolean
+  solution: string;
+  guess: string[];
+  isRevealing?: boolean;
 }
 
-export const CompletedRow: React.FC<CompletedRowProps> = ({ solution, guess, isRevealing }) => {
+export const CompletedRow: React.FC<CompletedRowProps> = ({
+  solution,
+  guess,
+  isRevealing,
+}) => {
   const statuses = calculateStatus(solution, guess);
   return (
     <div className="mb-1 flex justify-center">
@@ -22,5 +26,5 @@ export const CompletedRow: React.FC<CompletedRowProps> = ({ solution, guess, isR
         />
       ))}
     </div>
-  )
-}
+  );
+};
