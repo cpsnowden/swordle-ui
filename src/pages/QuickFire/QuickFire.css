@@ -1,0 +1,12 @@
+/* TODO Move to Inline */
+
+.timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timer-text {
+  color: #aaa;
+  font-size: 25px;
+}
