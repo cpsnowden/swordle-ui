@@ -28,7 +28,7 @@ const GameCompleteDialog: React.FC<GameCompleteDialogProps> = ({
   solution,
 }) => (
   <Dialog open={!!finishState}>
-    <DialogTitle id="alert-dialog-title">
+    <DialogTitle>
       {finishState === "LOSE"
         ? `You have lost, the solution was ${solution}`
         : "Horray, you have won"}
@@ -82,13 +82,17 @@ export const Wordle: React.FC<WordleProps> = ({ solution = "APPLE" }) => {
     setGameState("Letter Countdown");
   };
 
+  const confirmLetter = () => {
+    setCurrentLetter(undefined);
+    setCurrentGuess((currentGuess) => [...currentGuess, currentLetter!]);
+  };
+
   const handleStartRow = () => {
     startCaptureCountdown();
   };
 
   const handleNextLetter = () => {
-    setCurrentLetter(undefined);
-    setCurrentGuess((currentGuess) => [...currentGuess, currentLetter!]);
+    confirmLetter();
     startCaptureCountdown();
   };
 
@@ -102,11 +106,13 @@ export const Wordle: React.FC<WordleProps> = ({ solution = "APPLE" }) => {
     }
   }, [videoRef]);
 
-  const validateGuess = () => {
+  const validateGuess = (currentGuess: string[]) => {
+    confirmLetter();
     setGameState("Validating");
     setTimeout(() => {
       setGameState("Not Started");
     }, 350 * 5);
+    //Current guess is missing
     setPreviousGuesses((previousGuesses) => [...previousGuesses, currentGuess]);
 
     if (previousGuesses.length === 6 - 1) {
@@ -174,17 +180,7 @@ export const Wordle: React.FC<WordleProps> = ({ solution = "APPLE" }) => {
               </Button>
             )}
             {currentGuess.length < solution.length &&
-              gameState === "User Check" && (
-                <Button
-                  variant="contained"
-                  onClick={handleNextLetter}
-                  size="large"
-                >
-                  Next Letter
-                </Button>
-              )}
-            {currentGuess.length < solution.length &&
-              gameState === "Not Started" && (
+              (gameState === "Not Started" ? (
                 <Button
                   variant="contained"
                   onClick={handleStartRow}
@@ -192,22 +188,33 @@ export const Wordle: React.FC<WordleProps> = ({ solution = "APPLE" }) => {
                 >
                   Start Row
                 </Button>
-              )}
-            {currentGuess.length < solution.length &&
-              (gameState === "Predicting" ||
-                gameState === "Letter Countdown") && (
+              ) : gameState === "Predicting" ? (
                 <Button variant="contained" size="large" disabled>
-                  {gameState === "Predicting" && "Predicting..."}
-                  {gameState === "Letter Countdown" &&
-                    `Taking screenshot in ${count}`}
+                  Predicting...
                 </Button>
-              )}
-
-            {currentGuess.length === solution.length && (
-              <Button variant="contained" onClick={validateGuess} size="large">
-                Validate
-              </Button>
-            )}
+              ) : gameState === "Letter Countdown" ? (
+                <Button variant="contained" size="large" disabled>
+                  {`Taking screenshot in ${count}`}
+                </Button>
+              ) : null)}
+            {gameState === "User Check" &&
+              (currentGuess.length < solution.length - 1 ? (
+                <Button
+                  variant="contained"
+                  onClick={handleNextLetter}
+                  size="large"
+                >
+                  Next Letter
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  onClick={() => validateGuess(currentGuess)}
+                  size="large"
+                >
+                  Validate
+                </Button>
+              ))}
           </Box>
         </Grid>
       </Grid>
