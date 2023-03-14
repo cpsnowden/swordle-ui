@@ -1,12 +1,12 @@
 /* TODO Move to Inline */
 
-.timer {
+.quick-fire-timer {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.timer-text {
+.quick-fire-timer-text {
   color: #aaa;
   font-size: 25px;
 }

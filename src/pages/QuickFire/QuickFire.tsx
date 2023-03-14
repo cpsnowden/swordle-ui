@@ -20,8 +20,8 @@ const NoHand = ({ remainingTime }: { remainingTime: number }) => {
   return (
     <div className="timer">
       <div className="text-4xl">🤔</div>
-      <div className="timer-text">Where's your hand...</div>
-      <div className="timer-text">Try again in {remainingTime}</div>
+      <div className="quick-fire-timer-text">Where's your hand...</div>
+      <div className="quick-fire-timer-text">Try again in {remainingTime}</div>
     </div>
   );
 };
@@ -38,10 +38,10 @@ const IncorrectGuess = ({
   return (
     <div className="timer">
       <div className="text-4xl">🙁</div>
-      <div className="timer-text">
+      <div className="quick-fire-timer-text">
         {target} != {prediction}
       </div>
-      <div className="timer-text">Try again in {remainingTime}</div>
+      <div className="quick-fire-timer-text">Try again in {remainingTime}</div>
     </div>
   );
 };
@@ -56,8 +56,10 @@ const CorrectGuess = ({
   return (
     <div className="timer">
       <div className="text-4xl">🥳</div>
-      <div className="timer-text">Correct</div>
-      <div className="timer-text">Next letter in {remainingTime}</div>
+      <div className="quick-fire-timer-text">Correct</div>
+      <div className="quick-fire-timer-text">
+        Next letter in {remainingTime}
+      </div>
     </div>
   );
 };
@@ -71,8 +73,10 @@ const LetterCountdown = ({
 }) => {
   return (
     <div className="timer">
-      <div className="timer-text">Try to sign: {target}</div>
-      <div className="timer-text">Taking photo in {remainingTime}</div>
+      <div className="quick-fire-timer-text">Try to sign: {target}</div>
+      <div className="quick-fire-timer-text">
+        Taking photo in {remainingTime}
+      </div>
     </div>
   );
 };
