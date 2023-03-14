@@ -7,6 +7,6 @@ export const WebcamContainer = forwardRef<Webcam>((_, ref) => (
     audio={false}
     videoConstraints={videoConstraints}
     ref={ref}
-    mirrored
+    // mirrored
   />
 ));

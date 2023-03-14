@@ -120,15 +120,14 @@ export const Wordle: React.FC<WordleProps> = ({
       setGameState("Not Started");
     }, CELL_REVEAL_MS * solution.length);
     setPreviousGuesses((previousGuesses) => [...previousGuesses, newRow]);
-
-    if (previousGuesses.length === numberOfAttempts - 1) {
-      if (newRow.join("") === solution) {
-        setFinishState("WIN");
-      } else {
-        setFinishState("LOSE");
-      }
-    }
     setCurrentGuess([]);
+    if (newRow.join("") === solution) {
+      setFinishState("WIN");
+      return;
+    }
+    if (previousGuesses.length === numberOfAttempts - 1) {
+      setFinishState("LOSE");
+    }
   };
 
   const handleRetryLetter = () => {
