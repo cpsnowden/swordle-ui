@@ -3,10 +3,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import WordleGrid from "pages/Wordle/grid/WordleGrid";
 import { LetterPrediction, predict_letter } from "services/api";
 import Webcam from "react-webcam";
-import { CELL_REVEAL_MS, videoConstraints } from "services/params";
+import { CELL_REVEAL_MS } from "services/params";
 import { useCountdown } from "usehooks-ts";
 import ConfettiExplosion from "react-confetti-explosion";
 import AlertSnackbar from "components/AlertSnackbar";
+import WebcamContainer from "components/WebcamContainer";
 
 type FinishState = "WIN" | "LOSE";
 
@@ -163,11 +164,7 @@ export const Wordle: React.FC<WordleProps> = ({
           />
         </Grid>
         <Grid item xs={6}>
-          <Webcam
-            audio={false}
-            videoConstraints={videoConstraints}
-            ref={videoRef}
-          />
+          <WebcamContainer ref={videoRef} />
         </Grid>
         <Grid item xs={6}>
           <Box textAlign="center">
