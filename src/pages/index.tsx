@@ -14,6 +14,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { Container } from "@mui/material";
+import QuickFire from "./QuickFire";
 
 export type PageInfo = {
   name: string;
@@ -28,6 +29,12 @@ const pages: (PageInfo & RouteObject)[] = [
     element: <SingleSign />,
     icon: <SwipeDown />,
     path: "/single-sign",
+  },
+  {
+    name: "QuickFire",
+    element: <QuickFire />,
+    icon: <VideogameAssetIcon />,
+    path: "/quickfire",
   },
   {
     name: "SWordle",

@@ -108,6 +108,7 @@ export const SingleSign = () => {
               colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
               colorsTime={[1.5, 1, 0.5, 0]}
               onComplete={handleLetterCountdownComplete}
+              size={250}
             >
               {countDownChild}
             </CountdownCircleTimer>
