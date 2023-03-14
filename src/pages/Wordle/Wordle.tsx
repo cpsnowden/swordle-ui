@@ -106,31 +106,28 @@ export const Wordle: React.FC<WordleProps> = ({ solution = "APPLE" }) => {
     }
   }, [videoRef]);
 
-  const validateGuess = (currentGuess: string[]) => {
+  const validateGuess = (row: string[], currentLetter?: string) => {
+    const newRow: string[] = [...row, currentLetter!];
+
     confirmLetter();
     setGameState("Validating");
     setTimeout(() => {
       setGameState("Not Started");
     }, 350 * 5);
-    //Current guess is missing
-    setPreviousGuesses((previousGuesses) => [...previousGuesses, currentGuess]);
+    setPreviousGuesses((previousGuesses) => [...previousGuesses, newRow]);
 
     if (previousGuesses.length === 6 - 1) {
-      checkIfWon();
+      if (newRow.join("") === solution) {
+        setFinishState("WIN");
+      } else {
+        setFinishState("LOSE");
+      }
     }
     setCurrentGuess([]);
   };
 
   const handleRetryLetter = () => {
     startCaptureCountdown();
-  };
-
-  const checkIfWon = () => {
-    if (currentGuess.join("") === solution) {
-      setFinishState("WIN");
-    } else {
-      setFinishState("LOSE");
-    }
   };
 
   useEffect(() => {
@@ -209,7 +206,7 @@ export const Wordle: React.FC<WordleProps> = ({ solution = "APPLE" }) => {
               ) : (
                 <Button
                   variant="contained"
-                  onClick={() => validateGuess(currentGuess)}
+                  onClick={() => validateGuess(currentGuess, currentLetter)}
                   size="large"
                 >
                   Validate
