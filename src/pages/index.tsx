@@ -16,6 +16,7 @@ import {
 } from "react-router-dom";
 import { Container } from "@mui/material";
 import QuickFire from "./QuickFire";
+import AppStatusOverlay from "components/AppStatusOverlay";
 
 export type PageInfo = {
   name: string;
@@ -56,6 +57,7 @@ const Layout = () => {
   const page = pages.findIndex((item) => item.path === match.pathname);
   return (
     <>
+      <AppStatusOverlay />
       <Header />
       <Container className="mt-3 mb-3">
         <Outlet />
