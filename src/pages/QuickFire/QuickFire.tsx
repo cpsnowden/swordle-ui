@@ -225,11 +225,11 @@ export const QuickFire = () => {
           <Box textAlign="center">
             {gameState === "Not Started" ? (
               <Button variant="contained" onClick={handleStart} size="large">
-                Start
+                Start the Clock
               </Button>
             ) : (
               <Button variant="contained" onClick={handleStop} size="large">
-                Stop
+                Stop the Clock
               </Button>
             )}
           </Box>
