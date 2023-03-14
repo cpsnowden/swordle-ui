@@ -1,11 +1,6 @@
 import axios from "axios";
+import { URLS } from "./params";
 
-const BACKEND_API = process.env.REACT_APP_BACKEND_API;
-
-const URLS = {
-  ping: `${BACKEND_API}/`,
-  letterPrediction: `${BACKEND_API}/letter-prediction/frame-sequence`
-}
 
 export type PredictionStatus = "no_hand_detected" | "success";
 export interface LetterPrediction {

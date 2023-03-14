@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { CELL_REVEAL_MS } from "services/params";
 import { CharStatus } from "services/wordle";
 import "./Cell.css";
 
@@ -21,7 +22,7 @@ export const Cell: React.FC<CellProps> = ({
 }) => {
   const isFilled = value && !isCompleted;
   const shouldReveal = isRevealing && isCompleted;
-  const animationDelay = `${position * 350}ms`;
+  const animationDelay = `${position * CELL_REVEAL_MS}ms`;
 
   const classes = classnames(
     // Small Screen

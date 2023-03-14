@@ -3,6 +3,7 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { useApiPing, ApiPingState } from "hooks/useApiPing";
+import { API_POLL_INTERVAL_MS } from "services/params";
 
 export interface HeaderProps {}
 
@@ -18,7 +19,7 @@ export const apiPingIcon = (state: ApiPingState) => {
 };
 
 export const Header: React.FC<HeaderProps> = () => {
-  const { pingState } = useApiPing(1000);
+  const { pingState } = useApiPing(API_POLL_INTERVAL_MS);
   const pingStatusIcon = apiPingIcon(pingState);
   return (
     <AppBar position="static">
