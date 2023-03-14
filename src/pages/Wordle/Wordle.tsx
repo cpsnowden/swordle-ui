@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import WordleGrid from "pages/Wordle/grid/WordleGrid";
 import { LetterPrediction, predict_letter } from "services/api";
 import Webcam from "react-webcam";
-import { videoConstraints } from "services/params";
+import { CELL_REVEAL_MS, videoConstraints } from "services/params";
 import { useCountdown } from "usehooks-ts";
 import ConfettiExplosion from "react-confetti-explosion";
 import AlertSnackbar from "components/AlertSnackbar";
@@ -38,9 +38,13 @@ const GameCompleteDialog: React.FC<GameCompleteDialogProps> = ({
 );
 export interface WordleProps {
   solution?: string;
+  numberOfAttempts?: number;
 }
 
-export const Wordle: React.FC<WordleProps> = ({ solution = "APPLE" }) => {
+export const Wordle: React.FC<WordleProps> = ({
+  solution = "APPLE",
+  numberOfAttempts = 6,
+}) => {
   const [finishState, setFinishState] = useState<FinishState>();
   const [gameState, setGameState] = useState<GameStatus>("Not Started");
   const [count, { startCountdown, resetCountdown }] = useCountdown({
@@ -113,10 +117,10 @@ export const Wordle: React.FC<WordleProps> = ({ solution = "APPLE" }) => {
     setGameState("Validating");
     setTimeout(() => {
       setGameState("Not Started");
-    }, 350 * 5);
+    }, CELL_REVEAL_MS * solution.length);
     setPreviousGuesses((previousGuesses) => [...previousGuesses, newRow]);
 
-    if (previousGuesses.length === 6 - 1) {
+    if (previousGuesses.length === numberOfAttempts - 1) {
       if (newRow.join("") === solution) {
         setFinishState("WIN");
       } else {
@@ -154,7 +158,7 @@ export const Wordle: React.FC<WordleProps> = ({ solution = "APPLE" }) => {
             currentGuess={currentGuess}
             guesses={previousGuesses}
             isRevealing={gameState === "Validating"}
-            numberOfAttempts={6}
+            numberOfAttempts={numberOfAttempts}
             currentLetter={currentLetter}
           />
         </Grid>
