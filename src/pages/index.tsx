@@ -5,6 +5,7 @@ import AppFooter from "layouts/Footer";
 import Header from "layouts/Header";
 import InfoIcon from "@mui/icons-material/Info";
 import SwipeDown from "@mui/icons-material/SwipeDown";
+import FastForwardIcon from "@mui/icons-material/FastForward";
 import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
 import {
   createHashRouter,
@@ -33,7 +34,7 @@ const pages: (PageInfo & RouteObject)[] = [
   {
     name: "QuickFire",
     element: <QuickFire />,
-    icon: <VideogameAssetIcon />,
+    icon: <FastForwardIcon />,
     path: "/quickfire",
   },
   {

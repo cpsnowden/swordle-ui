@@ -1,10 +1,10 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid, Stack } from "@mui/material";
 import AlertSnackbar from "components/AlertSnackbar";
+import WebcamContainer from "components/WebcamContainer";
 import { useRef, useState } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 import Webcam from "react-webcam";
 import { LetterPrediction, predict_letter } from "services/api";
-import { videoConstraints } from "services/params";
 import "./QuickFire.css";
 
 type GameStatus =
@@ -18,11 +18,11 @@ type GameStatus =
 // https://dreamyguy.github.io/react-emojis/
 const NoHand = ({ remainingTime }: { remainingTime: number }) => {
   return (
-    <div className="timer">
+    <Stack spacing={0} alignItems="center">
       <div className="text-4xl">🤔</div>
-      <div className="quick-fire-timer-text">Where's your hand...</div>
-      <div className="quick-fire-timer-text">Try again in {remainingTime}</div>
-    </div>
+      <div className="text-2xl">No hand found...</div>
+      <div className="text-2xl">Try again in {remainingTime}</div>
+    </Stack>
   );
 };
 
@@ -36,31 +36,23 @@ const IncorrectGuess = ({
   remainingTime: number;
 }) => {
   return (
-    <div className="timer">
+    <Stack spacing={0} alignItems="center">
       <div className="text-4xl">🙁</div>
-      <div className="quick-fire-timer-text">
-        {target} != {prediction}
+      <div className="text-2xl">
+        Incorrect {target} != {prediction}
       </div>
-      <div className="quick-fire-timer-text">Try again in {remainingTime}</div>
-    </div>
+      <div className="text-2xl">Try again in {remainingTime}</div>
+    </Stack>
   );
 };
 
-const CorrectGuess = ({
-  prediction,
-  remainingTime,
-}: {
-  prediction: string;
-  remainingTime: number;
-}) => {
+const CorrectGuess = ({ remainingTime }: { remainingTime: number }) => {
   return (
-    <div className="timer">
+    <Stack spacing={0} alignItems="center">
       <div className="text-4xl">🥳</div>
-      <div className="quick-fire-timer-text">Correct</div>
-      <div className="quick-fire-timer-text">
-        Next letter in {remainingTime}
-      </div>
-    </div>
+      <div className="text-2xl">Correct</div>
+      <div className="text-2xl">Next letter in {remainingTime}</div>
+    </Stack>
   );
 };
 
@@ -72,12 +64,10 @@ const LetterCountdown = ({
   remainingTime: number;
 }) => {
   return (
-    <div className="timer">
-      <div className="quick-fire-timer-text">Try to sign: {target}</div>
-      <div className="quick-fire-timer-text">
-        Taking photo in {remainingTime}
-      </div>
-    </div>
+    <Stack spacing={0} alignItems="center">
+      <div className="text-2xl">Try to sign: {target}</div>
+      <div className="text-2xl">Taking photo in {remainingTime}</div>
+    </Stack>
   );
 };
 
@@ -149,10 +139,10 @@ export const QuickFire = () => {
     }
 
     if (prediction.predictionStatus === "success") {
-      const p = prediction.prediction.toUpperCase();
-      setCurrentPrediction(p);
+      const predictedLetter = prediction.prediction.toUpperCase();
+      setCurrentPrediction(predictedLetter);
 
-      if (p === target) {
+      if (predictedLetter === target) {
         setGameState("Show User - Correct");
       } else {
         setGameState("Show User - Incorrect");
@@ -173,9 +163,7 @@ export const QuickFire = () => {
           <LetterCountdown target={target} remainingTime={remainingTime} />
         )
       : gameState === "Show User - Correct" && prediction
-      ? ({ remainingTime }) => (
-          <CorrectGuess prediction={prediction} remainingTime={remainingTime} />
-        )
+      ? ({ remainingTime }) => <CorrectGuess remainingTime={remainingTime} />
       : gameState === "Show User - Incorrect" && prediction
       ? ({ remainingTime }) => (
           <IncorrectGuess
@@ -231,22 +219,17 @@ export const QuickFire = () => {
           </Box>
         </Grid>
         <Grid item xs={6}>
-          <Webcam
-            mirrored={true}
-            audio={false}
-            videoConstraints={videoConstraints}
-            ref={videoRef}
-          />
+          <WebcamContainer ref={videoRef} />
         </Grid>
         <Grid item xs={6}>
           <Box textAlign="center">
             {gameState === "Not Started" ? (
               <Button variant="contained" onClick={handleStart} size="large">
-                Start
+                Start the Clock
               </Button>
             ) : (
               <Button variant="contained" onClick={handleStop} size="large">
-                Stop
+                Stop the Clock
               </Button>
             )}
           </Box>

@@ -1,10 +1,10 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import AlertSnackbar from "components/AlertSnackbar";
+import WebcamContainer from "components/WebcamContainer";
 import { useRef, useState } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 import Webcam from "react-webcam";
 import { LetterPrediction, predict_letter } from "services/api";
-import { videoConstraints } from "services/params";
 import "./SingleSign.css";
 
 type GameStatus =
@@ -78,15 +78,18 @@ export const SingleSign = () => {
     }
   };
 
-  const countDownChild: (props: TimeProps) => React.ReactNode =
-    gameState === "Letter Countdown"
-      ? ({ remainingTime }) => (
-          <div className="timer">
-            <div className="timer-text">Taking photo in</div>
-            <div className="timer-value">{remainingTime}</div>
-          </div>
-        )
-      : () => <PredictionPanel>{prediction}</PredictionPanel>;
+  const countDownChild: (props: TimeProps) => React.ReactNode = ({
+    remainingTime,
+  }) => {
+    return gameState === "Letter Countdown" ? (
+      <div className="timer">
+        <div className="timer-text">Taking photo in</div>
+        <div className="timer-value">{remainingTime}</div>
+      </div>
+    ) : gameState === "User Check" ? (
+      <PredictionPanel>{prediction}</PredictionPanel>
+    ) : null;
+  };
 
   return (
     <div className="video-container">
@@ -115,11 +118,7 @@ export const SingleSign = () => {
           </Box>
         </Grid>
         <Grid item xs={6}>
-          <Webcam
-            audio={false}
-            videoConstraints={videoConstraints}
-            ref={videoRef}
-          />
+          <WebcamContainer ref={videoRef} />
         </Grid>
         <Grid item xs={6}>
           <Box textAlign="center">
