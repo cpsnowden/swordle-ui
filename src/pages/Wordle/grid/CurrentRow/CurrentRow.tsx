@@ -20,7 +20,7 @@ export const CurrentRow: React.FC<CurrentRowProps> = ({
       {guess.map((letter, i) => (
         <Cell key={i} value={letter} />
       ))}
-      <Cell key="current" value={currentLetter} current />
+      {guess.length < solution.length && <Cell key="current" value={currentLetter} current />}
       {emptyCells}
     </div>
   );
