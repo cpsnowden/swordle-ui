@@ -334,7 +334,6 @@ export const QuickFire = () => {
             <GameStatsContainer
               level={state.levelSettings.level}
               stats={state.stats}
-              lettersRemaining={state.remainingTargets.length + 1}
               onLevelClick={() => setSettingOpen(true)}
             />
           </Stack>
