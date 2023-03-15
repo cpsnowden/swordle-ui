@@ -1,4 +1,7 @@
-import { Box, Button, Grid, IconButton, Stack, Tooltip } from "@mui/material";
+import { Box, Fab, Grid, IconButton, Stack, Tooltip } from "@mui/material";
+import StopIcon from "@mui/icons-material/Stop";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+
 import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
 import { useReducer, useRef, useState } from "react";
@@ -46,10 +49,6 @@ const defaultStats: GameStats = {
   nStreaks: 0,
   streak: 0,
 };
-
-// Handle Game Complete
-// Check Score
-// Handle Retry
 
 type GameState = {
   countDownKey: number;
@@ -342,13 +341,15 @@ export const QuickFire = () => {
         <Grid item xs={6}>
           <Box textAlign="center">
             {state.status === "Not Started" ? (
-              <Button variant="contained" onClick={handleStart} size="large">
-                Start the Clock
-              </Button>
+              <Fab variant="extended" color="primary" onClick={handleStart}>
+                <PlayArrowIcon sx={{ mr: 1 }} />
+                Start
+              </Fab>
             ) : (
-              <Button variant="contained" onClick={handleStop} size="large">
+              <Fab variant="extended" color="primary" onClick={handleStop}>
+                <StopIcon sx={{ mr: 1 }} />
                 Stop
-              </Button>
+              </Fab>
             )}
           </Box>
         </Grid>

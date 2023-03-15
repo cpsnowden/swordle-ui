@@ -53,7 +53,7 @@ const About = () => (
     <Container className="mt-3 mb-3" maxWidth="md">
       {/* Try to use a stack */}
       <Grid container spacing={4} alignContent="center" justifyContent="center">
-        <Grid item key={1} xs={12} sm={6} md={4}>
+        <Grid item key={1} xs={12} sm={12} md={4}>
           <GameCard
             name="SingleSign"
             description="Your personal AI interpreter will check what sign you are making"
@@ -61,7 +61,7 @@ const About = () => (
             path="single-sign"
           />
         </Grid>
-        <Grid item key={2} xs={12} sm={6} md={4}>
+        <Grid item key={2} xs={12} sm={12} md={4}>
           <GameCard
             name="QuickFire"
             description="Test your signs against the clock, level up and try INSANE mode"
@@ -69,7 +69,7 @@ const About = () => (
             path="quickfire"
           />
         </Grid>
-        <Grid item key={3} xs={12} sm={6} md={4}>
+        <Grid item key={3} xs={12} sm={12} md={4}>
           <GameCard
             name="SWordle"
             description="The namesake, OG - play the popular word game using your sign skills"
