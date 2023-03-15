@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from "react";
 import { ping } from "services/api";
-import { useEffectOnce } from "./useEffectOne";
+import { useEffectOnce } from "./useEffectOnce";
 
 export type ApiPingState = "waiting" | "ok" | "error";
 

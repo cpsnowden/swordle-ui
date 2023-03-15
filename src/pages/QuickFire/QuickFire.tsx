@@ -116,6 +116,7 @@ const reducer = (prev: GameState, action: GameAction): GameState => {
         countDownKey: prev.countDownKey + 1,
         currentTarget: prev.remainingTargets[0],
         remainingTargets: prev.remainingTargets.slice(1),
+        attemptsAtLetter: 0,
       };
     case "change_level":
       return { ...prev, levelSettings: getLevelSettings(action.level) };
@@ -156,6 +157,7 @@ const reducer = (prev: GameState, action: GameAction): GameState => {
               streak: 0,
             },
             countDownKey: prev.countDownKey + 1,
+            attemptsAtLetter: prev.attemptsAtLetter + 1,
             currentPrediction: attempt,
           };
         }
@@ -180,7 +182,7 @@ export const QuickFire = () => {
     levelSettings: getLevelSettings(Level.Easy),
     countDownKey: 0,
   });
-
+  console.log(state);
   const [isSettingsOpen, setSettingOpen] = useState(false);
   const videoRef = useRef<Webcam | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -204,11 +206,14 @@ export const QuickFire = () => {
   const handleCountdownComplete = () => {
     if (state.status === "Letter Countdown") {
       handleSubmitPrediction();
-    } else if (
-      state.status === "Show User - Incorrect" ||
-      state.status === "Show User - Correct"
-    ) {
+    } else if (state.status === "Show User - Correct") {
       dispatch({ type: "go_to_next_letter" });
+    } else if (state.status === "Show User - Incorrect") {
+      if (state.attemptsAtLetter <= state.levelSettings.retriesPerLetter) {
+        dispatch({ type: "retry_letter" });
+      } else {
+        dispatch({ type: "go_to_next_letter" });
+      }
     } else if (state.status === "Show User - No Hand") {
       dispatch({ type: "retry_letter" });
     }
@@ -330,6 +335,8 @@ export const QuickFire = () => {
               <GameStatsContainer
                 level={state.levelSettings.level}
                 stats={state.stats}
+                lettersRemaining={state.remainingTargets.length + 1}
+                onLevelClick={() => setSettingOpen(true)}
               />
             </Stack>
           </Grid>
