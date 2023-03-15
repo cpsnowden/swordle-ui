@@ -1,6 +1,6 @@
 import { Box, Button, Dialog, DialogTitle, Grid } from "@mui/material";
 import { useCallback, useEffect, useRef, useState } from "react";
-import WordleGrid from "pages/Wordle/grid/WordleGrid";
+import WordleGrid from "pages/Wordle/components/WordleGrid";
 import { LetterPrediction, predict_letter } from "services/api";
 import Webcam from "react-webcam";
 import { CELL_REVEAL_MS } from "services/params";
