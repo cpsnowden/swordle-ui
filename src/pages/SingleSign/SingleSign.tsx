@@ -1,6 +1,8 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
+import { Container } from "@mui/system";
 import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
+import Header from "layouts/Header";
 import { useRef, useState } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 import Webcam from "react-webcam";
@@ -92,52 +94,55 @@ export const SingleSign = () => {
   };
 
   return (
-    <div className="video-container">
-      <AlertSnackbar error={error} onClose={() => setError(null)} />
-      <Grid
-        container
-        alignItems="center"
-        direction="row"
-        justifyContent="center"
-        columns={{ xs: 6, md: 12 }}
-        spacing={2}
-      >
-        <Grid item xs={6}>
-          <Box display="flex" justifyContent="center" alignItems="center">
-            <CountdownCircleTimer
-              key={countDownKey}
-              isPlaying={gameState === "Letter Countdown"}
-              duration={1.5}
-              colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-              colorsTime={[1.5, 1, 0.5, 0]}
-              onComplete={handleLetterCountdownComplete}
-              size={250}
-            >
-              {countDownChild}
-            </CountdownCircleTimer>
-          </Box>
+    <>
+      <Header />
+      <Container className="mt-3 mb-3">
+        <AlertSnackbar error={error} onClose={() => setError(null)} />
+        <Grid
+          container
+          alignItems="center"
+          direction="row"
+          justifyContent="center"
+          columns={{ xs: 6, md: 12 }}
+          spacing={2}
+        >
+          <Grid item xs={6}>
+            <Box display="flex" justifyContent="center" alignItems="center">
+              <CountdownCircleTimer
+                key={countDownKey}
+                isPlaying={gameState === "Letter Countdown"}
+                duration={1.5}
+                colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+                colorsTime={[1.5, 1, 0.5, 0]}
+                onComplete={handleLetterCountdownComplete}
+                size={250}
+              >
+                {countDownChild}
+              </CountdownCircleTimer>
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <WebcamContainer ref={videoRef} />
+          </Grid>
+          <Grid item xs={6}>
+            <Box textAlign="center">
+              <Button
+                variant="contained"
+                onClick={startCaptureCountdown}
+                disabled={
+                  gameState === "Predicting" || gameState === "Letter Countdown"
+                }
+                size="large"
+              >
+                {gameState === "Not Started" && "Start"}
+                {gameState === "User Check" && "Next Letter"}
+                {gameState === "Predicting" && "Predicting..."}
+                {gameState === "Letter Countdown" && `Wait for it...`}
+              </Button>
+            </Box>
+          </Grid>
         </Grid>
-        <Grid item xs={6}>
-          <WebcamContainer ref={videoRef} />
-        </Grid>
-        <Grid item xs={6}>
-          <Box textAlign="center">
-            <Button
-              variant="contained"
-              onClick={startCaptureCountdown}
-              disabled={
-                gameState === "Predicting" || gameState === "Letter Countdown"
-              }
-              size="large"
-            >
-              {gameState === "Not Started" && "Start"}
-              {gameState === "User Check" && "Next Letter"}
-              {gameState === "Predicting" && "Predicting..."}
-              {gameState === "Letter Countdown" && `Wait for it...`}
-            </Button>
-          </Box>
-        </Grid>
-      </Grid>
-    </div>
+      </Container>
+    </>
   );
 };
