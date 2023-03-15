@@ -12,7 +12,6 @@ export const WebcamContainer = forwardRef<Webcam>((_, ref) => {
       }}
       videoConstraints={{
         width: width,
-        height: (width * 9) / 16,
         facingMode: "user",
       }}
       width={width}
