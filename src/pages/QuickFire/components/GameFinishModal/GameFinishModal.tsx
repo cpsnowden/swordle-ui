@@ -21,7 +21,7 @@ export const GameFinishModal: React.FC<GameFinishModalProps> = ({
   gameStats,
 }) => (
   <Dialog open={isOpen}>
-    <DialogTitle>Your game stats...</DialogTitle>
+    <DialogTitle>Great job, here are your game stats...</DialogTitle>
     <DialogContent>
       <DialogContentText>
         Score: {gameStats.score}

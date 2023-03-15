@@ -67,6 +67,7 @@ type GameState = {
 
 type GameAction =
   | { type: "go_to_next_letter" }
+  | { type: "retry_letter" }
   | { type: "submit_attempt"; attempt: string }
   | { type: "start_game" }
   | { type: "stop_game" }
@@ -101,6 +102,12 @@ const reducer = (prev: GameState, action: GameAction): GameState => {
         // Randomise characters here
         currentTarget: characters[0],
         remainingTargets: characters.slice(1),
+      };
+    case "retry_letter":
+      return {
+        ...prev,
+        status: "Letter Countdown",
+        countDownKey: prev.countDownKey + 1,
       };
     case "go_to_next_letter":
       return {
@@ -199,10 +206,11 @@ export const QuickFire = () => {
       handleSubmitPrediction();
     } else if (
       state.status === "Show User - Incorrect" ||
-      state.status === "Show User - Correct" ||
-      state.status === "Show User - No Hand"
+      state.status === "Show User - Correct"
     ) {
       dispatch({ type: "go_to_next_letter" });
+    } else if (state.status === "Show User - No Hand") {
+      dispatch({ type: "retry_letter" });
     }
   };
 
