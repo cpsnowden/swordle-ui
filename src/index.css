@@ -1,13 +1,14 @@
-@tailwind base;
+/* @tailwind base; */
+/* This is breaking video */
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+/* @layer base {
   img, video {
     max-width: unset;
     height: unset;
   }
-}
+} */
 
 body {
   margin: 0;
