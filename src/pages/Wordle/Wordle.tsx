@@ -1,4 +1,12 @@
-import { Box, Button, Dialog, DialogTitle, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  IconButton,
+  DialogTitle,
+  Grid,
+  Tooltip,
+} from "@mui/material";
 import { useCallback, useEffect, useRef, useState } from "react";
 import WordleGrid from "pages/Wordle/components/WordleGrid";
 import { LetterPrediction, predict_letter } from "services/api";
@@ -9,6 +17,8 @@ import ConfettiExplosion from "react-confetti-explosion";
 import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
 import BasePage from "layouts/BasePage";
+import GameRulesModal from "./components/GameRulesModal";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 type FinishState = "WIN" | "LOSE";
 
@@ -47,6 +57,7 @@ export const Wordle: React.FC<WordleProps> = ({
   solution = "APPLE",
   numberOfAttempts = 6,
 }) => {
+  const [isSettingsOpen, setSettingOpen] = useState(false);
   const [finishState, setFinishState] = useState<FinishState>();
   const [gameState, setGameState] = useState<GameStatus>("Not Started");
   const [count, { startCountdown, resetCountdown }] = useCountdown({
@@ -141,10 +152,22 @@ export const Wordle: React.FC<WordleProps> = ({
     }
   }, [count, gameState, submitPrediction]);
 
+  const ruleButton = (
+    <Tooltip title="Open Rules">
+      <IconButton onClick={() => setSettingOpen(true)}>
+        <InfoOutlinedIcon />
+      </IconButton>
+    </Tooltip>
+  );
+
   return (
-    <BasePage>
+    <BasePage rightHeaderPanel={ruleButton}>
       <AlertSnackbar error={error} onClose={() => setError(null)} />
       <GameCompleteDialog finishState={finishState} solution={solution} />
+      <GameRulesModal
+        isOpen={isSettingsOpen}
+        onClose={() => setSettingOpen(false)}
+      />
       <Grid
         container
         alignItems="center"
