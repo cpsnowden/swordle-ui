@@ -1,4 +1,12 @@
-import { Box, Button, Container, Grid, IconButton, Stack } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  IconButton,
+  Stack,
+  Tooltip,
+} from "@mui/material";
 import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
 import Header from "layouts/Header";
@@ -265,15 +273,23 @@ export const QuickFire = () => {
       ? ({ remainingTime }) => <NoHand remainingTime={remainingTime} />
       : ({ remainingTime }) => null;
 
-  const settings = (
-    <IconButton onClick={() => setSettingOpen(true)}>
-      <InfoOutlinedIcon />
-    </IconButton>
+  {
+    /* <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                    </IconButton> */
+  }
+
+  const ruleButton = (
+    <Tooltip title="Open Rules">
+      <IconButton onClick={() => setSettingOpen(true)}>
+        <InfoOutlinedIcon />
+      </IconButton>
+    </Tooltip>
   );
 
   return (
     <>
-      <Header rightPanel={settings} />
+      <Header rightPanel={ruleButton} />
       <Container className="mt-3 mb-3">
         <QuickFireSettings
           isOpen={isSettingsOpen}
