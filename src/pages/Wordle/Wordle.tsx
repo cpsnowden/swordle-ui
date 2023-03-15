@@ -1,4 +1,11 @@
-import { Box, Button, Dialog, DialogTitle, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Dialog,
+  DialogTitle,
+  Grid,
+} from "@mui/material";
 import { useCallback, useEffect, useRef, useState } from "react";
 import WordleGrid from "pages/Wordle/grid/WordleGrid";
 import { LetterPrediction, predict_letter } from "services/api";
@@ -8,6 +15,7 @@ import { useCountdown } from "usehooks-ts";
 import ConfettiExplosion from "react-confetti-explosion";
 import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
+import Header from "layouts/Header";
 
 type FinishState = "WIN" | "LOSE";
 
@@ -142,79 +150,82 @@ export const Wordle: React.FC<WordleProps> = ({
 
   return (
     <>
-      <AlertSnackbar error={error} onClose={() => setError(null)} />
-      <GameCompleteDialog finishState={finishState} solution={solution} />
-      <Grid
-        container
-        alignItems="center"
-        direction="row"
-        justifyContent="center"
-        columns={{ xs: 6, md: 12 }}
-        spacing={2}
-      >
-        <Grid item xs={6}>
-          <WordleGrid
-            solution={solution}
-            currentGuess={currentGuess}
-            guesses={previousGuesses}
-            isRevealing={gameState === "Validating"}
-            numberOfAttempts={numberOfAttempts}
-            currentLetter={currentLetter}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <WebcamContainer ref={videoRef} />
-        </Grid>
-        <Grid item xs={6}>
-          <Box textAlign="center">
-            {(gameState === "User Check" || gameState === "Retry") && (
-              <Button
-                variant="contained"
-                onClick={handleRetryLetter}
-                size="large"
-              >
-                Retry
-              </Button>
-            )}
-            {currentGuess.length < solution.length &&
-              (gameState === "Not Started" ? (
+      <Header />
+      <Container className="mt-3 mb-3">
+        <AlertSnackbar error={error} onClose={() => setError(null)} />
+        <GameCompleteDialog finishState={finishState} solution={solution} />
+        <Grid
+          container
+          alignItems="center"
+          direction="row"
+          justifyContent="center"
+          columns={{ xs: 6, md: 12 }}
+          spacing={2}
+        >
+          <Grid item xs={6}>
+            <WordleGrid
+              solution={solution}
+              currentGuess={currentGuess}
+              guesses={previousGuesses}
+              isRevealing={gameState === "Validating"}
+              numberOfAttempts={numberOfAttempts}
+              currentLetter={currentLetter}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <WebcamContainer ref={videoRef} />
+          </Grid>
+          <Grid item xs={6}>
+            <Box textAlign="center">
+              {(gameState === "User Check" || gameState === "Retry") && (
                 <Button
                   variant="contained"
-                  onClick={handleStartRow}
+                  onClick={handleRetryLetter}
                   size="large"
                 >
-                  Start Row
+                  Retry
                 </Button>
-              ) : gameState === "Predicting" ? (
-                <Button variant="contained" size="large" disabled>
-                  Predicting...
-                </Button>
-              ) : gameState === "Letter Countdown" ? (
-                <Button variant="contained" size="large" disabled>
-                  {`Taking screenshot in ${count}`}
-                </Button>
-              ) : null)}
-            {gameState === "User Check" &&
-              (currentGuess.length < solution.length - 1 ? (
-                <Button
-                  variant="contained"
-                  onClick={handleNextLetter}
-                  size="large"
-                >
-                  Next Letter
-                </Button>
-              ) : (
-                <Button
-                  variant="contained"
-                  onClick={() => validateGuess(currentGuess, currentLetter)}
-                  size="large"
-                >
-                  Validate
-                </Button>
-              ))}
-          </Box>
+              )}
+              {currentGuess.length < solution.length &&
+                (gameState === "Not Started" ? (
+                  <Button
+                    variant="contained"
+                    onClick={handleStartRow}
+                    size="large"
+                  >
+                    Start Row
+                  </Button>
+                ) : gameState === "Predicting" ? (
+                  <Button variant="contained" size="large" disabled>
+                    Predicting...
+                  </Button>
+                ) : gameState === "Letter Countdown" ? (
+                  <Button variant="contained" size="large" disabled>
+                    {`Taking screenshot in ${count}`}
+                  </Button>
+                ) : null)}
+              {gameState === "User Check" &&
+                (currentGuess.length < solution.length - 1 ? (
+                  <Button
+                    variant="contained"
+                    onClick={handleNextLetter}
+                    size="large"
+                  >
+                    Next Letter
+                  </Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    onClick={() => validateGuess(currentGuess, currentLetter)}
+                    size="large"
+                  >
+                    Validate
+                  </Button>
+                ))}
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </>
   );
 };

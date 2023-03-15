@@ -1,8 +1,10 @@
 import { AppBar, Container, Toolbar, Typography } from "@mui/material";
 
-export interface HeaderProps {}
+export interface HeaderProps {
+  rightPanel?: React.ReactNode;
+}
 
-export const Header: React.FC<HeaderProps> = () => {
+export const Header: React.FC<HeaderProps> = ({ rightPanel }) => {
   return (
     <AppBar position="static">
       <Container>
@@ -22,6 +24,7 @@ export const Header: React.FC<HeaderProps> = () => {
           >
             SWordle
           </Typography>
+          {rightPanel}
         </Toolbar>
       </Container>
     </AppBar>

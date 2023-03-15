@@ -2,7 +2,6 @@ import About from "pages/About";
 import Wordle from "pages/Wordle";
 import SingleSign from "pages/SingleSign";
 import AppFooter from "layouts/Footer";
-import Header from "layouts/Header";
 import InfoIcon from "@mui/icons-material/Info";
 import SwipeDown from "@mui/icons-material/SwipeDown";
 import FastForwardIcon from "@mui/icons-material/FastForward";
@@ -14,7 +13,6 @@ import {
   useLocation,
   Navigate,
 } from "react-router-dom";
-import { Container } from "@mui/material";
 import QuickFire from "./QuickFire";
 import AppStatusOverlay from "components/AppStatusOverlay";
 
@@ -26,6 +24,12 @@ export type PageInfo = {
 };
 
 const pages: (PageInfo & RouteObject)[] = [
+  {
+    name: "About",
+    element: <About />,
+    icon: <InfoIcon />,
+    path: "/",
+  },
   {
     name: "SingleSign",
     element: <SingleSign />,
@@ -44,12 +48,6 @@ const pages: (PageInfo & RouteObject)[] = [
     icon: <VideogameAssetIcon />,
     path: "/swordle",
   },
-  {
-    name: "About",
-    element: <About />,
-    icon: <InfoIcon />,
-    path: "/",
-  },
 ];
 
 const Layout = () => {
@@ -58,10 +56,7 @@ const Layout = () => {
   return (
     <>
       <AppStatusOverlay />
-      <Header />
-      <Container className="mt-3 mb-3">
-        <Outlet />
-      </Container>
+      <Outlet />
       <AppFooter pages={pages} selectedPageIndex={page} />
     </>
   );
