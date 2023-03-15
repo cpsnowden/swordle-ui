@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import Webcam from "react-webcam";
-import { videoConstraints } from "services/params";
+// import { videoConstraints } from "services/params";
 
 export const WebcamContainer = forwardRef<Webcam>((_, ref) => {
   const width = 200;
