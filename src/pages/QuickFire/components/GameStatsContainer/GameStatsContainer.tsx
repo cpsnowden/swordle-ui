@@ -15,7 +15,7 @@ export const GameStatsContainer: React.FC<GameStatsContainerProps> = ({
       <Chip label={`${Level[level]} mode`} variant="outlined" />
       <Chip label={`Score: ${stats.score}`} variant="outlined" />
       <Chip label={`Current Streak: ${stats.streak}`} variant="outlined" />
-      <Chip label={`Streaks: ${stats.nStreaks}`} variant="outlined" />
+      {/* <Chip label={`Streaks: ${stats.nStreaks}`} variant="outlined" /> */}
     </Stack>
   );
 };

@@ -45,7 +45,7 @@ export const QuickFireSettings = ({
 }: QuickFireSettingsProps) => {
   return (
     <Dialog open={isOpen} onClose={handleClose}>
-      <DialogTitle>Settings</DialogTitle>
+      <DialogTitle>Rules</DialogTitle>
       <DialogContent>
         <DialogContentText>
           You have a fixed amount of time to sign a letter at random. For each

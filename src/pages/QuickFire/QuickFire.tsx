@@ -10,7 +10,11 @@ import QuickFireSettings from "./components/QuickFireSettings";
 import { GameStats, getLevelSettings, Level } from "./types";
 import GameStatsContainer from "./components/GameStatsContainer";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import { CorrectGuess, IncorrectGuess, NoHand } from "./components/GuessFeedback";
+import {
+  CorrectGuess,
+  IncorrectGuess,
+  NoHand,
+} from "./components/GuessFeedback";
 
 type GameStatus =
   | "Not Started"
@@ -87,7 +91,7 @@ export const QuickFire = () => {
       if (gameState === "Show User - Correct") {
         setTarget(characters.charAt(Math.random() * characters.length));
       }
-      // retries
+      // handle retries
 
       handleShowUserComplete();
     }
@@ -123,6 +127,7 @@ export const QuickFire = () => {
 
       if (predictedLetter === target) {
         setGameState("Show User - Correct");
+        // handle streak
         setStats((prevStats) => ({
           ...prevStats,
           score: prevStats.score + 10,
