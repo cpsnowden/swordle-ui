@@ -25,7 +25,7 @@ export const GameFinishModal: React.FC<GameFinishModalProps> = ({
     <DialogContent>
       <DialogContentText>
         Score: {gameStats.score}
-        Streaks: {gameStats.streak}
+        Streaks: {gameStats.nStreaks}
       </DialogContentText>
     </DialogContent>
     <DialogActions>

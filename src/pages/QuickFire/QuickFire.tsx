@@ -110,6 +110,12 @@ const reducer = (prev: GameState, action: GameAction): GameState => {
         countDownKey: prev.countDownKey + 1,
       };
     case "go_to_next_letter":
+      if (prev.remainingTargets.length === 0) {
+        return {
+          ...prev,
+          status: "Complete",
+        };
+      }
       return {
         ...prev,
         status: "Letter Countdown",
@@ -130,43 +136,36 @@ const reducer = (prev: GameState, action: GameAction): GameState => {
           countDownKey: prev.countDownKey + 1,
         };
       }
-      if (prev.remainingTargets.length > 1) {
-        if (attempt === prev.currentTarget) {
-          const stats: GameStats = {
-            ...prev.stats,
-            score: prev.stats.score + 10,
-            streak: prev.stats.streak + 1,
-          };
-          if (prev.stats.streak === 5) {
-            stats.streak = 0;
-            stats.nStreaks += 1;
-          }
-          return {
-            ...prev,
-            stats,
-            status: "Show User - Correct",
-            countDownKey: prev.countDownKey + 1,
-            currentPrediction: attempt,
-          };
-        } else {
-          return {
-            ...prev,
-            status: "Show User - Incorrect",
-            stats: {
-              ...prev.stats,
-              streak: 0,
-            },
-            countDownKey: prev.countDownKey + 1,
-            attemptsAtLetter: prev.attemptsAtLetter + 1,
-            currentPrediction: attempt,
-          };
+      if (attempt === prev.currentTarget) {
+        const stats: GameStats = {
+          ...prev.stats,
+          score: prev.stats.score + 10,
+          streak: prev.stats.streak + 1,
+        };
+        if (prev.stats.streak === 5) {
+          stats.streak = 0;
+          stats.nStreaks += 1;
         }
+        return {
+          ...prev,
+          stats,
+          status: "Show User - Correct",
+          countDownKey: prev.countDownKey + 1,
+          currentPrediction: attempt,
+        };
+      } else {
+        return {
+          ...prev,
+          status: "Show User - Incorrect",
+          stats: {
+            ...prev.stats,
+            streak: 0,
+          },
+          countDownKey: prev.countDownKey + 1,
+          attemptsAtLetter: prev.attemptsAtLetter + 1,
+          currentPrediction: attempt,
+        };
       }
-      return {
-        ...prev,
-        status: "Complete",
-        remainingTargets: "",
-      };
   }
   return prev;
 };
