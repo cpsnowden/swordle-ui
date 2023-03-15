@@ -1,8 +1,8 @@
 import { DialogContentText, List, ListItemText, Slider } from "@mui/material";
-import BaseModal from "components/BaseModal";
+import BaseDialog from "components/BaseDialog";
 import { Level } from "pages/QuickFire/types";
 
-interface GameRulesModalProps {
+interface GameRulesDialogProps {
   isOpen: boolean;
   onClose: () => void;
   level: Level;
@@ -29,14 +29,14 @@ const marks = [
   },
 ];
 
-export const GameRulesModal = ({
+export const GameRulesDialog = ({
   isOpen,
   onClose: handleClose,
   level,
   onLevelChange: handleLevel,
-}: GameRulesModalProps) => {
+}: GameRulesDialogProps) => {
   return (
-    <BaseModal
+    <BaseDialog
       isOpen={isOpen}
       onClose={handleClose}
       title="Rules"
@@ -76,6 +76,6 @@ export const GameRulesModal = ({
           handleLevel(value as Level);
         }}
       />
-    </BaseModal>
+    </BaseDialog>
   );
 };

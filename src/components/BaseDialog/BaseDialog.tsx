@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 
-export interface BaseModalProps {
+export interface BaseDialogProps {
   title: string;
   isOpen: boolean;
   closeText: string;
@@ -14,7 +14,7 @@ export interface BaseModalProps {
   children: React.ReactNode;
 }
 
-export const BaseModal: React.FC<BaseModalProps> = ({
+export const BaseDialog: React.FC<BaseDialogProps> = ({
   title,
   isOpen,
   closeText,

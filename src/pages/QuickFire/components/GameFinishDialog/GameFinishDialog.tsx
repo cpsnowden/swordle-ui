@@ -1,20 +1,20 @@
 import { DialogContentText } from "@mui/material";
-import BaseModal from "components/BaseModal";
+import BaseDialog from "components/BaseDialog";
 import { GameStats, Level } from "pages/QuickFire/types";
 
-export interface GameFinishModalProps {
+export interface GameFinishDialogProps {
   isOpen: boolean;
   gameStats: GameStats;
   level: Level;
   onNextGame: () => void;
 }
 
-export const GameFinishModal: React.FC<GameFinishModalProps> = ({
+export const GameFinishDialog: React.FC<GameFinishDialogProps> = ({
   isOpen,
   onNextGame,
   gameStats,
 }) => (
-  <BaseModal
+  <BaseDialog
     isOpen={isOpen}
     title="Great job, here are your game stats..."
     closeText="Play again"
@@ -24,5 +24,5 @@ export const GameFinishModal: React.FC<GameFinishModalProps> = ({
       Score: {gameStats.score}
       Streaks: {gameStats.nStreaks}
     </DialogContentText>
-  </BaseModal>
+  </BaseDialog>
 );

@@ -1,18 +1,18 @@
-import BaseModal from "components/BaseModal";
+import BaseDialog from "components/BaseDialog";
 import { FC } from "react";
 import Cell from "../Cell";
 
-interface GameRulesModalProps {
+interface GameRulesDialogProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export const GameRulesModal: FC<GameRulesModalProps> = ({
+export const GameRulesDialog: FC<GameRulesDialogProps> = ({
   isOpen,
   onClose,
-}: GameRulesModalProps) => {
+}: GameRulesDialogProps) => {
   return (
-    <BaseModal
+    <BaseDialog
       title="How to play"
       isOpen={isOpen}
       onClose={onClose}
@@ -55,6 +55,6 @@ export const GameRulesModal: FC<GameRulesModalProps> = ({
       <p className="text-sm text-gray-500 text-gray-300">
         The letter U is not in the word in any spot.
       </p>
-    </BaseModal>
+    </BaseDialog>
   );
 };

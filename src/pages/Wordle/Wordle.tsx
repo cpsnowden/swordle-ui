@@ -17,7 +17,7 @@ import ConfettiExplosion from "react-confetti-explosion";
 import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
 import BasePage from "layouts/BasePage";
-import GameRulesModal from "./components/GameRulesModal";
+import GameRulesDialog from "./components/GameRulesDialog";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 type FinishState = "WIN" | "LOSE";
@@ -164,7 +164,7 @@ export const Wordle: React.FC<WordleProps> = ({
     <BasePage rightHeaderPanel={ruleButton}>
       <AlertSnackbar error={error} onClose={() => setError(null)} />
       <GameCompleteDialog finishState={finishState} solution={solution} />
-      <GameRulesModal
+      <GameRulesDialog
         isOpen={isSettingsOpen}
         onClose={() => setSettingOpen(false)}
       />
