@@ -2,12 +2,12 @@ import { Box, Button, Container, Grid, IconButton, Stack } from "@mui/material";
 import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
 import Header from "layouts/Header";
-import { useRef, useState } from "react";
+import { useReducer, useRef, useState } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 import Webcam from "react-webcam";
 import { LetterPrediction, predict_letter } from "services/api";
 import QuickFireSettings from "./components/QuickFireSettings";
-import { GameStats, getLevelSettings, Level } from "./types";
+import { GameStats, getLevelSettings, Level, LevelSettings } from "./types";
 import GameStatsContainer from "./components/GameStatsContainer";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import {
@@ -15,8 +15,10 @@ import {
   IncorrectGuess,
   NoHand,
 } from "./components/GuessFeedback";
+import GameFinishModal from "./components/GameFinishModal";
 
 type GameStatus =
+  | "Complete"
   | "Not Started"
   | "Letter Countdown"
   | "Predicting"
@@ -39,8 +41,6 @@ const LetterCountdown = ({
   );
 };
 
-const characters = "ABCKLRVWXY";
-
 const initialScore: GameStats = {
   score: 0,
   nStreaks: 0,
@@ -51,58 +51,159 @@ const initialScore: GameStats = {
 // Check Score
 // Handle Retry
 
+type GameState = {
+  countDownKey: number;
+
+  status: GameStatus;
+  stats: GameStats;
+
+  currentPrediction: string;
+  currentTarget: string;
+  remainingTargets: string;
+
+  attemptsAtLetter: number;
+  levelSettings: LevelSettings;
+};
+
+type GameAction =
+  | { type: "go_to_next_letter" }
+  | { type: "submit_attempt"; attempt: string }
+  | { type: "start_game" }
+  | { type: "stop_game" }
+  | { type: "change_level"; level: Level };
+
+// const characters = "ABCKLRVWXY";
+const characters = "ABCKL";
+
+const nextCharacterList = (): string => {
+  return characters
+    .split("")
+    .sort(() => 0.5 - Math.random())
+    .join("");
+};
+
+const reducer = (prev: GameState, action: GameAction): GameState => {
+  console.log("Action", action);
+  switch (action.type) {
+    case "stop_game":
+      return {
+        ...prev,
+        status: "Not Started",
+        remainingTargets: "",
+        countDownKey: prev.countDownKey + 1,
+      };
+    case "start_game":
+      const characters = nextCharacterList();
+      return {
+        ...prev,
+        status: "Letter Countdown",
+        countDownKey: prev.countDownKey + 1,
+        // Randomise characters here
+        currentTarget: characters[0],
+        remainingTargets: characters.slice(1),
+      };
+    case "go_to_next_letter":
+      return {
+        ...prev,
+        status: "Letter Countdown",
+        countDownKey: prev.countDownKey + 1,
+        currentTarget: prev.remainingTargets[0],
+        remainingTargets: prev.remainingTargets.slice(1),
+      };
+    case "change_level":
+      return { ...prev, levelSettings: getLevelSettings(action.level) };
+    case "submit_attempt":
+      // You've finished
+      const attempt = action.attempt;
+      if (attempt === "NO_HAND") {
+        return {
+          ...prev,
+          status: "Show User - No Hand",
+          countDownKey: prev.countDownKey + 1,
+        };
+      }
+      if (prev.remainingTargets.length > 1) {
+        if (attempt === prev.currentTarget) {
+          const stats: GameStats = {
+            ...prev.stats,
+            score: prev.stats.score + 10,
+            streak: prev.stats.streak + 1,
+          };
+          if (prev.stats.streak === 5) {
+            stats.streak = 0;
+            stats.nStreaks += 1;
+          }
+          return {
+            ...prev,
+            stats,
+            status: "Show User - Correct",
+            countDownKey: prev.countDownKey + 1,
+            currentPrediction: attempt,
+          };
+        } else {
+          return {
+            ...prev,
+            status: "Show User - Incorrect",
+            stats: {
+              ...prev.stats,
+              streak: 0,
+            },
+            countDownKey: prev.countDownKey + 1,
+            currentPrediction: attempt,
+          };
+        }
+      }
+      return {
+        ...prev,
+        status: "Complete",
+        remainingTargets: "",
+      };
+  }
+  return prev;
+};
+
 export const QuickFire = () => {
+  const [state, dispatch] = useReducer(reducer, {
+    status: "Not Started",
+    stats: initialScore,
+    currentPrediction: "",
+    currentTarget: "",
+    remainingTargets: "",
+    attemptsAtLetter: 0,
+    levelSettings: getLevelSettings(Level.Easy),
+    countDownKey: 0,
+  });
+
   const [isSettingsOpen, setSettingOpen] = useState(false);
-
-  const [level, setLevel] = useState(Level.Easy);
-
-  const [gameState, setGameState] = useState<GameStatus>("Not Started");
-
-  const [target, setTarget] = useState("A");
-  const [prediction, setCurrentPrediction] = useState<string | null>();
-
-  const levelSettings = getLevelSettings(level);
-
-  const [stats, setStats] = useState<GameStats>(initialScore);
-
-  const [countDownKey, setCountdownKey] = useState(0);
-  const resetCountDown = () => setCountdownKey((prev) => prev + 1);
-
   const videoRef = useRef<Webcam | null>(null);
-
   const [error, setError] = useState<string | null>(null);
 
   const handleStart = () => {
-    setGameState("Letter Countdown");
-    resetCountDown();
+    dispatch({ type: "start_game" });
   };
 
   const handleStop = () => {
-    setGameState("Not Started");
-    resetCountDown();
+    dispatch({ type: "stop_game" });
+  };
+
+  const handleSetLevel = (level: Level) => {
+    dispatch({ type: "change_level", level });
+  };
+
+  const handleNextGame = () => {
+    dispatch({ type: "start_game" });
   };
 
   const handleCountdownComplete = () => {
-    if (gameState === "Letter Countdown") {
+    if (state.status === "Letter Countdown") {
       handleSubmitPrediction();
     } else if (
-      gameState === "Show User - Incorrect" ||
-      gameState === "Show User - Correct" ||
-      gameState === "Show User - No Hand"
+      state.status === "Show User - Incorrect" ||
+      state.status === "Show User - Correct" ||
+      state.status === "Show User - No Hand"
     ) {
-      if (gameState === "Show User - Correct") {
-        setTarget(characters.charAt(Math.random() * characters.length));
-      }
-      // handle retries
-
-      handleShowUserComplete();
+      dispatch({ type: "go_to_next_letter" });
     }
-  };
-
-  const handleShowUserComplete = () => {
-    // When show user is complete we restart the countdown
-    setGameState("Letter Countdown");
-    resetCountDown();
   };
 
   const handleSubmitPrediction = async () => {
@@ -112,66 +213,43 @@ export const QuickFire = () => {
       return;
     }
 
-    setGameState("Predicting");
     let prediction: LetterPrediction;
     try {
       prediction = await predict_letter(img);
     } catch (predictionError: any) {
       setError("Something has gone wrong, try again...");
-      setCurrentPrediction(null);
-      setGameState("Not Started");
       return;
     }
 
     if (prediction.predictionStatus === "success") {
       const predictedLetter = prediction.prediction.toUpperCase();
-      setCurrentPrediction(predictedLetter);
-
-      if (predictedLetter === target) {
-        setGameState("Show User - Correct");
-        // handle streak
-        setStats((prevStats) => ({
-          ...prevStats,
-          score: prevStats.score + 10,
-          nStreaks:
-            prevStats.streak === 4
-              ? prevStats.nStreaks + 1
-              : prevStats.nStreaks,
-          streak: prevStats.streak === 4 ? 0 : prevStats.streak + 1,
-        }));
-      } else {
-        setGameState("Show User - Incorrect");
-        setStats((prevStats) => ({
-          ...prevStats,
-          streak: 0,
-        }));
-      }
-      resetCountDown();
+      dispatch({ type: "submit_attempt", attempt: predictedLetter });
     } else if (prediction.predictionStatus === "no_hand_detected") {
-      setGameState("Show User - No Hand");
-      resetCountDown();
-      setCurrentPrediction(null);
+      dispatch({ type: "submit_attempt", attempt: "NO_HAND" });
     } else {
       setError("Something has gone wrong, try again...");
     }
   };
 
   const countDownChild: (props: TimeProps) => React.ReactNode =
-    gameState === "Letter Countdown"
+    state.status === "Letter Countdown"
       ? ({ remainingTime }) => (
-          <LetterCountdown target={target} remainingTime={remainingTime} />
-        )
-      : gameState === "Show User - Correct" && prediction
-      ? ({ remainingTime }) => <CorrectGuess remainingTime={remainingTime} />
-      : gameState === "Show User - Incorrect" && prediction
-      ? ({ remainingTime }) => (
-          <IncorrectGuess
-            target={target}
-            prediction={prediction}
+          <LetterCountdown
+            target={state.currentTarget}
             remainingTime={remainingTime}
           />
         )
-      : gameState === "Show User - No Hand"
+      : state.status === "Show User - Correct" && state.currentPrediction
+      ? ({ remainingTime }) => <CorrectGuess remainingTime={remainingTime} />
+      : state.status === "Show User - Incorrect" && state.currentPrediction
+      ? ({ remainingTime }) => (
+          <IncorrectGuess
+            target={state.currentTarget}
+            prediction={state.currentPrediction}
+            remainingTime={remainingTime}
+          />
+        )
+      : state.status === "Show User - No Hand"
       ? ({ remainingTime }) => <NoHand remainingTime={remainingTime} />
       : ({ remainingTime }) => null;
 
@@ -181,10 +259,6 @@ export const QuickFire = () => {
     </IconButton>
   );
 
-  const handleSetLevel = (level: Level) => {
-    setLevel(level);
-  };
-
   return (
     <>
       <Header rightPanel={settings} />
@@ -192,8 +266,14 @@ export const QuickFire = () => {
         <QuickFireSettings
           isOpen={isSettingsOpen}
           handleClose={() => setSettingOpen(false)}
-          level={level}
+          level={state.levelSettings.level}
           handleLevel={handleSetLevel}
+        />
+        <GameFinishModal
+          isOpen={state.status === "Complete"}
+          onNextGame={handleNextGame}
+          gameStats={state.stats}
+          level={state.levelSettings.level}
         />
         <AlertSnackbar error={error} onClose={() => setError(null)} />
         <Grid
@@ -208,27 +288,27 @@ export const QuickFire = () => {
             <Stack direction="column" spacing={2}>
               <Box display="flex" justifyContent="center" alignItems="center">
                 <CountdownCircleTimer
-                  key={countDownKey}
+                  key={state.countDownKey}
                   isPlaying={
-                    gameState === "Show User - Incorrect" ||
-                    gameState === "Show User - Correct" ||
-                    gameState === "Show User - No Hand" ||
-                    gameState === "Letter Countdown"
+                    state.status === "Show User - Incorrect" ||
+                    state.status === "Show User - Correct" ||
+                    state.status === "Show User - No Hand" ||
+                    state.status === "Letter Countdown"
                   }
                   duration={
-                    gameState === "Letter Countdown"
-                      ? levelSettings.secondsPerLetter
+                    state.status === "Letter Countdown"
+                      ? state.levelSettings.secondsPerLetter
                       : 2
                   }
                   colors={
-                    gameState === "Not Started"
+                    state.status === "Not Started"
                       ? // Grey
                         "#808080"
-                      : gameState === "Letter Countdown" ||
-                        gameState === "Predicting"
+                      : state.status === "Letter Countdown" ||
+                        state.status === "Predicting"
                       ? // Blue
                         "#004777"
-                      : gameState === "Show User - Correct"
+                      : state.status === "Show User - Correct"
                       ? // Green
                         "#059611"
                       : "#A30000"
@@ -239,7 +319,10 @@ export const QuickFire = () => {
                   {countDownChild}
                 </CountdownCircleTimer>
               </Box>
-              <GameStatsContainer level={level} stats={stats} />
+              <GameStatsContainer
+                level={state.levelSettings.level}
+                stats={state.stats}
+              />
             </Stack>
           </Grid>
           <Grid item xs={6}>
@@ -247,13 +330,13 @@ export const QuickFire = () => {
           </Grid>
           <Grid item xs={6}>
             <Box textAlign="center">
-              {gameState === "Not Started" ? (
+              {state.status === "Not Started" ? (
                 <Button variant="contained" onClick={handleStart} size="large">
                   Start the Clock
                 </Button>
               ) : (
                 <Button variant="contained" onClick={handleStop} size="large">
-                  Stop the Clock
+                  Stop
                 </Button>
               )}
             </Box>

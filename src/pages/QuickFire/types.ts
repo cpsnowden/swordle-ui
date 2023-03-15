@@ -6,6 +6,7 @@ export enum Level {
 }
 
 export type LevelSettings = {
+  level: Level
   secondsPerLetter: number
   retriesPerLetter: number
 }
@@ -19,19 +20,23 @@ export type GameStats = {
 const LEVEL_SETTINGS = {
   [Level.Easy]: {
     secondsPerLetter: 5,
-    retriesPerLetter: 1
+    retriesPerLetter: 1,
+    level: Level.Easy,
   },
   [Level.Medium]: {
     secondsPerLetter: 3,
-    retriesPerLetter: 1
+    retriesPerLetter: 1,
+    level: Level.Medium,
   },
   [Level.Hard]: {
     secondsPerLetter: 3,
-    retriesPerLetter: 0
+    retriesPerLetter: 0,
+    level: Level.Hard,
   },
   [Level.Insane]: {
     secondsPerLetter: 1,
-    retriesPerLetter: 0
+    retriesPerLetter: 0,
+    level: Level.Insane,
   }
 }
 

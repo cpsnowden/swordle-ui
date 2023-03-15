@@ -53,7 +53,7 @@ export const QuickFireSettings = ({
           <b>5</b> correct guesses, you get an additional <b>30</b> points.
         </DialogContentText>
         <List>
-          <ListItemText secondary>
+          <ListItemText>
             EASY: <b>5 seconds</b> to sign the letter with <b>1 retry</b> per
             letter.
           </ListItemText>
