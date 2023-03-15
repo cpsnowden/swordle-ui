@@ -1,15 +1,6 @@
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  IconButton,
-  Stack,
-  Tooltip,
-} from "@mui/material";
+import { Box, Button, Grid, IconButton, Stack, Tooltip } from "@mui/material";
 import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
-import Header from "layouts/Header";
 import { useReducer, useRef, useState } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 import Webcam from "react-webcam";
@@ -24,6 +15,7 @@ import {
   NoHand,
 } from "./components/GuessFeedback";
 import GameFinishModal from "./components/GameFinishModal";
+import BasePage from "layouts/BasePage";
 
 type GameStatus =
   | "Complete"
@@ -273,12 +265,6 @@ export const QuickFire = () => {
       ? ({ remainingTime }) => <NoHand remainingTime={remainingTime} />
       : ({ remainingTime }) => null;
 
-  {
-    /* <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                    </IconButton> */
-  }
-
   const ruleButton = (
     <Tooltip title="Open Rules">
       <IconButton onClick={() => setSettingOpen(true)}>
@@ -288,91 +274,88 @@ export const QuickFire = () => {
   );
 
   return (
-    <>
-      <Header rightPanel={ruleButton} />
-      <Container className="mt-3 mb-3">
-        <QuickFireSettings
-          isOpen={isSettingsOpen}
-          handleClose={() => setSettingOpen(false)}
-          level={state.levelSettings.level}
-          handleLevel={handleSetLevel}
-        />
-        <GameFinishModal
-          isOpen={state.status === "Complete"}
-          onNextGame={handleNextGame}
-          gameStats={state.stats}
-          level={state.levelSettings.level}
-        />
-        <AlertSnackbar error={error} onClose={() => setError(null)} />
-        <Grid
-          container
-          alignItems="center"
-          direction="row"
-          justifyContent="center"
-          columns={{ xs: 6, md: 12 }}
-          spacing={2}
-        >
-          <Grid item xs={6}>
-            <Stack direction="column" spacing={2}>
-              <Box display="flex" justifyContent="center" alignItems="center">
-                <CountdownCircleTimer
-                  key={state.countDownKey}
-                  isPlaying={
-                    state.status === "Show User - Incorrect" ||
-                    state.status === "Show User - Correct" ||
-                    state.status === "Show User - No Hand" ||
-                    state.status === "Letter Countdown"
-                  }
-                  duration={
-                    state.status === "Letter Countdown"
-                      ? state.levelSettings.secondsPerLetter
-                      : 2
-                  }
-                  colors={
-                    state.status === "Not Started"
-                      ? // Grey
-                        "#808080"
-                      : state.status === "Letter Countdown" ||
-                        state.status === "Predicting"
-                      ? // Blue
-                        "#004777"
-                      : state.status === "Show User - Correct"
-                      ? // Green
-                        "#059611"
-                      : "#A30000"
-                  }
-                  size={250}
-                  onComplete={handleCountdownComplete}
-                >
-                  {countDownChild}
-                </CountdownCircleTimer>
-              </Box>
-              <GameStatsContainer
-                level={state.levelSettings.level}
-                stats={state.stats}
-                lettersRemaining={state.remainingTargets.length + 1}
-                onLevelClick={() => setSettingOpen(true)}
-              />
-            </Stack>
-          </Grid>
-          <Grid item xs={6}>
-            <WebcamContainer ref={videoRef} />
-          </Grid>
-          <Grid item xs={6}>
-            <Box textAlign="center">
-              {state.status === "Not Started" ? (
-                <Button variant="contained" onClick={handleStart} size="large">
-                  Start the Clock
-                </Button>
-              ) : (
-                <Button variant="contained" onClick={handleStop} size="large">
-                  Stop
-                </Button>
-              )}
+    <BasePage rightHeaderPanel={ruleButton}>
+      <QuickFireSettings
+        isOpen={isSettingsOpen}
+        handleClose={() => setSettingOpen(false)}
+        level={state.levelSettings.level}
+        handleLevel={handleSetLevel}
+      />
+      <GameFinishModal
+        isOpen={state.status === "Complete"}
+        onNextGame={handleNextGame}
+        gameStats={state.stats}
+        level={state.levelSettings.level}
+      />
+      <AlertSnackbar error={error} onClose={() => setError(null)} />
+      <Grid
+        container
+        alignItems="center"
+        direction="row"
+        justifyContent="center"
+        columns={{ xs: 6, md: 12 }}
+        spacing={2}
+      >
+        <Grid item xs={6}>
+          <Stack direction="column" spacing={2}>
+            <Box display="flex" justifyContent="center" alignItems="center">
+              <CountdownCircleTimer
+                key={state.countDownKey}
+                isPlaying={
+                  state.status === "Show User - Incorrect" ||
+                  state.status === "Show User - Correct" ||
+                  state.status === "Show User - No Hand" ||
+                  state.status === "Letter Countdown"
+                }
+                duration={
+                  state.status === "Letter Countdown"
+                    ? state.levelSettings.secondsPerLetter
+                    : 2
+                }
+                colors={
+                  state.status === "Not Started"
+                    ? // Grey
+                      "#808080"
+                    : state.status === "Letter Countdown" ||
+                      state.status === "Predicting"
+                    ? // Blue
+                      "#004777"
+                    : state.status === "Show User - Correct"
+                    ? // Green
+                      "#059611"
+                    : "#A30000"
+                }
+                size={250}
+                onComplete={handleCountdownComplete}
+              >
+                {countDownChild}
+              </CountdownCircleTimer>
             </Box>
-          </Grid>
+            <GameStatsContainer
+              level={state.levelSettings.level}
+              stats={state.stats}
+              lettersRemaining={state.remainingTargets.length + 1}
+              onLevelClick={() => setSettingOpen(true)}
+            />
+          </Stack>
         </Grid>
-      </Container>
-    </>
+        <Grid item xs={6}>
+          <WebcamContainer ref={videoRef} />
+        </Grid>
+        <Grid item xs={6}>
+          <Box textAlign="center">
+            {state.status === "Not Started" ? (
+              <Button variant="contained" onClick={handleStart} size="large">
+                Start the Clock
+              </Button>
+            ) : (
+              <Button variant="contained" onClick={handleStop} size="large">
+                Stop
+              </Button>
+            )}
+          </Box>
+        </Grid>
+      </Grid>
+    </BasePage>
   );
 };
