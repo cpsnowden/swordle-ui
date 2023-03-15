@@ -5,6 +5,8 @@ The production deployed version is at https://cpsnowden.github.io/sign-game-ui-r
 - About Page
 - Web cam size on iphone
 - Cleanup typography on single sign
+- Consistent Fonts in Info
+- Responsive WebCam
 
 # Development
 
