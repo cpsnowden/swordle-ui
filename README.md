@@ -7,6 +7,7 @@ The production deployed version is at https://cpsnowden.github.io/sign-game-ui-r
 - Cleanup typography on single sign
 - Consistent Fonts in Info
 - Responsive WebCam
+- Score page on quickfire
 
 # Development
 
