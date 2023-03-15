@@ -1,11 +1,11 @@
-import { Box, Button, Grid, Stack } from "@mui/material";
+import { Box, Button, Chip, Grid, Stack } from "@mui/material";
 import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
+import { useRandomEmoji } from "hooks/useRandomEmoji";
 import { useRef, useState } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 import Webcam from "react-webcam";
 import { LetterPrediction, predict_letter } from "services/api";
-import "./QuickFire.css";
 
 type GameStatus =
   | "Not Started"
@@ -26,6 +26,25 @@ const NoHand = ({ remainingTime }: { remainingTime: number }) => {
   );
 };
 
+const PositiveReaction = () => {
+  const emoji = useRandomEmoji(true);
+  return (
+    <>
+      <div className="text-4xl">{emoji}</div>
+      {/* <ConfettiExplosion /> */}
+    </>
+  );
+};
+
+const NegativeReaction = () => {
+  const emoji = useRandomEmoji(false);
+  return (
+    <>
+      <div className="text-4xl">{emoji}</div>
+    </>
+  );
+};
+
 const IncorrectGuess = ({
   target,
   prediction,
@@ -37,7 +56,7 @@ const IncorrectGuess = ({
 }) => {
   return (
     <Stack spacing={0} alignItems="center">
-      <div className="text-4xl">🙁</div>
+      <NegativeReaction />
       <div className="text-2xl">
         Incorrect {target} != {prediction}
       </div>
@@ -49,7 +68,7 @@ const IncorrectGuess = ({
 const CorrectGuess = ({ remainingTime }: { remainingTime: number }) => {
   return (
     <Stack spacing={0} alignItems="center">
-      <div className="text-4xl">🥳</div>
+      <PositiveReaction />
       <div className="text-2xl">Correct</div>
       <div className="text-2xl">Next letter in {remainingTime}</div>
     </Stack>
@@ -76,11 +95,23 @@ const LetterCountdown = ({
 // and alphabet
 const characters = "ABCKLRVWXY";
 
+type Stats = {
+  nTries: number;
+  nCorrect: number;
+  streak: number;
+};
+
 export const QuickFire = () => {
   const [gameState, setGameState] = useState<GameStatus>("Not Started");
 
   const [target, setTarget] = useState("A");
   const [prediction, setCurrentPrediction] = useState<string | null>();
+
+  const [stats, setStats] = useState<Stats>({
+    nTries: 0,
+    nCorrect: 0,
+    streak: 0,
+  });
 
   const [countDownKey, setCountdownKey] = useState(0);
   const resetCountDown = () => setCountdownKey((prev) => prev + 1);
@@ -144,8 +175,19 @@ export const QuickFire = () => {
 
       if (predictedLetter === target) {
         setGameState("Show User - Correct");
+        setStats((prevStats) => ({
+          ...prevStats,
+          nCorrect: prevStats.nCorrect + 1,
+          nTries: prevStats.nTries + 1,
+          streak: prevStats.streak + 1,
+        }));
       } else {
         setGameState("Show User - Incorrect");
+        setStats((prevStats) => ({
+          ...prevStats,
+          nTries: prevStats.nTries + 1,
+          streak: 0,
+        }));
       }
       resetCountDown();
     } else if (prediction.predictionStatus === "no_hand_detected") {
@@ -188,35 +230,45 @@ export const QuickFire = () => {
         spacing={2}
       >
         <Grid item xs={6}>
-          <Box display="flex" justifyContent="center" alignItems="center">
-            <CountdownCircleTimer
-              key={countDownKey}
-              isPlaying={
-                gameState === "Show User - Incorrect" ||
-                gameState === "Show User - Correct" ||
-                gameState === "Show User - No Hand" ||
-                gameState === "Letter Countdown"
-              }
-              duration={gameState === "Letter Countdown" ? 3 : 2}
-              colors={
-                gameState === "Not Started"
-                  ? // Grey
-                    "#808080"
-                  : gameState === "Letter Countdown" ||
-                    gameState === "Predicting"
-                  ? // Blue
-                    "#004777"
-                  : gameState === "Show User - Correct"
-                  ? // Green
-                    "#059611"
-                  : "#A30000"
-              }
-              size={250}
-              onComplete={handleCountdownComplete}
-            >
-              {countDownChild}
-            </CountdownCircleTimer>
-          </Box>
+          <Stack direction="column" spacing={2}>
+            <Box display="flex" justifyContent="center" alignItems="center">
+              <CountdownCircleTimer
+                key={countDownKey}
+                isPlaying={
+                  gameState === "Show User - Incorrect" ||
+                  gameState === "Show User - Correct" ||
+                  gameState === "Show User - No Hand" ||
+                  gameState === "Letter Countdown"
+                }
+                duration={gameState === "Letter Countdown" ? 3 : 2}
+                colors={
+                  gameState === "Not Started"
+                    ? // Grey
+                      "#808080"
+                    : gameState === "Letter Countdown" ||
+                      gameState === "Predicting"
+                    ? // Blue
+                      "#004777"
+                    : gameState === "Show User - Correct"
+                    ? // Green
+                      "#059611"
+                    : "#A30000"
+                }
+                size={250}
+                onComplete={handleCountdownComplete}
+              >
+                {countDownChild}
+              </CountdownCircleTimer>
+            </Box>
+            <Stack direction="row" spacing={1} justifyContent="center">
+              <Chip
+                label={`Score: ${stats.nCorrect}/${stats.nTries}`}
+                variant="outlined"
+                size="medium"
+              />
+              <Chip label={`Streak: ${stats.streak}`} variant="outlined" />
+            </Stack>
+          </Stack>
         </Grid>
         <Grid item xs={6}>
           <WebcamContainer ref={videoRef} />
