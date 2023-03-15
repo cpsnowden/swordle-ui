@@ -10,7 +10,11 @@ export const WebcamContainer = forwardRef<Webcam>((_, ref) => {
       style={{
         borderRadius: `30px 30px 30px 30px`,
       }}
-      videoConstraints={videoConstraints}
+      videoConstraints={{
+        width: width,
+        height: (width * 9) / 16,
+        facingMode: "user",
+      }}
       width={width}
       height={(width * 9) / 16}
       ref={ref}
