@@ -3,10 +3,7 @@ import { useRandomEmoji } from "hooks/useRandomEmoji";
 export const PositiveReaction = () => {
   const emoji = useRandomEmoji(true);
   return (
-    <>
-      <div className="text-4xl">{emoji}</div>
-      {/* <ConfettiExplosion /> */}
-    </>
+    <div className="text-4xl">{emoji}</div>
   );
 };
 
