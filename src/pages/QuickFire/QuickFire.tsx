@@ -41,7 +41,7 @@ const LetterCountdown = ({
   );
 };
 
-const initialScore: GameStats = {
+const defaultStats: GameStats = {
   score: 0,
   nStreaks: 0,
   streak: 0,
@@ -98,8 +98,8 @@ const reducer = (prev: GameState, action: GameAction): GameState => {
       return {
         ...prev,
         status: "Letter Countdown",
+        stats: defaultStats,
         countDownKey: prev.countDownKey + 1,
-        // Randomise characters here
         currentTarget: characters[0],
         remainingTargets: characters.slice(1),
       };
@@ -167,13 +167,12 @@ const reducer = (prev: GameState, action: GameAction): GameState => {
         };
       }
   }
-  return prev;
 };
 
 export const QuickFire = () => {
   const [state, dispatch] = useReducer(reducer, {
     status: "Not Started",
-    stats: initialScore,
+    stats: defaultStats,
     currentPrediction: "",
     currentTarget: "",
     remainingTargets: "",
@@ -181,7 +180,6 @@ export const QuickFire = () => {
     levelSettings: getLevelSettings(Level.Easy),
     countDownKey: 0,
   });
-  console.log(state);
   const [isSettingsOpen, setSettingOpen] = useState(false);
   const videoRef = useRef<Webcam | null>(null);
   const [error, setError] = useState<string | null>(null);
