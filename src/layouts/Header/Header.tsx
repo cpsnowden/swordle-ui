@@ -1,4 +1,4 @@
-import { AppBar, Container, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Container, Toolbar, Typography } from "@mui/material";
 
 export interface HeaderProps {
   rightPanel?: React.ReactNode;
@@ -9,22 +9,22 @@ export const Header: React.FC<HeaderProps> = ({ rightPanel }) => {
     <AppBar position="static">
       <Container>
         <Toolbar disableGutters>
+          <Box sx={{ flex: 1 }}></Box>
           <Typography
-            variant="h6"
+            variant="h5"
+            align="center"
             noWrap
             sx={{
-              flexGrow: 1,
-              textAlign: "center",
               fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+              letterSpacing: ".2rem",
             }}
           >
             SWordle
           </Typography>
-          {rightPanel}
+          <Box sx={{ flex: 1, display: "flex", justifyContent: "right" }}>
+            {rightPanel}
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>

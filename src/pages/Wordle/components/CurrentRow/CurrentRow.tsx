@@ -1,4 +1,4 @@
-import Cell from "pages/Wordle/grid/Cell";
+import Cell from "pages/Wordle/components/Cell";
 import { mapRange } from "services/utils";
 
 export interface CurrentRowProps {
@@ -20,7 +20,9 @@ export const CurrentRow: React.FC<CurrentRowProps> = ({
       {guess.map((letter, i) => (
         <Cell key={i} value={letter} />
       ))}
-      {guess.length < solution.length && <Cell key="current" value={currentLetter} current />}
+      {guess.length < solution.length && (
+        <Cell key="current" value={currentLetter} current />
+      )}
       {emptyCells}
     </div>
   );

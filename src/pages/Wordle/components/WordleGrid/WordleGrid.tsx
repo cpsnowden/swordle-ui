@@ -1,6 +1,6 @@
-import CompletedRow from "pages/Wordle/grid/CompletedRow";
-import CurrentRow from "pages/Wordle/grid/CurrentRow";
-import EmptyRow from "pages/Wordle/grid/EmptyRow";
+import CompletedRow from "pages/Wordle/components/CompletedRow";
+import CurrentRow from "pages/Wordle/components/CurrentRow";
+import EmptyRow from "pages/Wordle/components/EmptyRow";
 import { mapRange } from "services/utils";
 export interface WordleGridProps {
   solution: string;

@@ -1,26 +1,26 @@
-import { Stack, Chip } from "@mui/material";
+import { Stack, Chip, Tooltip } from "@mui/material";
 import { GameStats, Level } from "pages/QuickFire/types";
 
 export interface GameStatsContainerProps {
   level: Level;
   stats: GameStats;
-  lettersRemaining: number;
   onLevelClick: () => void;
 }
 
 export const GameStatsContainer: React.FC<GameStatsContainerProps> = ({
   level,
   stats,
-  lettersRemaining,
   onLevelClick,
 }) => {
   return (
     <Stack direction="row" spacing={1} justifyContent="center">
-      <Chip
-        label={`${Level[level]} mode`}
-        variant="outlined"
-        onClick={onLevelClick}
-      />
+      <Tooltip title="Change Level">
+        <Chip
+          label={`${Level[level]}`}
+          variant="outlined"
+          onClick={onLevelClick}
+        />
+      </Tooltip>
       <Chip
         label={`Score: ${stats.score}`}
         variant="outlined"
@@ -31,12 +31,6 @@ export const GameStatsContainer: React.FC<GameStatsContainerProps> = ({
         variant="outlined"
         color="success"
       />
-      {/* <Chip
-        label={`${lettersRemaining} letters remaining`}
-        variant="outlined"
-        color="success"
-      /> */}
-      {/* <Chip label={`Streaks: ${stats.nStreaks}`} variant="outlined" /> */}
     </Stack>
   );
 };

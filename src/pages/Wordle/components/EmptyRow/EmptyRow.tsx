@@ -1,4 +1,4 @@
-import Cell from "pages/Wordle/grid/Cell";
+import Cell from "pages/Wordle/components/Cell";
 import { mapRange } from "services/utils";
 
 export interface EmptyRowProps {
