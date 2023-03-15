@@ -24,8 +24,6 @@ type GameStatus =
   | "Show User - Correct"
   | "Show User - No Hand";
 
-// https://dreamyguy.github.io/react-emojis/
-
 const LetterCountdown = ({
   target,
   remainingTime,
@@ -48,6 +46,10 @@ const initialScore: GameStats = {
   nStreaks: 0,
   streak: 0,
 };
+
+// Handle Game Complete
+// Check Score
+// Handle Retry
 
 export const QuickFire = () => {
   const [isSettingsOpen, setSettingOpen] = useState(false);
