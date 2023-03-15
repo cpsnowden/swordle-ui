@@ -5,7 +5,7 @@ import { useReducer, useRef, useState } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 import Webcam from "react-webcam";
 import { LetterPrediction, predict_letter } from "services/api";
-import QuickFireSettings from "./components/QuickFireSettings";
+import QuickFireRules from "./components/QuickFireRules";
 import { GameStats, getLevelSettings, Level, LevelSettings } from "./types";
 import GameStatsContainer from "./components/GameStatsContainer";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
@@ -275,11 +275,11 @@ export const QuickFire = () => {
 
   return (
     <BasePage rightHeaderPanel={ruleButton}>
-      <QuickFireSettings
+      <QuickFireRules
         isOpen={isSettingsOpen}
-        handleClose={() => setSettingOpen(false)}
+        onClose={() => setSettingOpen(false)}
         level={state.levelSettings.level}
-        handleLevel={handleSetLevel}
+        onLevelChange={handleSetLevel}
       />
       <GameFinishModal
         isOpen={state.status === "Complete"}

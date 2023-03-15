@@ -11,13 +11,14 @@ import {
 } from "@mui/material";
 import { Level } from "pages/QuickFire/types";
 
-interface QuickFireSettingsProps {
+interface QuickFireRulesProps {
   isOpen: boolean;
-  handleClose: () => void;
+  onClose: () => void;
   level: Level;
-  handleLevel: (level: Level) => void;
+  onLevelChange: (level: Level) => void;
 }
 
+//TODO make this programatically
 const marks = [
   {
     value: Level.Easy,
@@ -37,12 +38,12 @@ const marks = [
   },
 ];
 
-export const QuickFireSettings = ({
+export const QuickFireRules = ({
   isOpen,
-  handleClose,
+  onClose: handleClose,
   level,
-  handleLevel,
-}: QuickFireSettingsProps) => {
+  onLevelChange: handleLevel,
+}: QuickFireRulesProps) => {
   return (
     <Dialog open={isOpen} onClose={handleClose}>
       <DialogTitle>Rules</DialogTitle>
