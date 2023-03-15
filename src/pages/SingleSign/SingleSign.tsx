@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Fab, Grid, Typography } from "@mui/material";
 import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
 import BasePage from "layouts/BasePage";
@@ -123,19 +123,20 @@ export const SingleSign = () => {
         </Grid>
         <Grid item xs={6}>
           <Box textAlign="center">
-            <Button
-              variant="contained"
+            <Fab
+              variant="extended"
+              color="primary"
               onClick={startCaptureCountdown}
+              size="large"
               disabled={
                 gameState === "Predicting" || gameState === "Letter Countdown"
               }
-              size="large"
             >
               {gameState === "Not Started" && "Start"}
               {gameState === "User Check" && "Next Letter"}
               {gameState === "Predicting" && "Predicting..."}
               {gameState === "Letter Countdown" && `Wait for it...`}
-            </Button>
+            </Fab>
           </Box>
         </Grid>
       </Grid>
