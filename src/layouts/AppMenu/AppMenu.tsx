@@ -18,14 +18,13 @@ import { Link, useLocation } from "react-router-dom";
 import SettingsIcon from "@mui/icons-material/Settings";
 
 interface AppMenuProps {
-  pages: PageInfo[];
   isOpen: boolean;
   onClose: () => void;
 }
 
-export const AppMenu: FC<AppMenuProps> = ({ pages, isOpen, onClose }) => {
+export const AppMenu: FC<AppMenuProps> = ({ isOpen, onClose }) => {
   const match = useLocation();
-  const selectedPage = pages.findIndex((item) => item.path === match.pathname);
+  const selectedPage = games.findIndex((item) => item.path === match.pathname);
   const [isSettingsOpen, setSettingOpen] = useState(false);
   return (
     <>
