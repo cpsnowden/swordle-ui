@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { PageInfo } from "pages";
 import { FC } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 interface AppMenuProps {
   pages: PageInfo[];
@@ -18,8 +18,8 @@ interface AppMenuProps {
 }
 
 export const AppMenu: FC<AppMenuProps> = ({ pages, isOpen, onClose }) => {
-  // const match = useLocation();
-  // const page = pages.findIndex((item) => item.path === match.pathname);
+  const match = useLocation();
+  const selectedPage = pages.findIndex((item) => item.path === match.pathname);
   return (
     <Drawer
       variant="temporary"
@@ -38,7 +38,11 @@ export const AppMenu: FC<AppMenuProps> = ({ pages, isOpen, onClose }) => {
         {pages.map((page, index) => (
           <>
             <ListItem key={index} disablePadding>
-              <ListItemButton to={page.path} component={Link}>
+              <ListItemButton
+                to={page.path}
+                component={Link}
+                selected={index === selectedPage}
+              >
                 <ListItemIcon>{page.icon}</ListItemIcon>
                 <ListItemText primary={page.name} secondary={page.tagLine} />
               </ListItemButton>
