@@ -1,4 +1,4 @@
-import { AppBar, IconButton, Toolbar } from "@mui/material";
+import { AppBar, Box, Container, IconButton, Toolbar } from "@mui/material";
 import AppMenu from "layouts/AppMenu";
 import { pages } from "pages";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -13,34 +13,29 @@ export const Header: React.FC<HeaderProps> = ({ rightPanel }) => {
   const [isOpen, setOpen] = useState(false);
   return (
     <AppBar position="static">
-      <Toolbar>
-        <IconButton
-          size="large"
-          edge="start"
-          onClick={() => setOpen(true)}
-          sx={{ mr: 2 }}
-        >
-          <MenuIcon />
-        </IconButton>
-        <AppMenu pages={pages} isOpen={isOpen} onClose={() => setOpen(false)} />
-        <div className="grow flex justify-center ">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Box sx={{ flex: 1, display: "flex", justifyContent: "left" }}>
+            <IconButton
+              size="large"
+              edge="start"
+              onClick={() => setOpen(true)}
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Box>
+          <AppMenu
+            pages={pages}
+            isOpen={isOpen}
+            onClose={() => setOpen(false)}
+          />
           <Logo height={65} />
-        </div>
-        {/* <Typography
-          variant="h5"
-          align="center"
-          noWrap
-          sx={{
-            flexGrow: 1,
-            fontFamily: "monospace",
-            fontWeight: 700,
-            letterSpacing: ".2rem",
-          }}
-        >
-          SWordle
-        </Typography> */}
-        {rightPanel}
-      </Toolbar>
+          <Box sx={{ flex: 1, display: "flex", justifyContent: "right" }}>
+            {rightPanel}
+          </Box>
+        </Toolbar>
+      </Container>
     </AppBar>
   );
 };
