@@ -1,8 +1,9 @@
-import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
 import AppMenu from "layouts/AppMenu";
 import { pages } from "pages";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
+import { ReactComponent as Logo } from "assets/swordle-logo.svg";
 
 export interface HeaderProps {
   rightPanel?: React.ReactNode;
@@ -22,7 +23,10 @@ export const Header: React.FC<HeaderProps> = ({ rightPanel }) => {
           <MenuIcon />
         </IconButton>
         <AppMenu pages={pages} isOpen={isOpen} onClose={() => setOpen(false)} />
-        <Typography
+        <div className="grow flex justify-center ">
+          <Logo height={65} />
+        </div>
+        {/* <Typography
           variant="h5"
           align="center"
           noWrap
@@ -34,7 +38,7 @@ export const Header: React.FC<HeaderProps> = ({ rightPanel }) => {
           }}
         >
           SWordle
-        </Typography>
+        </Typography> */}
         {rightPanel}
       </Toolbar>
     </AppBar>
