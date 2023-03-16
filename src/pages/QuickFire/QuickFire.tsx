@@ -141,9 +141,10 @@ const reducer = (prev: GameState, action: GameAction): GameState => {
           score: prev.stats.score + 10,
           streak: prev.stats.streak + 1,
         };
-        if (prev.stats.streak === 5) {
+        if (prev.stats.streak + 1 === 5) {
           stats.streak = 0;
           stats.nStreaks += 1;
+          stats.score += 30;
         }
         return {
           ...prev,
