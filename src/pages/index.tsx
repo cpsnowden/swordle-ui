@@ -4,7 +4,7 @@ import SingleSign from "pages/SingleSign";
 import InfoIcon from "@mui/icons-material/Info";
 import SwipeDown from "@mui/icons-material/SwipeDown";
 import FastForwardIcon from "@mui/icons-material/FastForward";
-import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
+import GridOnIcon from "@mui/icons-material/GridOn";
 import {
   createHashRouter,
   Outlet,
@@ -40,7 +40,7 @@ export const games: (PageInfo & RouteObject)[] = [
   {
     name: "SWordle",
     element: <Wordle />,
-    icon: <VideogameAssetIcon />,
+    icon: <GridOnIcon />,
     path: "/swordle",
     tagLine: "The namesake - play the popular word game using your sign skills",
   },
