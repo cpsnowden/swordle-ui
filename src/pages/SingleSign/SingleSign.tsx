@@ -102,6 +102,7 @@ export const SingleSign = () => {
         justifyContent="center"
         columns={{ xs: 6, md: 12 }}
         spacing={2}
+        minHeight="90vh"
       >
         <Grid item xs={6}>
           <Box display="flex" justifyContent="center" alignItems="center">
