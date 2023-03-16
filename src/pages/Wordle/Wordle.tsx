@@ -54,7 +54,7 @@ export interface WordleProps {
 }
 
 export const Wordle: React.FC<WordleProps> = ({
-  solution = "APPLE",
+  solution = "CAMEL",
   numberOfAttempts = 6,
 }) => {
   const [isSettingsOpen, setSettingOpen] = useState(false);
