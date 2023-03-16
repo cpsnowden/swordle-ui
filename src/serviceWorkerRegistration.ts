@@ -95,6 +95,12 @@ function registerValidSW(swUrl: string, config?: Config) {
           }
         };
       };
+
+      setInterval(() => {
+          console.debug("Checked for update...");
+          registration.update().catch(console.error);
+      }, 10 * 60 * 60);
+      // Update code every 10 minutes
     })
     .catch((error) => {
       console.error('Error during service worker registration:', error);
