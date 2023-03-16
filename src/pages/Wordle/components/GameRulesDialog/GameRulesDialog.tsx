@@ -65,7 +65,7 @@ export const GameRulesDialog: FC<GameRulesDialogProps> = ({
         <Link href="https://github.com/cwackerfuss/react-wordle">
           open source version
         </Link>{" "}
-        of the word guessing.
+        of the word game.
       </DialogContentText>
     </BaseDialog>
   );
