@@ -174,9 +174,9 @@ export const Wordle: React.FC<WordleProps> = ({
                 variant="extended"
                 onClick={handleRetryLetter}
                 size="large"
-                sx={{ width: 140 }}
+                sx={{ width: 150 }}
               >
-                Retry
+                Retry Letter
               </Fab>
             )}
             {currentGuess.length < solution.length &&
@@ -204,7 +204,7 @@ export const Wordle: React.FC<WordleProps> = ({
                   variant="extended"
                   onClick={handleNextLetter}
                   size="large"
-                  sx={{ ml: 2, width: 140 }}
+                  sx={{ ml: 2, width: 150 }}
                 >
                   Next Letter
                 </Fab>
