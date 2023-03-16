@@ -37,9 +37,9 @@ export const GameRulesDialog = ({
 }: GameRulesDialogProps) => {
   return (
     <BaseDialog
+      title="How to play"
       isOpen={isOpen}
       onClose={handleClose}
-      title="Rules"
       closeText="Close"
     >
       <DialogContentText>
