@@ -9,9 +9,9 @@ interface ScoreSquareProps {
 }
 
 const ScoreSquare: FC<ScoreSquareProps> = ({ score, scoreValue }) => (
-  <Paper elevation={3} style={{ textAlign: "center", width: 128, height: 128 }}>
-    <h3>{score}</h3>
-    <h1>{scoreValue}</h1>
+  <Paper elevation={3} style={{ textAlign: "center", width: 100, height: 100 }}>
+    <h3 className="m-2">{score}</h3>
+    <h1 className="m-0">{scoreValue}</h1>
   </Paper>
 );
 

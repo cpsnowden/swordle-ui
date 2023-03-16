@@ -1,7 +1,6 @@
 import About from "pages/About";
 import Wordle from "pages/Wordle";
 import SingleSign from "pages/SingleSign";
-import AppFooter from "layouts/Footer";
 import InfoIcon from "@mui/icons-material/Info";
 import SwipeDown from "@mui/icons-material/SwipeDown";
 import FastForwardIcon from "@mui/icons-material/FastForward";
@@ -10,7 +9,6 @@ import {
   createHashRouter,
   Outlet,
   RouteObject,
-  useLocation,
   Navigate,
 } from "react-router-dom";
 import QuickFire from "./QuickFire";
@@ -21,43 +19,49 @@ export type PageInfo = {
   element?: React.ReactNode;
   icon: React.ReactNode;
   path: string;
+  tagLine?: string;
 };
 
-const pages: (PageInfo & RouteObject)[] = [
-  {
-    name: "About",
-    element: <About />,
-    icon: <InfoIcon />,
-    path: "/",
-  },
+export const games: (PageInfo & RouteObject)[] = [
   {
     name: "SingleSign",
     element: <SingleSign />,
     icon: <SwipeDown />,
     path: "/single-sign",
+    tagLine: "Your personal AI interpreter will check what sign you are making",
   },
   {
     name: "QuickFire",
     element: <QuickFire />,
     icon: <FastForwardIcon />,
     path: "/quickfire",
+    tagLine: "Test your signs against the clock, level up and try INSANE mode",
   },
   {
     name: "SWordle",
     element: <Wordle />,
     icon: <VideogameAssetIcon />,
     path: "/swordle",
+    tagLine: "The namesake - play the popular word game using your sign skills",
   },
 ];
 
+export const pages: (PageInfo & RouteObject)[] = [
+  {
+    name: "About",
+    element: <About />,
+    icon: <InfoIcon />,
+    path: "/",
+  },
+  ...games,
+];
+
 const Layout = () => {
-  const match = useLocation();
-  const page = pages.findIndex((item) => item.path === match.pathname);
   return (
     <>
       <AppStatusOverlay />
       <Outlet />
-      <AppFooter pages={pages} selectedPageIndex={page} />
+      {/* <AppFooter pages={pages} selectedPageIndex={page} /> */}
     </>
   );
 };

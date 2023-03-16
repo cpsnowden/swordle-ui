@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Grid, Tooltip } from "@mui/material";
+import { Box, IconButton, Grid, Tooltip, Fab } from "@mui/material";
 import { useCallback, useEffect, useRef, useState } from "react";
 import WordleGrid from "pages/Wordle/components/WordleGrid";
 import { LetterPrediction, predict_letter } from "services/api";
@@ -30,7 +30,7 @@ export const Wordle: React.FC<WordleProps> = ({
   solution = "CAMEL",
   numberOfAttempts = 6,
 }) => {
-  const [isSettingsOpen, setSettingOpen] = useState(false);
+  const [isSettingsOpen, setSettingOpen] = useState(true);
   const [finishState, setFinishState] = useState<FinishState>();
   const [gameState, setGameState] = useState<GameStatus>("Not Started");
   const [count, { startCountdown, resetCountdown }] = useCountdown({
@@ -152,6 +152,7 @@ export const Wordle: React.FC<WordleProps> = ({
         justifyContent="center"
         columns={{ xs: 6, md: 12 }}
         spacing={2}
+        minHeight="90vh"
       >
         <Grid item xs={6}>
           <WordleGrid
@@ -169,49 +170,52 @@ export const Wordle: React.FC<WordleProps> = ({
         <Grid item xs={6}>
           <Box textAlign="center">
             {(gameState === "User Check" || gameState === "Retry") && (
-              <Button
-                variant="contained"
+              <Fab
+                variant="extended"
                 onClick={handleRetryLetter}
                 size="large"
+                sx={{ width: 140 }}
               >
                 Retry
-              </Button>
+              </Fab>
             )}
             {currentGuess.length < solution.length &&
               (gameState === "Not Started" ? (
-                <Button
-                  variant="contained"
+                <Fab
+                  variant="extended"
                   onClick={handleStartRow}
+                  color="success"
                   size="large"
                 >
                   Start Row
-                </Button>
+                </Fab>
               ) : gameState === "Predicting" ? (
-                <Button variant="contained" size="large" disabled>
+                <Fab variant="extended" size="large" disabled>
                   Predicting...
-                </Button>
+                </Fab>
               ) : gameState === "Letter Countdown" ? (
-                <Button variant="contained" size="large" disabled>
+                <Fab variant="extended" size="large" disabled>
                   {`Taking screenshot in ${count}`}
-                </Button>
+                </Fab>
               ) : null)}
             {gameState === "User Check" &&
               (currentGuess.length < solution.length - 1 ? (
-                <Button
-                  variant="contained"
+                <Fab
+                  variant="extended"
                   onClick={handleNextLetter}
                   size="large"
+                  sx={{ ml: 2, width: 140 }}
                 >
                   Next Letter
-                </Button>
+                </Fab>
               ) : (
-                <Button
-                  variant="contained"
+                <Fab
+                  variant="extended"
                   onClick={() => validateGuess(currentGuess, currentLetter)}
                   size="large"
                 >
                   Validate
-                </Button>
+                </Fab>
               ))}
           </Box>
         </Grid>

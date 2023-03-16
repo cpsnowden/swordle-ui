@@ -91,6 +91,7 @@ const reducer = (prev: GameState, action: GameAction): GameState => {
         status: "Not Started",
         remainingTargets: "",
         countDownKey: prev.countDownKey + 1,
+        stats: defaultStats,
       };
     case "start_game":
       const characters = nextCharacterList();
@@ -180,7 +181,7 @@ export const QuickFire = () => {
     levelSettings: getLevelSettings(Level.Easy),
     countDownKey: 0,
   });
-  const [isSettingsOpen, setSettingOpen] = useState(false);
+  const [isSettingsOpen, setSettingOpen] = useState(true);
   const videoRef = useRef<Webcam | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -197,7 +198,7 @@ export const QuickFire = () => {
   };
 
   const handleNextGame = () => {
-    dispatch({ type: "start_game" });
+    dispatch({ type: "stop_game" });
   };
 
   const handleCountdownComplete = () => {
@@ -293,6 +294,7 @@ export const QuickFire = () => {
         justifyContent="center"
         columns={{ xs: 6, md: 12 }}
         spacing={2}
+        minHeight="90vh"
       >
         <Grid item xs={6}>
           <Stack direction="column" spacing={2}>
@@ -342,12 +344,12 @@ export const QuickFire = () => {
         <Grid item xs={6}>
           <Box textAlign="center">
             {state.status === "Not Started" ? (
-              <Fab variant="extended" color="primary" onClick={handleStart}>
+              <Fab variant="extended" color="success" onClick={handleStart}>
                 <PlayArrowIcon sx={{ mr: 1 }} />
                 Start
               </Fab>
             ) : (
-              <Fab variant="extended" color="primary" onClick={handleStop}>
+              <Fab variant="extended" color="error" onClick={handleStop}>
                 <StopIcon sx={{ mr: 1 }} />
                 Stop
               </Fab>
