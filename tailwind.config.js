@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        short: { raw: '(max-height: 700px)' },
+        short: { raw: '(max-height: 800px)' },
       },
     },
   },
