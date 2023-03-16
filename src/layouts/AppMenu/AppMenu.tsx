@@ -12,7 +12,7 @@ import {
   Stack,
 } from "@mui/material";
 import PreferencesForm from "components/UserPreferences";
-import { games, PageInfo } from "pages";
+import { games } from "pages";
 import { FC, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import SettingsIcon from "@mui/icons-material/Settings";
