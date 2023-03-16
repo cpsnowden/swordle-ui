@@ -1,26 +1,17 @@
-import {
-  Box,
-  Button,
-  Dialog,
-  IconButton,
-  DialogTitle,
-  Grid,
-  Tooltip,
-} from "@mui/material";
+import { Box, Button, IconButton, Grid, Tooltip } from "@mui/material";
 import { useCallback, useEffect, useRef, useState } from "react";
 import WordleGrid from "pages/Wordle/components/WordleGrid";
 import { LetterPrediction, predict_letter } from "services/api";
 import Webcam from "react-webcam";
 import { CELL_REVEAL_MS } from "services/params";
 import { useCountdown } from "usehooks-ts";
-import ConfettiExplosion from "react-confetti-explosion";
 import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
 import BasePage from "layouts/BasePage";
 import GameRulesDialog from "./components/GameRulesDialog";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-
-type FinishState = "WIN" | "LOSE";
+import GameFinishDialog from "./components/GameFinishDialog";
+import { FinishState } from "./types";
 
 type GameStatus =
   | "Not Started"
@@ -30,24 +21,6 @@ type GameStatus =
   | "Retry"
   | "Validating";
 
-interface GameCompleteDialogProps {
-  finishState?: FinishState;
-  solution: string;
-}
-
-const GameCompleteDialog: React.FC<GameCompleteDialogProps> = ({
-  finishState,
-  solution,
-}) => (
-  <Dialog open={!!finishState}>
-    <DialogTitle>
-      {finishState === "LOSE"
-        ? `You have lost, the solution was ${solution}`
-        : "Horray, you have won"}
-    </DialogTitle>
-    <ConfettiExplosion />
-  </Dialog>
-);
 export interface WordleProps {
   solution?: string;
   numberOfAttempts?: number;
@@ -163,7 +136,11 @@ export const Wordle: React.FC<WordleProps> = ({
   return (
     <BasePage rightHeaderPanel={ruleButton}>
       <AlertSnackbar error={error} onClose={() => setError(null)} />
-      <GameCompleteDialog finishState={finishState} solution={solution} />
+      <GameFinishDialog
+        finishState={finishState}
+        solution={solution}
+        onNextGame={() => {}}
+      />
       <GameRulesDialog
         isOpen={isSettingsOpen}
         onClose={() => setSettingOpen(false)}
