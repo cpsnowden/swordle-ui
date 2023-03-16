@@ -96,6 +96,8 @@ function registerValidSW(swUrl: string, config?: Config) {
         };
       };
 
+      console.debug("Checked for update...");
+      registration.update().catch(console.error);
       setInterval(() => {
           console.debug("Checked for update...");
           registration.update().catch(console.error);
