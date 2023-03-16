@@ -1,4 +1,4 @@
-import { Box, Fab, Grid, IconButton, Typography } from "@mui/material";
+import { Box, Grid, IconButton, Typography } from "@mui/material";
 import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
 import BasePage from "layouts/BasePage";
@@ -8,6 +8,7 @@ import Webcam from "react-webcam";
 import { LetterPrediction, predict_letter } from "services/api";
 import "./SingleSign.css";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import GameButton from "components/GameButton";
 
 type GameStatus =
   | "Not Started"
@@ -131,20 +132,17 @@ export const SingleSign = () => {
         </Grid>
         <Grid item xs={6}>
           <Box textAlign="center">
-            <Fab
-              variant="extended"
-              color="primary"
-              onClick={startCaptureCountdown}
-              size="large"
-              disabled={
-                gameState === "Predicting" || gameState === "Letter Countdown"
-              }
-            >
-              {gameState === "Not Started" && "Start"}
-              {gameState === "User Check" && "Next Letter"}
-              {gameState === "Predicting" && "Predicting..."}
-              {gameState === "Letter Countdown" && `Wait for it...`}
-            </Fab>
+            {gameState === "Predicting" || gameState === "Letter Countdown" ? (
+              <GameButton disabled>
+                {gameState === "Predicting" && "Predicting..."}
+                {gameState === "Letter Countdown" && `Wait for it...`}
+              </GameButton>
+            ) : (
+              <GameButton color="success" onClick={startCaptureCountdown}>
+                {gameState === "Not Started" && "Start"}
+                {gameState === "User Check" && "Next Letter"}
+              </GameButton>
+            )}
           </Box>
         </Grid>
       </Grid>

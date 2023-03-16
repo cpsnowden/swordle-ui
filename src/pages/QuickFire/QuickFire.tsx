@@ -1,4 +1,4 @@
-import { Box, Fab, Grid, IconButton, Stack, Tooltip } from "@mui/material";
+import { Box, Grid, IconButton, Stack, Tooltip } from "@mui/material";
 import StopIcon from "@mui/icons-material/Stop";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
@@ -19,6 +19,7 @@ import {
 } from "./components/GuessFeedback";
 import GameFinishDialog from "./components/GameFinishDialog";
 import BasePage from "layouts/BasePage";
+import GameButton from "components/GameButton";
 
 type GameStatus =
   | "Complete"
@@ -344,15 +345,15 @@ export const QuickFire = () => {
         <Grid item xs={6}>
           <Box textAlign="center">
             {state.status === "Not Started" ? (
-              <Fab variant="extended" color="success" onClick={handleStart}>
+              <GameButton color="success" onClick={handleStart}>
                 <PlayArrowIcon sx={{ mr: 1 }} />
                 Start
-              </Fab>
+              </GameButton>
             ) : (
-              <Fab variant="extended" color="error" onClick={handleStop}>
+              <GameButton color="error" onClick={handleStop}>
                 <StopIcon sx={{ mr: 1 }} />
                 Stop
-              </Fab>
+              </GameButton>
             )}
           </Box>
         </Grid>
