@@ -72,7 +72,7 @@ const About = () => (
         <Grid item key={3} xs={12} sm={12} md={4}>
           <GameCard
             name="SWordle"
-            description="The namesake, OG - play the popular word game using your sign skills"
+            description="The namesake - play the popular word game using your sign skills"
             image={""}
             path="swordle"
           />
