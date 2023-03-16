@@ -1,4 +1,4 @@
-import { Box, Fab, Grid, Typography } from "@mui/material";
+import { Box, Fab, Grid, IconButton, Typography } from "@mui/material";
 import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
 import BasePage from "layouts/BasePage";
@@ -7,6 +7,7 @@ import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 import Webcam from "react-webcam";
 import { LetterPrediction, predict_letter } from "services/api";
 import "./SingleSign.css";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 type GameStatus =
   | "Not Started"
@@ -92,8 +93,14 @@ export const SingleSign = () => {
     ) : null;
   };
 
+  const ruleButton = (
+    <IconButton disabled>
+      <InfoOutlinedIcon />
+    </IconButton>
+  );
+
   return (
-    <BasePage>
+    <BasePage rightHeaderPanel={ruleButton}>
       <AlertSnackbar error={error} onClose={() => setError(null)} />
       <Grid
         container
