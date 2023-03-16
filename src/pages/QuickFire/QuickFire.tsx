@@ -179,7 +179,7 @@ export const QuickFire = () => {
     currentTarget: "",
     remainingTargets: "",
     attemptsAtLetter: 0,
-    levelSettings: getLevelSettings(Level.Easy),
+    levelSettings: getLevelSettings(Level.Medium),
     countDownKey: 0,
   });
   const [isSettingsOpen, setSettingOpen] = useState(true);
