@@ -1,3 +1,3 @@
-import {HandOverlayHelp} from './HandOverlay'
+import {HandOverlay} from './HandOverlay'
 
-export default HandOverlayHelp;
+export default HandOverlay;

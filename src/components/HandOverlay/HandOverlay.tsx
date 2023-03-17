@@ -1,12 +1,10 @@
-import { Backdrop, Box, Fab } from "@mui/material";
-import { FC, useState } from "react";
-import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
-
+import { Backdrop, Box } from "@mui/material";
+import { FC } from "react";
 interface HandOverlayProps {
   isOpen: boolean;
   onClose: () => void;
 }
-const HandOverlay: FC<HandOverlayProps> = ({ isOpen, onClose }) => {
+export const HandOverlay: FC<HandOverlayProps> = ({ isOpen, onClose }) => {
   return (
     <Backdrop
       sx={{
@@ -28,17 +26,5 @@ const HandOverlay: FC<HandOverlayProps> = ({ isOpen, onClose }) => {
         />
       </Box>
     </Backdrop>
-  );
-};
-
-export const HandOverlayHelp = () => {
-  const [isOpen, setOpen] = useState(false);
-  return (
-    <>
-      <Fab size="large" variant="extended" onClick={() => setOpen(true)}>
-        <QuestionMarkIcon />
-      </Fab>
-      <HandOverlay isOpen={isOpen} onClose={() => setOpen(false)} />
-    </>
   );
 };

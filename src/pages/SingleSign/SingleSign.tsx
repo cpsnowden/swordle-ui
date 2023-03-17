@@ -9,7 +9,7 @@ import { LetterPrediction, predict_letter } from "services/api";
 import "./SingleSign.css";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import GameButton from "components/GameButton";
-import HandOverlayHelp from "components/HandOverlay";
+import GameButtonContainer from "components/GameButtonContainer";
 
 type GameStatus =
   | "Not Started"
@@ -132,7 +132,7 @@ export const SingleSign = () => {
           <WebcamContainer ref={videoRef} />
         </Grid>
         <Grid item xs={6}>
-          <Box textAlign="center">
+          <GameButtonContainer>
             {gameState === "Predicting" || gameState === "Letter Countdown" ? (
               <GameButton disabled>
                 {gameState === "Predicting" && "Predicting..."}
@@ -144,8 +144,7 @@ export const SingleSign = () => {
                 {gameState === "User Check" && "Next Letter"}
               </GameButton>
             )}
-            <HandOverlayHelp />
-          </Box>
+          </GameButtonContainer>
         </Grid>
       </Grid>
     </BasePage>

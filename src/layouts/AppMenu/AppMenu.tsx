@@ -11,21 +11,27 @@ import {
   Paper,
   Stack,
 } from "@mui/material";
-import PreferencesForm from "components/UserPreferences";
 import { games } from "pages";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
 import SettingsIcon from "@mui/icons-material/Settings";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 
 interface AppMenuProps {
   isOpen: boolean;
   onClose: () => void;
+  onHandOverlayClick: () => void;
+  onPreferenceClick: () => void;
 }
 
-export const AppMenu: FC<AppMenuProps> = ({ isOpen, onClose }) => {
+export const AppMenu: FC<AppMenuProps> = ({
+  isOpen,
+  onClose,
+  onHandOverlayClick,
+  onPreferenceClick,
+}) => {
   const match = useLocation();
   const selectedPage = games.findIndex((item) => item.path === match.pathname);
-  const [isSettingsOpen, setSettingOpen] = useState(false);
   return (
     <>
       <Drawer
@@ -74,16 +80,17 @@ export const AppMenu: FC<AppMenuProps> = ({ isOpen, onClose }) => {
               <BottomNavigationAction
                 label="Settings"
                 icon={<SettingsIcon />}
-                onClick={() => setSettingOpen(true)}
+                onClick={onPreferenceClick}
+              />
+              <BottomNavigationAction
+                label="Sign Reference"
+                icon={<MenuBookIcon />}
+                onClick={onHandOverlayClick}
               />
             </BottomNavigation>
           </Paper>
         </Stack>
       </Drawer>
-      <PreferencesForm
-        isOpen={isSettingsOpen}
-        onClose={() => setSettingOpen(false)}
-      />
     </>
   );
 };

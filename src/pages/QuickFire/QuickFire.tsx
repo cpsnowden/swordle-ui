@@ -20,6 +20,7 @@ import {
 import GameFinishDialog from "./components/GameFinishDialog";
 import BasePage from "layouts/BasePage";
 import GameButton from "components/GameButton";
+import GameButtonContainer from "components/GameButtonContainer";
 
 type GameStatus =
   | "Complete"
@@ -343,7 +344,7 @@ export const QuickFire = () => {
           <WebcamContainer ref={videoRef} />
         </Grid>
         <Grid item xs={6}>
-          <Box textAlign="center">
+          <GameButtonContainer>
             {state.status === "Not Started" ? (
               <GameButton color="success" onClick={handleStart}>
                 <PlayArrowIcon sx={{ mr: 1 }} />
@@ -355,7 +356,7 @@ export const QuickFire = () => {
                 Stop
               </GameButton>
             )}
-          </Box>
+          </GameButtonContainer>
         </Grid>
       </Grid>
     </BasePage>

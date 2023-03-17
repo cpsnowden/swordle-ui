@@ -1,4 +1,4 @@
-import { Box, IconButton, Grid, Tooltip } from "@mui/material";
+import { IconButton, Grid, Tooltip } from "@mui/material";
 import { useCallback, useEffect, useRef, useState } from "react";
 import WordleGrid from "pages/Wordle/components/WordleGrid";
 import { LetterPrediction, predict_letter } from "services/api";
@@ -13,7 +13,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import GameFinishDialog from "./components/GameFinishDialog";
 import { FinishState } from "./types";
 import GameButton from "components/GameButton";
-import HandOverlayHelp from "components/HandOverlay";
+import GameButtonContainer from "components/GameButtonContainer";
 
 type GameStatus =
   | "Not Started"
@@ -170,7 +170,7 @@ export const Wordle: React.FC<WordleProps> = ({
           <WebcamContainer ref={videoRef} />
         </Grid>
         <Grid item xs={6}>
-          <Box textAlign="center">
+          <GameButtonContainer>
             {(gameState === "User Check" || gameState === "Retry") && (
               <GameButton onClick={handleRetryLetter}>Retry Letter</GameButton>
             )}
@@ -200,8 +200,7 @@ export const Wordle: React.FC<WordleProps> = ({
                 Validating...
               </GameButton>
             )}
-            <HandOverlayHelp />
-          </Box>
+          </GameButtonContainer>
         </Grid>
       </Grid>
     </BasePage>

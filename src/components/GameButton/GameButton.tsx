@@ -6,7 +6,7 @@ export const GameButton: React.FC<GameButtonProps> = ({
   children,
   ...rest
 }) => (
-  <Fab variant="extended" size="large" sx={{ mr: 2, minWidth: 150 }} {...rest}>
+  <Fab variant="extended" size="large" sx={{ minWidth: 150 }} {...rest}>
     {children}
   </Fab>
 );
