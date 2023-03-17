@@ -5,6 +5,7 @@ import { useState } from "react";
 import { ReactComponent as Logo } from "assets/swordle-logo.svg";
 import HandOverlay from "components/HandOverlay";
 import PreferencesForm from "components/UserPreferences";
+import { Link } from "react-router-dom";
 
 export interface HeaderProps {
   rightPanel?: React.ReactNode;
@@ -49,7 +50,9 @@ export const Header: React.FC<HeaderProps> = ({ rightPanel }) => {
             isOpen={isPreferencesOpen}
             onClose={() => setPreferencesOpen(false)}
           />
-          <Logo height={65} />
+          <Box to="/" component={Link}>
+            <Logo height={65} />
+          </Box>
           <Box sx={{ flex: 1, display: "flex", justifyContent: "right" }}>
             {rightPanel}
           </Box>
