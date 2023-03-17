@@ -13,6 +13,7 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import GameFinishDialog from "./components/GameFinishDialog";
 import { FinishState } from "./types";
 import GameButton from "components/GameButton";
+import HandOverlayHelp from "components/HandOverlay";
 
 type GameStatus =
   | "Not Started"
@@ -199,6 +200,7 @@ export const Wordle: React.FC<WordleProps> = ({
                 Validating...
               </GameButton>
             )}
+            <HandOverlayHelp />
           </Box>
         </Grid>
       </Grid>

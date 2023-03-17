@@ -9,6 +9,7 @@ import { LetterPrediction, predict_letter } from "services/api";
 import "./SingleSign.css";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import GameButton from "components/GameButton";
+import HandOverlayHelp from "components/HandOverlay";
 
 type GameStatus =
   | "Not Started"
@@ -143,6 +144,7 @@ export const SingleSign = () => {
                 {gameState === "User Check" && "Next Letter"}
               </GameButton>
             )}
+            <HandOverlayHelp />
           </Box>
         </Grid>
       </Grid>
