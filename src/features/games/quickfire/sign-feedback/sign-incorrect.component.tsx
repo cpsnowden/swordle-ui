@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useRandomChoice } from "hooks/use-random-choice";
 
 const neutralReactionEmoji = [
@@ -31,11 +31,19 @@ export const SignIncorrect: React.FC<SignIncorrectProps> = ({
   const emoji = useRandomChoice(neutralReactionEmoji);
   return (
     <Stack spacing={0} alignItems="center">
-      <div className="text-4xl">{emoji}</div>
-      <div className="text-2xl">
-        Incorrect {targetLetter} != {predictedLetter}
-      </div>
-      <div className="text-2xl">Try again in {remainingTime}</div>
+      <Typography
+        variant="h6"
+        align="center"
+        sx={{
+          fontFamily: "monospace",
+        }}
+      >
+        Incorrect {emoji}
+        <br />
+        {targetLetter} != {predictedLetter}
+        <br />
+        Next letter in {remainingTime}
+      </Typography>
     </Stack>
   );
 };

@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useRandomChoice } from "hooks/use-random-choice";
 import { useState } from "react";
 import ConfettiExplosion from "react-confetti-explosion";
@@ -32,10 +32,18 @@ export const SignCorrect: React.FC<SignCorrectProps> = ({ remainingTime }) => {
   });
   return (
     <Stack spacing={0} alignItems="center">
-      return <div className="text-4xl">{emoji}</div>;
       {shouldFireConfetti && <ConfettiExplosion />}
-      <div className="text-2xl">Correct</div>
-      <div className="text-2xl">Next letter in {remainingTime}</div>
+      <Typography
+        variant="h6"
+        align="center"
+        sx={{
+          fontFamily: "monospace",
+        }}
+      >
+        Correct {emoji}
+        <br />
+        Next letter in {remainingTime}
+      </Typography>
     </Stack>
   );
 };

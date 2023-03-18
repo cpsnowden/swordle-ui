@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 export interface NoHandProps {
   remainingTime: number;
@@ -8,8 +8,17 @@ export const NoHand: React.FC<NoHandProps> = ({ remainingTime }) => {
   return (
     <Stack spacing={0} alignItems="center">
       <div className="text-4xl">🤔</div>
-      <div className="text-2xl">No hand found...</div>
-      <div className="text-2xl">Try again in {remainingTime}</div>
+      <Typography
+        variant="h6"
+        align="center"
+        sx={{
+          fontFamily: "monospace",
+        }}
+      >
+        No hand found...
+        <br />
+        Try again in {remainingTime}
+      </Typography>
     </Stack>
   );
 };

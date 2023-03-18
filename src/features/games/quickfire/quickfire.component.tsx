@@ -1,4 +1,11 @@
-import { Box, Grid, IconButton, Stack, Tooltip } from "@mui/material";
+import {
+  Box,
+  Grid,
+  IconButton,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import StopIcon from "@mui/icons-material/Stop";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { WebcamContainer } from "features/webcam";
@@ -36,8 +43,24 @@ const LetterCountdown = ({
 }) => {
   return (
     <Stack spacing={0} alignItems="center">
-      <div className="text-2xl">Try to sign: {target}</div>
-      <div className="text-2xl">Taking photo in {remainingTime}</div>
+      <Typography
+        variant="h5"
+        align="center"
+        sx={{
+          fontFamily: "monospace",
+        }}
+      >
+        Sign "{target}"
+      </Typography>
+      <Typography
+        variant="h3"
+        align="center"
+        sx={{
+          fontFamily: "monospace",
+        }}
+      >
+        {remainingTime}
+      </Typography>
     </Stack>
   );
 };
