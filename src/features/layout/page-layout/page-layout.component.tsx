@@ -1,10 +1,11 @@
 import { Container } from "@mui/material";
 import HandReferenceOverlay from "components/HandReferenceOverlay";
 import { PreferencesDialog } from "features/preferences";
-import NavMenu from "features/layout/nav-menu";
+import { NavMenu } from "features/layout/nav-menu";
 import { Header } from "features/layout/header";
 import { FC } from "react";
 import { useBoolean } from "usehooks-ts";
+import { AlertContainer } from "features/alerts";
 
 export interface PageLayoutProps {
   rightHeaderPanel?: React.ReactNode;
@@ -33,7 +34,9 @@ export const PageLayout: FC<PageLayoutProps> = ({
   return (
     <>
       <Header rightPanel={rightHeaderPanel} onAppMenuClick={openAppMenu} />
-      <Container className="mt-3 mb-3">{children}</Container>
+      <Container className="mt-3 mb-3">
+        <AlertContainer>{children}</AlertContainer>
+      </Container>
       <NavMenu
         isOpen={isMenuOpen}
         onClose={closeAppMenu}

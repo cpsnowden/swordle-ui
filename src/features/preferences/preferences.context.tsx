@@ -18,8 +18,9 @@ export const PreferenceContext = createContext<PreferencesContext>({
   savedPreferences: defaultPreferences,
   savePreferences: () => {},
 });
+PreferenceContext.displayName = "PreferenceContext";
 
-export const PreferenceContextProvider = ({
+export const PreferencesProvider = ({
   children,
 }: {
   children: React.ReactNode;

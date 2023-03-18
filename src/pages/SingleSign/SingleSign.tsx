@@ -1,5 +1,4 @@
 import { Box, Grid, IconButton, Typography } from "@mui/material";
-import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
 import { PageLayout } from "features/layout/page-layout";
 import { useRef, useState } from "react";
@@ -10,6 +9,7 @@ import "./SingleSign.css";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import GameButton from "components/GameButton";
 import GameButtonContainer from "components/GameButtonContainer";
+import { useAlert } from "features/alerts";
 
 type GameStatus =
   | "Not Started"
@@ -43,7 +43,7 @@ export const SingleSign = () => {
 
   const videoRef = useRef<Webcam | null>(null);
 
-  const [error, setError] = useState<string | null>(null);
+  const { showError } = useAlert();
 
   const startCaptureCountdown = () => {
     resetCountDown();
@@ -55,7 +55,7 @@ export const SingleSign = () => {
     try {
       prediction = await predict_letter(img);
     } catch (predictionError: any) {
-      setError("Something has gone wrong, try again...");
+      showError("Something has gone wrong, try again...");
       setCurrentPrediction(null);
       setGameState("User Check");
       return;
@@ -64,11 +64,11 @@ export const SingleSign = () => {
       setCurrentPrediction(prediction.prediction.toUpperCase());
       setGameState("User Check");
     } else if (prediction.predictionStatus === "no_hand_detected") {
-      setError("No hand detected, try again...");
+      showError("No hand detected, try again...");
       setGameState("User Check");
       setCurrentPrediction(null);
     } else {
-      setError("Something has gone wrong, try again...");
+      showError("Something has gone wrong, try again...");
     }
   };
 
@@ -103,7 +103,6 @@ export const SingleSign = () => {
 
   return (
     <PageLayout rightHeaderPanel={ruleButton}>
-      <AlertSnackbar error={error} onClose={() => setError(null)} />
       <Grid
         container
         alignItems="center"

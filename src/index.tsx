@@ -7,8 +7,9 @@ import theme from "theme";
 import { RouterProvider } from "react-router-dom";
 import { router } from "pages";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-import { PreferenceContextProvider } from "features/preferences";
-import AppStatusOverlay from "features/app-status";
+import { PreferencesProvider } from "features/preferences";
+import { AppStatusOverlay } from "features/app-status";
+import { AlertProvider } from "features/alerts";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -18,9 +19,11 @@ root.render(
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppStatusOverlay />
-      <PreferenceContextProvider>
-        <RouterProvider router={router} />
-      </PreferenceContextProvider>
+      <PreferencesProvider>
+        <AlertProvider>
+          <RouterProvider router={router} />
+        </AlertProvider>
+      </PreferencesProvider>
     </ThemeProvider>
   </React.StrictMode>
 );

@@ -1,8 +1,6 @@
 import { Box, Grid, IconButton, Stack, Tooltip } from "@mui/material";
 import StopIcon from "@mui/icons-material/Stop";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-
-import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
 import { useReducer, useRef, useState } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
@@ -21,6 +19,7 @@ import GameFinishDialog from "./components/GameFinishDialog";
 import { PageLayout } from "features/layout/page-layout";
 import GameButton from "components/GameButton";
 import GameButtonContainer from "components/GameButtonContainer";
+import { useAlert } from "features/alerts";
 
 type GameStatus =
   | "Complete"
@@ -185,7 +184,7 @@ export const QuickFire = () => {
   });
   const [isSettingsOpen, setSettingOpen] = useState(true);
   const videoRef = useRef<Webcam | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const { showError } = useAlert();
 
   const handleStart = () => {
     dispatch({ type: "start_game" });
@@ -230,7 +229,7 @@ export const QuickFire = () => {
     try {
       prediction = await predict_letter(img);
     } catch (predictionError: any) {
-      setError("Something has gone wrong, try again...");
+      showError("Something has gone wrong, try again...");
       return;
     }
 
@@ -240,7 +239,7 @@ export const QuickFire = () => {
     } else if (prediction.predictionStatus === "no_hand_detected") {
       dispatch({ type: "submit_attempt", attempt: "NO_HAND" });
     } else {
-      setError("Something has gone wrong, try again...");
+      showError("Something has gone wrong, try again...");
     }
   };
 
@@ -288,7 +287,6 @@ export const QuickFire = () => {
         gameStats={state.stats}
         level={state.levelSettings.level}
       />
-      <AlertSnackbar error={error} onClose={() => setError(null)} />
       <Grid
         container
         alignItems="center"

@@ -5,7 +5,6 @@ import { LetterPrediction, predict_letter } from "services/api";
 import Webcam from "react-webcam";
 import { CELL_REVEAL_MS } from "services/params";
 import { useCountdown } from "usehooks-ts";
-import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
 import { PageLayout } from "features/layout/page-layout";
 import GameRulesDialog from "./components/GameRulesDialog";
@@ -14,6 +13,7 @@ import GameFinishDialog from "./components/GameFinishDialog";
 import { FinishState } from "./types";
 import GameButton from "components/GameButton";
 import GameButtonContainer from "components/GameButtonContainer";
+import { useAlert } from "features/alerts";
 
 type GameStatus =
   | "Not Started"
@@ -46,14 +46,14 @@ export const Wordle: React.FC<WordleProps> = ({
 
   const videoRef = useRef<Webcam | null>(null);
 
-  const [error, setError] = useState<string | null>(null);
+  const { showError } = useAlert();
 
   const submitToPredictionApi = async (img: string) => {
     let prediction: LetterPrediction;
     try {
       prediction = await predict_letter(img);
     } catch (predictionError: any) {
-      setError("Something has gone wrong, try again...");
+      showError("Something has gone wrong, try again...");
       setGameState("User Check");
       return;
     }
@@ -61,10 +61,10 @@ export const Wordle: React.FC<WordleProps> = ({
       setCurrentLetter(prediction.prediction.toUpperCase());
       setGameState("User Check");
     } else if (prediction.predictionStatus === "no_hand_detected") {
-      setError("No hand detected, try again...");
+      showError("No hand detected, try again...");
       setGameState("Retry");
     } else {
-      setError("Something has gone wrong, try again...");
+      showError("Something has gone wrong, try again...");
     }
   };
 
@@ -96,6 +96,7 @@ export const Wordle: React.FC<WordleProps> = ({
     } else {
       console.log("No image captured!");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoRef]);
 
   const validateGuess = (row: string[], currentLetter?: string) => {
@@ -137,7 +138,6 @@ export const Wordle: React.FC<WordleProps> = ({
 
   return (
     <PageLayout rightHeaderPanel={ruleButton}>
-      <AlertSnackbar error={error} onClose={() => setError(null)} />
       <GameFinishDialog
         finishState={finishState}
         solution={solution}
