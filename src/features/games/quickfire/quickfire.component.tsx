@@ -1,11 +1,4 @@
-import {
-  Box,
-  Grid,
-  IconButton,
-  Stack,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Box, IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import StopIcon from "@mui/icons-material/Stop";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { WebcamContainer } from "features/webcam";
@@ -22,6 +15,7 @@ import { GameScoreDialog } from "./game-score-dialog";
 import { PageLayout } from "components/layout/page-layout";
 import { GameButton, GameButtonContainer } from "features/games/common";
 import { useAlert } from "features/alerts";
+import { GameLayout } from "../common/game-layout";
 
 // TODO Clean this class up
 
@@ -307,16 +301,8 @@ export const QuickFire = () => {
         gameStats={state.stats}
         level={state.levelSettings.level}
       />
-      <Grid
-        container
-        alignItems="center"
-        direction="row"
-        justifyContent="center"
-        columns={{ xs: 6, md: 12 }}
-        spacing={2}
-        minHeight="90vh"
-      >
-        <Grid item xs={6}>
+      <GameLayout
+        feedbackPanel={
           <Stack direction="column" spacing={2}>
             <Box display="flex" justifyContent="center" alignItems="center">
               <CountdownCircleTimer
@@ -357,11 +343,9 @@ export const QuickFire = () => {
               onLevelClick={() => setSettingOpen(true)}
             />
           </Stack>
-        </Grid>
-        <Grid item xs={6}>
-          <WebcamContainer ref={videoRef} />
-        </Grid>
-        <Grid item xs={6}>
+        }
+        webcamPanel={<WebcamContainer ref={videoRef} />}
+        buttonPanel={
           <GameButtonContainer>
             {state.status === "Not Started" ? (
               <GameButton color="success" onClick={handleStart}>
@@ -375,8 +359,8 @@ export const QuickFire = () => {
               </GameButton>
             )}
           </GameButtonContainer>
-        </Grid>
-      </Grid>
+        }
+      />
     </PageLayout>
   );
 };

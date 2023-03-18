@@ -1,4 +1,4 @@
-import { IconButton, Grid, Tooltip } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { SWordleGrid } from "./grid/swordle-grid";
 import { LetterPrediction, predict_letter } from "services/api";
@@ -13,6 +13,7 @@ import { ResultDialog } from "./result-dialog";
 import { FinishState, GameStatus } from "./types";
 import { GameButton, GameButtonContainer } from "features/games/common";
 import { useAlert } from "features/alerts";
+import { GameLayout } from "../common/game-layout";
 
 export interface WordleProps {
   solution?: string;
@@ -140,16 +141,8 @@ export const Wordle: React.FC<WordleProps> = ({
         isOpen={isSettingsOpen}
         onClose={() => setSettingOpen(false)}
       />
-      <Grid
-        container
-        alignItems="center"
-        direction="row"
-        justifyContent="center"
-        columns={{ xs: 6, md: 12 }}
-        spacing={2}
-        minHeight="90vh"
-      >
-        <Grid item xs={6}>
+      <GameLayout
+        feedbackPanel={
           <SWordleGrid
             solution={solution}
             currentGuess={currentGuess}
@@ -158,11 +151,9 @@ export const Wordle: React.FC<WordleProps> = ({
             numberOfAttempts={numberOfAttempts}
             currentLetter={currentLetter}
           />
-        </Grid>
-        <Grid item xs={6}>
-          <WebcamContainer ref={videoRef} />
-        </Grid>
-        <Grid item xs={6}>
+        }
+        webcamPanel={<WebcamContainer ref={videoRef} />}
+        buttonPanel={
           <GameButtonContainer>
             {(gameState === "User Check" || gameState === "Retry") && (
               <GameButton onClick={handleRetryLetter}>Retry Letter</GameButton>
@@ -194,8 +185,8 @@ export const Wordle: React.FC<WordleProps> = ({
               </GameButton>
             )}
           </GameButtonContainer>
-        </Grid>
-      </Grid>
+        }
+      />
     </PageLayout>
   );
 };
