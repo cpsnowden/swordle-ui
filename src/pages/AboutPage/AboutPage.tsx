@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import BasePage from "pages/BasePage";
+import BaseLayout from "layout/BaseLayout";
 import { games } from "pages";
 import { FC } from "react";
 import { Link } from "react-router-dom";
@@ -18,7 +18,7 @@ interface GameCardProps {
   path: string;
 }
 
-const GameCard: FC<GameCardProps> = ({ path, tagLine: description, name }) => {
+const GameCard: FC<GameCardProps> = ({ path, tagLine, name }) => {
   return (
     <Card variant="outlined">
       <CardContent>
@@ -26,7 +26,7 @@ const GameCard: FC<GameCardProps> = ({ path, tagLine: description, name }) => {
           {name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {description}
+          {tagLine}
         </Typography>
       </CardContent>
       <CardActions>
@@ -39,7 +39,7 @@ const GameCard: FC<GameCardProps> = ({ path, tagLine: description, name }) => {
 };
 
 export const AboutPage = () => (
-  <BasePage>
+  <BaseLayout>
     <Container maxWidth="sm">
       <Stack spacing={2}>
         {games.map((game, index) => (
@@ -52,5 +52,5 @@ export const AboutPage = () => (
         ))}
       </Stack>
     </Container>
-  </BasePage>
+  </BaseLayout>
 );

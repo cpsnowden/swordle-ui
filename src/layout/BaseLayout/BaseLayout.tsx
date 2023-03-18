@@ -1,17 +1,20 @@
 import { Container } from "@mui/material";
-import HandOverlay from "components/HandOverlay";
+import HandReferenceOverlay from "components/HandReferenceOverlay";
 import PreferencesForm from "components/UserPreferences";
 import AppMenu from "components/AppMenu";
-import Header from "components/Header";
+import Header from "layout/Header";
 import { FC } from "react";
 import { useBoolean } from "usehooks-ts";
 
-export interface BasePageProps {
+export interface BaseLayoutProps {
   rightHeaderPanel?: React.ReactNode;
   children: React.ReactNode;
 }
 
-export const BasePage: FC<BasePageProps> = ({ rightHeaderPanel, children }) => {
+export const BaseLayout: FC<BaseLayoutProps> = ({
+  rightHeaderPanel,
+  children,
+}) => {
   const {
     value: isMenuOpen,
     setTrue: openAppMenu,
@@ -43,7 +46,10 @@ export const BasePage: FC<BasePageProps> = ({ rightHeaderPanel, children }) => {
           openPeferences();
         }}
       />
-      <HandOverlay isOpen={isHandReferenceOpen} onClose={closeHandReference} />
+      <HandReferenceOverlay
+        isOpen={isHandReferenceOpen}
+        onClose={closeHandReference}
+      />
       <PreferencesForm isOpen={isPreferencesOpen} onClose={closePreferences} />
     </>
   );

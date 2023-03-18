@@ -1,7 +1,7 @@
 import { Box, Grid, IconButton, Typography } from "@mui/material";
 import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
-import BasePage from "pages/BasePage";
+import BaseLayout from "layout/BaseLayout";
 import { useRef, useState } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 import Webcam from "react-webcam";
@@ -102,7 +102,7 @@ export const SingleSign = () => {
   );
 
   return (
-    <BasePage rightHeaderPanel={ruleButton}>
+    <BaseLayout rightHeaderPanel={ruleButton}>
       <AlertSnackbar error={error} onClose={() => setError(null)} />
       <Grid
         container
@@ -147,6 +147,6 @@ export const SingleSign = () => {
           </GameButtonContainer>
         </Grid>
       </Grid>
-    </BasePage>
+    </BaseLayout>
   );
 };

@@ -18,7 +18,7 @@ import {
   NoHand,
 } from "./components/GuessFeedback";
 import GameFinishDialog from "./components/GameFinishDialog";
-import BasePage from "pages/BasePage";
+import BaseLayout from "layout/BaseLayout";
 import GameButton from "components/GameButton";
 import GameButtonContainer from "components/GameButtonContainer";
 
@@ -275,7 +275,7 @@ export const QuickFire = () => {
   );
 
   return (
-    <BasePage rightHeaderPanel={ruleButton}>
+    <BaseLayout rightHeaderPanel={ruleButton}>
       <GameRulesDialog
         isOpen={isSettingsOpen}
         onClose={() => setSettingOpen(false)}
@@ -359,6 +359,6 @@ export const QuickFire = () => {
           </GameButtonContainer>
         </Grid>
       </Grid>
-    </BasePage>
+    </BaseLayout>
   );
 };
