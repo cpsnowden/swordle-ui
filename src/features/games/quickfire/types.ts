@@ -6,10 +6,10 @@ export enum Level {
 }
 
 export type LevelSettings = {
-  level: Level
-  secondsPerLetter: number
-  retriesPerLetter: number
-}
+  level: Level;
+  secondsPerLetter: number;
+  retriesPerLetter: number;
+};
 
 export type GameStats = {
   score: number;
@@ -37,9 +37,9 @@ const LEVEL_SETTINGS = {
     secondsPerLetter: 1,
     retriesPerLetter: 0,
     level: Level.Insane,
-  }
-}
+  },
+};
 
 export const getLevelSettings = (level: Level): LevelSettings => {
   return LEVEL_SETTINGS[level];
-}
+};
