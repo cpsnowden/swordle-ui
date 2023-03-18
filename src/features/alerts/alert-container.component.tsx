@@ -1,5 +1,5 @@
 import { Alert, Snackbar } from "@mui/material";
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 import { useAlert } from "./use-alert";
 
 export const AlertContainer: FC<{}> = () => {
