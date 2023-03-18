@@ -3,12 +3,12 @@ import Webcam from "react-webcam";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { useDebounce } from "usehooks-ts";
 import { Paper } from "@mui/material";
-import { useReadPreferences } from "features/preferences";
+import { usePreferences } from "features/preferences";
 
 const ResizableWebcamContainer = forwardRef<Webcam, { width: number }>(
   ({ width }, ref) => {
     const debounceWidth = useDebounce<number>(width, 1000);
-    const preferences = useReadPreferences();
+    const { savedPreferences } = usePreferences();
     return (
       <Paper elevation={3} sx={{ color: "primary.dark" }}>
         <Webcam
@@ -24,7 +24,7 @@ const ResizableWebcamContainer = forwardRef<Webcam, { width: number }>(
           width={debounceWidth}
           height={(debounceWidth * 9) / 16}
           ref={ref}
-          mirrored={preferences.mirrorWebcam}
+          mirrored={savedPreferences.mirrorWebcam}
         />
       </Paper>
     );

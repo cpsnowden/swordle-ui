@@ -1,18 +1,7 @@
 import { useContext } from "react";
-import {
-  Preferences,
-  PreferencesContext,
-  UserPreferenceContext,
-} from "./preferences.context";
-
-export const useReadPreferences = (): Preferences => {
-  const { savedPreferences } = useContext(UserPreferenceContext);
-  return savedPreferences;
-};
+import { PreferencesContext, PreferenceContext } from "./preferences.context";
 
 export const usePreferences = (): PreferencesContext => {
-  const { savedPreferences, savePreferences } = useContext(
-    UserPreferenceContext
-  );
+  const { savedPreferences, savePreferences } = useContext(PreferenceContext);
   return { savedPreferences, savePreferences };
 };

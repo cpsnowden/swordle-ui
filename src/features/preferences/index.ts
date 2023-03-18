@@ -1,5 +1,5 @@
 import { PreferencesDialog  } from "./preferences-dialog.component";
-import { useReadPreferences } from "./use-preferences";
-import {UserPreferenceContextProvider} from "./preferences.context"
+import { usePreferences } from "./use-preferences";
+import {PreferenceContextProvider} from "./preferences.context"
 
-export {PreferencesDialog, useReadPreferences, UserPreferenceContextProvider};
+export {PreferencesDialog, usePreferences, PreferenceContextProvider};

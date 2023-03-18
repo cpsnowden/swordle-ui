@@ -7,7 +7,7 @@ import theme from "theme";
 import { RouterProvider } from "react-router-dom";
 import { router } from "pages";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-import { UserPreferenceContextProvider } from "features/preferences";
+import { PreferenceContextProvider } from "features/preferences";
 import AppStatusOverlay from "features/app-status";
 
 const root = ReactDOM.createRoot(
@@ -16,11 +16,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <UserPreferenceContextProvider>
-        <CssBaseline />
-        <AppStatusOverlay />
+      <CssBaseline />
+      <AppStatusOverlay />
+      <PreferenceContextProvider>
         <RouterProvider router={router} />
-      </UserPreferenceContextProvider>
+      </PreferenceContextProvider>
     </ThemeProvider>
   </React.StrictMode>
 );

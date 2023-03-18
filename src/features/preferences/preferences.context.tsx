@@ -14,12 +14,12 @@ const defaultPreferences: Preferences = {
   mirrorWebcam: false,
 };
 
-export const UserPreferenceContext = createContext<PreferencesContext>({
+export const PreferenceContext = createContext<PreferencesContext>({
   savedPreferences: defaultPreferences,
   savePreferences: () => {},
 });
 
-export const UserPreferenceContextProvider = ({
+export const PreferenceContextProvider = ({
   children,
 }: {
   children: React.ReactNode;
@@ -30,10 +30,8 @@ export const UserPreferenceContextProvider = ({
   );
 
   return (
-    <UserPreferenceContext.Provider
-      value={{ savedPreferences, savePreferences }}
-    >
+    <PreferenceContext.Provider value={{ savedPreferences, savePreferences }}>
       {children}
-    </UserPreferenceContext.Provider>
+    </PreferenceContext.Provider>
   );
 };
