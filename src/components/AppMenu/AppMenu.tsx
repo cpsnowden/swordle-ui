@@ -20,14 +20,14 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 interface AppMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  onHandOverlayClick: () => void;
+  onHandReferenceClick: () => void;
   onPreferenceClick: () => void;
 }
 
 export const AppMenu: FC<AppMenuProps> = ({
   isOpen,
   onClose,
-  onHandOverlayClick,
+  onHandReferenceClick,
   onPreferenceClick,
 }) => {
   const match = useLocation();
@@ -73,7 +73,6 @@ export const AppMenu: FC<AppMenuProps> = ({
                 <Divider />
               </div>
             ))}
-            <Divider />
           </List>
           <Paper elevation={3}>
             <BottomNavigation showLabels>
@@ -85,7 +84,7 @@ export const AppMenu: FC<AppMenuProps> = ({
               <BottomNavigationAction
                 label="Sign Reference"
                 icon={<MenuBookIcon />}
-                onClick={onHandOverlayClick}
+                onClick={onHandReferenceClick}
               />
             </BottomNavigation>
           </Paper>

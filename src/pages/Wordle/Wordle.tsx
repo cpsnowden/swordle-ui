@@ -7,7 +7,7 @@ import { CELL_REVEAL_MS } from "services/params";
 import { useCountdown } from "usehooks-ts";
 import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
-import BasePage from "layouts/BasePage";
+import BasePage from "pages/BasePage";
 import GameRulesDialog from "./components/GameRulesDialog";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import GameFinishDialog from "./components/GameFinishDialog";

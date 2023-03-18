@@ -1,28 +1,20 @@
-import About from "pages/About";
+import AboutPage from "pages/AboutPage";
 import Wordle from "pages/Wordle";
 import SingleSign from "pages/SingleSign";
-import InfoIcon from "@mui/icons-material/Info";
 import SwipeDown from "@mui/icons-material/SwipeDown";
 import FastForwardIcon from "@mui/icons-material/FastForward";
 import GridOnIcon from "@mui/icons-material/GridOn";
-import {
-  createHashRouter,
-  Outlet,
-  RouteObject,
-  Navigate,
-} from "react-router-dom";
+import { createHashRouter, RouteObject, Navigate } from "react-router-dom";
 import QuickFire from "./QuickFire";
-import AppStatusOverlay from "components/AppStatusOverlay";
 
-export type PageInfo = {
+export type GameInfo = {
   name: string;
-  element?: React.ReactNode;
   icon: React.ReactNode;
   path: string;
-  tagLine?: string;
+  tagLine: string;
 };
 
-export const games: (PageInfo & RouteObject)[] = [
+export const games: (GameInfo & RouteObject)[] = [
   {
     name: "SingleSign",
     element: <SingleSign />,
@@ -46,35 +38,14 @@ export const games: (PageInfo & RouteObject)[] = [
   },
 ];
 
-export const pages: (PageInfo & RouteObject)[] = [
+export const router = createHashRouter([
   {
-    name: "About",
-    element: <About />,
-    icon: <InfoIcon />,
+    element: <AboutPage />,
     path: "/",
   },
   ...games,
-];
-
-const Layout = () => {
-  return (
-    <>
-      <AppStatusOverlay />
-      <Outlet />
-      {/* <AppFooter pages={pages} selectedPageIndex={page} /> */}
-    </>
-  );
-};
-
-export const router = createHashRouter([
   {
-    element: <Layout />,
-    children: [
-      ...pages,
-      {
-        path: "*",
-        element: <Navigate to="/" />,
-      },
-    ],
+    path: "*",
+    element: <Navigate to="/" />,
   },
 ]);

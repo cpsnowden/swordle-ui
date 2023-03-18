@@ -8,6 +8,7 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "pages";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import { UserPreferenceContextProvider } from "components/UserPreferences/UserPreferences";
+import AppStatusOverlay from "components/AppStatusOverlay";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -17,6 +18,7 @@ root.render(
     <ThemeProvider theme={theme}>
       <UserPreferenceContextProvider>
         <CssBaseline />
+        <AppStatusOverlay />
         <RouterProvider router={router} />
       </UserPreferenceContextProvider>
     </ThemeProvider>

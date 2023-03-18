@@ -18,7 +18,7 @@ import {
   NoHand,
 } from "./components/GuessFeedback";
 import GameFinishDialog from "./components/GameFinishDialog";
-import BasePage from "layouts/BasePage";
+import BasePage from "pages/BasePage";
 import GameButton from "components/GameButton";
 import GameButtonContainer from "components/GameButtonContainer";
 

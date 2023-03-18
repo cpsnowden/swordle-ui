@@ -20,8 +20,8 @@ export const HandOverlay: FC<HandOverlayProps> = ({ isOpen, onClose }) => {
         }}
       >
         <img
-          className="short:max-w-xs max-w-md h-auto"
-          src="https://www.researchgate.net/profile/Sergio-Benini/publication/259921409/figure/fig1/AS:614251592949760@1523460400036/ASL-finger-spelling-alphabet-reproduced-from-3.png"
+          className="short:max-w-xs max-w-lg h-auto"
+          src="https://www.researchgate.net/publication/328396430/figure/fig1/AS:683619848830976@1539999081795/The-26-letters-and-10-digits-of-American-Sign-Language-ASL.jpg"
           alt="asl-signs"
         />
       </Box>

@@ -7,30 +7,20 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Header from "layouts/Header";
+import BasePage from "pages/BasePage";
 import { games } from "pages";
+import { FC } from "react";
 import { Link } from "react-router-dom";
 
 interface GameCardProps {
   name: string;
-  description: string;
-  image: string;
+  tagLine: string;
   path: string;
 }
 
-const GameCard: React.FC<GameCardProps> = ({
-  image,
-  path,
-  description,
-  name,
-}) => {
+const GameCard: FC<GameCardProps> = ({ path, tagLine: description, name }) => {
   return (
     <Card variant="outlined">
-      {/* <CardMedia
-        sx={{ height: 140 }}
-        image={image}
-        // image="/static/images/cards/contemplative-reptile.jpg"
-      /> */}
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {name}
@@ -48,23 +38,19 @@ const GameCard: React.FC<GameCardProps> = ({
   );
 };
 
-const About = () => (
-  <>
-    <Header />
-    <Container className="mt-3 mb-3" maxWidth="sm">
+export const AboutPage = () => (
+  <BasePage>
+    <Container maxWidth="sm">
       <Stack spacing={2}>
-        {games.map((page, index) => (
+        {games.map((game, index) => (
           <GameCard
             key={index}
-            name={page.name}
-            description={page.tagLine!}
-            image={""}
-            path={page.path}
+            name={game.name}
+            tagLine={game.tagLine}
+            path={game.path}
           />
         ))}
       </Stack>
     </Container>
-  </>
+  </BasePage>
 );
-
-export default About;
