@@ -1,4 +1,4 @@
-# Sign Game
+# Swordle UI
 
 The production deployed version is at https://swordle.dev/
 
