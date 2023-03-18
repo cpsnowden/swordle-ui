@@ -1,4 +1,4 @@
-import { Box, Paper } from "@mui/material";
+import { Paper, Stack } from "@mui/material";
 import { BaseDialog } from "components/base-dialog";
 import { GameStats, Level } from "features/games/quickfire/types";
 import { FC } from "react";
@@ -36,17 +36,9 @@ export const GameScoreDialog: React.FC<GameScoreDialogProps> = ({
     closeText="Play again"
     onClose={onNextGame}
   >
-    <Box
-      sx={{
-        display: "flex",
-        flexWrap: "wrap",
-        "& > :not(style)": {
-          m: 1,
-        },
-      }}
-    >
+    <Stack direction="row" justifyContent="center" spacing={2}>
       <ScoreSquare scoreName="Score" scoreValue={gameStats.score} />
       <ScoreSquare scoreName="Streaks" scoreValue={gameStats.nStreaks} />
-    </Box>
+    </Stack>
   </BaseDialog>
 );
