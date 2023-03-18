@@ -1,17 +1,15 @@
 # Sign Game
 
-The production deployed version is at https://cpsnowden.github.io/sign-game-ui-react
+The production deployed version is at https://swordle.dev/
 
-- About Page
-- Web cam size on iphone
-- Cleanup typography on single sign
-- Consistent Fonts in Info
-- Responsive WebCam
-- Score page on quickfire
-https://github.com/alan2207/bulletproof-react/blob/master/docs/project-structure.md
 # Development
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Prerequisites
+
+1. Install node - https://nodejs.org/en/download
+2. Install dependences `npm install`
 
 ## Available Scripts
 
