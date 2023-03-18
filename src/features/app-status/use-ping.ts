@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from "react";
-import { useEffectOnce } from "./useEffectOnce";
+import { useEffectOnce } from "../../hooks/useEffectOnce";
 
 export type PingState = "waiting" | "ok" | "error";
 

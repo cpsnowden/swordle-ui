@@ -1,7 +1,7 @@
 import { Container } from "@mui/material";
 import HandReferenceOverlay from "components/HandReferenceOverlay";
-import PreferencesForm from "components/UserPreferences";
-import AppMenu from "components/AppMenu";
+import { PreferencesDialog } from "features/preferences";
+import NavMenu from "features/layout/nav-menu";
 import { Header } from "features/layout/header";
 import { FC } from "react";
 import { useBoolean } from "usehooks-ts";
@@ -34,7 +34,7 @@ export const PageLayout: FC<PageLayoutProps> = ({
     <>
       <Header rightPanel={rightHeaderPanel} onAppMenuClick={openAppMenu} />
       <Container className="mt-3 mb-3">{children}</Container>
-      <AppMenu
+      <NavMenu
         isOpen={isMenuOpen}
         onClose={closeAppMenu}
         onHandReferenceClick={() => {
@@ -50,7 +50,10 @@ export const PageLayout: FC<PageLayoutProps> = ({
         isOpen={isHandReferenceOpen}
         onClose={closeHandReference}
       />
-      <PreferencesForm isOpen={isPreferencesOpen} onClose={closePreferences} />
+      <PreferencesDialog
+        isOpen={isPreferencesOpen}
+        onClose={closePreferences}
+      />
     </>
   );
 };

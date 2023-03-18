@@ -1,10 +1,11 @@
 import { Backdrop, CircularProgress, Typography } from "@mui/material";
-import { usePing } from "hooks/usePing";
+import { usePing } from "features/app-status/use-ping";
 import { API_POLL_INTERVAL_MS } from "services/params";
 import { Stack } from "@mui/system";
 import { ping } from "services/api";
+import { FC } from "react";
 
-export const AppStatusOverlay = () => {
+export const AppStatusOverlay: FC<{}> = () => {
   const { pingState } = usePing(API_POLL_INTERVAL_MS, ping);
   return (
     <Backdrop

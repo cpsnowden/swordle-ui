@@ -17,14 +17,14 @@ import { Link, useLocation } from "react-router-dom";
 import SettingsIcon from "@mui/icons-material/Settings";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 
-interface AppMenuProps {
+interface NavMenuProps {
   isOpen: boolean;
   onClose: () => void;
   onHandReferenceClick: () => void;
   onPreferenceClick: () => void;
 }
 
-export const AppMenu: FC<AppMenuProps> = ({
+export const NavMenu: FC<NavMenuProps> = ({
   isOpen,
   onClose,
   onHandReferenceClick,

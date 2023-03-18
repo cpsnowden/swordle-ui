@@ -3,8 +3,7 @@ import Webcam from "react-webcam";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { useDebounce } from "usehooks-ts";
 import { Paper } from "@mui/material";
-import { useReadPreferences } from "components/UserPreferences/UserPreferences";
-// import { videoConstraints } from "services/params";
+import { useReadPreferences } from "features/preferences";
 
 const ResizableWebcamContainer = forwardRef<Webcam, { width: number }>(
   ({ width }, ref) => {

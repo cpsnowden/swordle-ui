@@ -7,8 +7,8 @@ import theme from "theme";
 import { RouterProvider } from "react-router-dom";
 import { router } from "pages";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-import { UserPreferenceContextProvider } from "components/UserPreferences/UserPreferences";
-import AppStatusOverlay from "components/AppStatusOverlay";
+import { UserPreferenceContextProvider } from "features/preferences";
+import AppStatusOverlay from "features/app-status";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
