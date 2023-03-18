@@ -15,7 +15,7 @@ export const CountdownFeedback: React.FC<CountdownFeedbackProps> = ({
         fontFamily: "monospace",
       }}
     >
-      Taking photo in
+      Sign a letter in
     </Typography>
     <Typography
       variant="h3"
