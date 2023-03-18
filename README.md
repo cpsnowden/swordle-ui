@@ -40,3 +40,7 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+# Credits
+
+- The wordle implementation started from Reactle available from https://github.com/cwackerfuss/react-wordle
