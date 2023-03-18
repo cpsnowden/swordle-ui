@@ -35,7 +35,8 @@ export const PageLayout: FC<PageLayoutProps> = ({
     <>
       <Header rightPanel={rightHeaderPanel} onAppMenuClick={openAppMenu} />
       <Container className="mt-3 mb-3">
-        <AlertContainer>{children}</AlertContainer>
+        <AlertContainer/>
+        {children}
       </Container>
       <NavMenu
         isOpen={isMenuOpen}

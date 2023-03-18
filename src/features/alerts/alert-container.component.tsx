@@ -2,11 +2,7 @@ import { Alert, Snackbar } from "@mui/material";
 import { FC, ReactNode } from "react";
 import { useAlert } from "./use-alert";
 
-export interface AlertContainerProps {
-  children: ReactNode;
-}
-
-export const AlertContainer: FC<AlertContainerProps> = () => {
+export const AlertContainer: FC<{}> = () => {
   const { currentAlert, dismissAlert } = useAlert();
   return (
     <Snackbar
