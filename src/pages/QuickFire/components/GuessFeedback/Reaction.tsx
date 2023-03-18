@@ -1,10 +1,8 @@
-import { useRandomEmoji } from "hooks/useRandomEmoji";
+import { useRandomEmoji } from "features/games/quickfire/useRandomEmoji";
 
 export const PositiveReaction = () => {
   const emoji = useRandomEmoji(true);
-  return (
-    <div className="text-4xl">{emoji}</div>
-  );
+  return <div className="text-4xl">{emoji}</div>;
 };
 
 export const NegativeReaction = () => {

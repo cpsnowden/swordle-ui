@@ -1,5 +1,5 @@
 import Cell from "pages/Wordle/components/Cell";
-import { mapRange } from "services/utils";
+import { mapRange } from "utils/functional";
 
 export interface CurrentRowProps {
   solution: string;

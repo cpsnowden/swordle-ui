@@ -1,6 +1,6 @@
 import classnames from "classnames";
-import { CELL_REVEAL_MS } from "services/params";
-import { CharStatus } from "services/wordle";
+import { CELL_REVEAL_MS } from "config";
+import { CharStatus } from "features/games/wordle/wordle";
 import "./Cell.css";
 
 export interface CellProps {

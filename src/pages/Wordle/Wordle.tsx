@@ -3,16 +3,15 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import WordleGrid from "pages/Wordle/components/WordleGrid";
 import { LetterPrediction, predict_letter } from "services/api";
 import Webcam from "react-webcam";
-import { CELL_REVEAL_MS } from "services/params";
+import { CELL_REVEAL_MS } from "config";
 import { useCountdown } from "usehooks-ts";
-import WebcamContainer from "components/WebcamContainer";
-import { PageLayout } from "features/layout/page-layout";
+import { WebcamContainer } from "features/webcam";
+import { PageLayout } from "components/layout/page-layout";
 import GameRulesDialog from "./components/GameRulesDialog";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import GameFinishDialog from "./components/GameFinishDialog";
 import { FinishState } from "./types";
-import GameButton from "components/GameButton";
-import GameButtonContainer from "components/GameButtonContainer";
+import { GameButton, GameButtonContainer } from "features/games/common";
 import { useAlert } from "features/alerts";
 
 type GameStatus =

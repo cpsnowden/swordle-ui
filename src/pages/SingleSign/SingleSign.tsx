@@ -1,14 +1,13 @@
 import { Box, Grid, IconButton, Typography } from "@mui/material";
-import WebcamContainer from "components/WebcamContainer";
-import { PageLayout } from "features/layout/page-layout";
+import { WebcamContainer } from "features/webcam";
+import { PageLayout } from "components/layout/page-layout";
 import { useRef, useState } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 import Webcam from "react-webcam";
 import { LetterPrediction, predict_letter } from "services/api";
 import "./SingleSign.css";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import GameButton from "components/GameButton";
-import GameButtonContainer from "components/GameButtonContainer";
+import { GameButton, GameButtonContainer } from "features/games/common";
 import { useAlert } from "features/alerts";
 
 type GameStatus =

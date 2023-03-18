@@ -1,3 +1,1 @@
-import { AppStatusOverlay } from "./app-status-overlay.component"
-
-export {AppStatusOverlay};
+export { AppStatusOverlay } from "./app-status-overlay.component";

@@ -1,5 +1,5 @@
 import { Box, Paper } from "@mui/material";
-import BaseDialog from "components/BaseDialog";
+import { BaseDialog } from "components/base-dialog";
 import { GameStats, Level } from "pages/QuickFire/types";
 import { FC } from "react";
 

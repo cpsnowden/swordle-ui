@@ -1,6 +1,4 @@
-import axios from "axios";
-import { URLS } from "./params";
-
+import { axiosClient } from "lib/axios";
 
 export type PredictionStatus = "no_hand_detected" | "success";
 export interface LetterPrediction {
@@ -8,20 +6,13 @@ export interface LetterPrediction {
   prediction: string;
 }
 
-export const ping = async (): Promise<boolean> => {
-  try {
-    await axios.get(URLS.ping)
-  } catch {
-    return false;
-  }
-  return true;
-}
-
 // TODO error handling
 export const predict_letter = async (
   img: string
 ): Promise<LetterPrediction> => {
-  return axios
-    .post<LetterPrediction>(URLS.letterPrediction, { frames: [img] })
+  return axiosClient
+    .post<LetterPrediction>("letter-prediction/frame-sequence", {
+      frames: [img],
+    })
     .then((response) => response.data);
 };

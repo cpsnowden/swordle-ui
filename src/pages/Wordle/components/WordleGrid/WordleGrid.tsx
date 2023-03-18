@@ -1,7 +1,7 @@
 import CompletedRow from "pages/Wordle/components/CompletedRow";
 import CurrentRow from "pages/Wordle/components/CurrentRow";
 import EmptyRow from "pages/Wordle/components/EmptyRow";
-import { mapRange } from "services/utils";
+import { mapRange } from "utils/functional";
 export interface WordleGridProps {
   solution: string;
   guesses: string[][];

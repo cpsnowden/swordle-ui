@@ -1,5 +1,5 @@
 import { DialogContentText } from "@mui/material";
-import BaseDialog from "components/BaseDialog";
+import { BaseDialog } from "components/base-dialog";
 import { FinishState } from "pages/Wordle/types";
 import ConfettiExplosion from "react-confetti-explosion";
 

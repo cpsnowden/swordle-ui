@@ -1,7 +1,7 @@
 import { Box, Grid, IconButton, Stack, Tooltip } from "@mui/material";
 import StopIcon from "@mui/icons-material/Stop";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import WebcamContainer from "components/WebcamContainer";
+import { WebcamContainer } from "features/webcam";
 import { useReducer, useRef, useState } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 import Webcam from "react-webcam";
@@ -16,9 +16,8 @@ import {
   NoHand,
 } from "./components/GuessFeedback";
 import GameFinishDialog from "./components/GameFinishDialog";
-import { PageLayout } from "features/layout/page-layout";
-import GameButton from "components/GameButton";
-import GameButtonContainer from "components/GameButtonContainer";
+import { PageLayout } from "components/layout/page-layout";
+import { GameButton, GameButtonContainer } from "features/games/common";
 import { useAlert } from "features/alerts";
 
 type GameStatus =

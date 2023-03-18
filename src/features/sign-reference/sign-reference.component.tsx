@@ -1,14 +1,11 @@
 import { Backdrop, Box } from "@mui/material";
 import { FC } from "react";
 
-interface HandReferenceOverlayProps {
+interface SignReferenceProps {
   isOpen: boolean;
   onClose: () => void;
 }
-export const HandReferenceOverlay: FC<HandReferenceOverlayProps> = ({
-  isOpen,
-  onClose,
-}) => {
+export const SignReference: FC<SignReferenceProps> = ({ isOpen, onClose }) => {
   return (
     <Backdrop
       sx={{

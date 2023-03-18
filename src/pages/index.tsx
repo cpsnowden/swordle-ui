@@ -1,4 +1,4 @@
-import AboutPage from "pages/AboutPage";
+import { AboutPage } from "pages/AboutPage";
 import Wordle from "pages/Wordle";
 import SingleSign from "pages/SingleSign";
 import SwipeDown from "@mui/icons-material/SwipeDown";

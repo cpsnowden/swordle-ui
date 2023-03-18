@@ -1,5 +1,5 @@
 import Cell from "pages/Wordle/components/Cell";
-import { calculateStatus } from "services/wordle";
+import { calculateStatus } from "features/games/wordle/wordle";
 
 export interface CompletedRowProps {
   solution: string;

@@ -1,5 +1,3 @@
-import { AlertContainer } from "./alert-container.component";
-import { useAlert } from "./use-alert";
-import { AlertProvider } from "./alert.context";
-
-export { AlertContainer, useAlert, AlertProvider};
+export { AlertContainer } from "./alert-container.component";
+export { AlertProvider } from "./alert.context";
+export { useAlert } from "./use-alert";

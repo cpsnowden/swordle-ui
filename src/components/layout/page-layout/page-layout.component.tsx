@@ -1,8 +1,8 @@
 import { Container } from "@mui/material";
-import HandReferenceOverlay from "components/HandReferenceOverlay";
+import { SignReference } from "features/sign-reference";
 import { PreferencesDialog } from "features/preferences";
-import { NavMenu } from "features/layout/nav-menu";
-import { Header } from "features/layout/header";
+import { NavMenu } from "components/layout/nav-menu";
+import { Header } from "components/layout/header";
 import { FC } from "react";
 import { useBoolean } from "usehooks-ts";
 import { AlertContainer } from "features/alerts";
@@ -22,9 +22,9 @@ export const PageLayout: FC<PageLayoutProps> = ({
     setFalse: closeAppMenu,
   } = useBoolean(false);
   const {
-    value: isHandReferenceOpen,
+    value: isSignReferenceOpen,
     setTrue: openHandReference,
-    setFalse: closeHandReference,
+    setFalse: closeSignReference,
   } = useBoolean(false);
   const {
     value: isPreferencesOpen,
@@ -35,7 +35,7 @@ export const PageLayout: FC<PageLayoutProps> = ({
     <>
       <Header rightPanel={rightHeaderPanel} onAppMenuClick={openAppMenu} />
       <Container className="mt-3 mb-3">
-        <AlertContainer/>
+        <AlertContainer />
         {children}
       </Container>
       <NavMenu
@@ -50,9 +50,9 @@ export const PageLayout: FC<PageLayoutProps> = ({
           openPeferences();
         }}
       />
-      <HandReferenceOverlay
-        isOpen={isHandReferenceOpen}
-        onClose={closeHandReference}
+      <SignReference
+        isOpen={isSignReferenceOpen}
+        onClose={closeSignReference}
       />
       <PreferencesDialog
         isOpen={isPreferencesOpen}

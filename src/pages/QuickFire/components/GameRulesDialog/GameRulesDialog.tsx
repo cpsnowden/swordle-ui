@@ -1,5 +1,5 @@
 import { DialogContentText, List, ListItemText, Slider } from "@mui/material";
-import BaseDialog from "components/BaseDialog";
+import { BaseDialog } from "components/base-dialog";
 import { Level } from "pages/QuickFire/types";
 
 interface GameRulesDialogProps {

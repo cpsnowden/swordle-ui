@@ -8,7 +8,7 @@ The production deployed version is at https://cpsnowden.github.io/sign-game-ui-r
 - Consistent Fonts in Info
 - Responsive WebCam
 - Score page on quickfire
-
+https://github.com/alan2207/bulletproof-react/blob/master/docs/project-structure.md
 # Development
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

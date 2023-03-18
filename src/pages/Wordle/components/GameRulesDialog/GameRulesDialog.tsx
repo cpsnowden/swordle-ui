@@ -1,5 +1,5 @@
 import { DialogContentText, Link } from "@mui/material";
-import BaseDialog from "components/BaseDialog";
+import { BaseDialog } from "components/base-dialog";
 import { FC } from "react";
 import Cell from "../Cell";
 

@@ -1,14 +1,5 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FormControlLabel,
-  FormGroup,
-  Stack,
-  Switch,
-} from "@mui/material";
+import { FormControlLabel, FormGroup, Stack, Switch } from "@mui/material";
+import { BaseDialog } from "components/base-dialog";
 import { FC, useState } from "react";
 import { usePreferences } from "./use-preferences";
 
@@ -31,31 +22,30 @@ export const PreferencesDialog: FC<PreferencesDialogProps> = ({
   };
 
   return (
-    <Dialog open={isOpen}>
-      <DialogTitle>Settings</DialogTitle>
-      <DialogContent>
-        <Stack spacing={2}>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={unsavedPreferences.mirrorWebcam}
-                  onChange={(_, mirrorWebcam) =>
-                    setUnsavedPreferences({
-                      ...unsavedPreferences,
-                      mirrorWebcam,
-                    })
-                  }
-                />
-              }
-              label="Mirror Webcam"
-            />
-          </FormGroup>
-        </Stack>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleSave}>Save</Button>
-      </DialogActions>
-    </Dialog>
+    <BaseDialog
+      title="Settings"
+      closeText="Save"
+      isOpen={isOpen}
+      onClose={handleSave}
+    >
+      <Stack spacing={2}>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={unsavedPreferences.mirrorWebcam}
+                onChange={(_, mirrorWebcam) =>
+                  setUnsavedPreferences({
+                    ...unsavedPreferences,
+                    mirrorWebcam,
+                  })
+                }
+              />
+            }
+            label="Mirror Webcam"
+          />
+        </FormGroup>
+      </Stack>
+    </BaseDialog>
   );
 };

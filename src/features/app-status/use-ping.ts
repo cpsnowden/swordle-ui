@@ -1,20 +1,30 @@
+import { axiosClient } from "lib/axios";
 import { useState, useRef, useCallback } from "react";
-import { useEffectOnce } from "../../hooks/useEffectOnce";
+import { useEffectOnce } from "../../hooks/use-effect-once";
 
 export type PingState = "waiting" | "ok" | "error";
 
-export const usePing = (interval: number, pingFn: () => Promise<Boolean>) => {
+const tryPing = async (): Promise<boolean> => {
+  try {
+    await axiosClient.get("/");
+  } catch {
+    return false;
+  }
+  return true;
+};
+
+export const usePing = (interval: number) => {
   const [pingState, setPingState] = useState<PingState>("waiting");
   const timerRef = useRef<NodeJS.Timeout>();
   const mountedRef = useRef(false);
 
   const doPingAndReschedule = useCallback(async () => {
-    const result = await pingFn();
+    const result = await tryPing();
     if (mountedRef.current) {
       setPingState(result ? "ok" : "error");
       timerRef.current = setTimeout(doPingAndReschedule, interval);
     }
-  }, [setPingState, interval, pingFn]);
+  }, [setPingState, interval]);
 
   useEffectOnce(() => {
     mountedRef.current = true;

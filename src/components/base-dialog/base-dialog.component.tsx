@@ -5,23 +5,24 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
+import { FC } from "react";
 
 export interface BaseDialogProps {
   title: string;
-  isOpen: boolean;
   closeText: string;
+  isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
 }
 
-export const BaseDialog: React.FC<BaseDialogProps> = ({
+export const BaseDialog: FC<BaseDialogProps> = ({
   title,
   isOpen,
   closeText,
   onClose,
   children,
 }) => (
-  <Dialog open={isOpen}>
+  <Dialog open={isOpen} fullWidth maxWidth="sm">
     <DialogTitle>{title}</DialogTitle>
     <DialogContent>{children}</DialogContent>
     <DialogActions>
