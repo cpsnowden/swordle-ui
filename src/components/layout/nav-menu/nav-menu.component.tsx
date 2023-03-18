@@ -11,7 +11,7 @@ import {
   Paper,
   Stack,
 } from "@mui/material";
-import { games } from "pages";
+import { games } from "features/games";
 import { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
 import SettingsIcon from "@mui/icons-material/Settings";

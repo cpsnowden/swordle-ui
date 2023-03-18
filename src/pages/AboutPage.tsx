@@ -1,7 +1,7 @@
 import { Container, Stack } from "@mui/material";
 import { PageLayout } from "components/layout/page-layout";
 import { GameCard } from "features/games/common";
-import { games } from "pages";
+import { games } from "features/games";
 
 export const AboutPage = () => (
   <PageLayout>

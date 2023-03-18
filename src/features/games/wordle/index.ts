@@ -1,0 +1,1 @@
+export { Wordle } from "./Wordle";
