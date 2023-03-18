@@ -45,6 +45,22 @@ export const PreferencesDialog: FC<PreferencesDialogProps> = ({
             label="Mirror Webcam"
           />
         </FormGroup>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={unsavedPreferences.enableDarkMode}
+                onChange={(_, darkMode) =>
+                  setUnsavedPreferences({
+                    ...unsavedPreferences,
+                    enableDarkMode: darkMode,
+                  })
+                }
+              />
+            }
+            label="Enable Dark Mode"
+          />
+        </FormGroup>
       </Stack>
     </BaseDialog>
   );

@@ -1,8 +1,9 @@
-import { createContext } from "react";
+import { createContext, useMemo } from "react";
 import { useLocalStorage } from "usehooks-ts";
 
 export type Preferences = {
   mirrorWebcam: boolean;
+  enableDarkMode: boolean;
 };
 
 export type PreferencesContext = {
@@ -12,6 +13,7 @@ export type PreferencesContext = {
 
 const defaultPreferences: Preferences = {
   mirrorWebcam: false,
+  enableDarkMode: true,
 };
 
 export const PreferenceContext = createContext<PreferencesContext>({
@@ -30,8 +32,12 @@ export const PreferencesProvider = ({
     defaultPreferences
   );
 
+  const mergedPreferences: Preferences = useMemo(() =>
+    ({ ...defaultPreferences, ...savedPreferences })
+  , [savedPreferences]);
+
   return (
-    <PreferenceContext.Provider value={{ savedPreferences, savePreferences }}>
+    <PreferenceContext.Provider value={{ savedPreferences: mergedPreferences, savePreferences }}>
       {children}
     </PreferenceContext.Provider>
   );

@@ -29,7 +29,7 @@ export const Cell: React.FC<CellProps> = ({
     "short:w-10 short:h-10 short:text-2xl",
     // Default
     "w-14 h-14 text-4xl",
-    "border-solid border-2 flex items-center justify-center mx-0.5 font-bold rounded text-white",
+    "border-solid border-2 flex items-center justify-center mx-0.5 font-bold rounded dark:text-white",
     {
       "border-indigo-600": current,
       "border-slate-600": !status && !current,

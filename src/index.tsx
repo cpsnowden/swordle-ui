@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import theme from "theme";
+import { CssBaseline } from "@mui/material";
+import { AppThemeProvider } from "theme";
 import { RouterProvider } from "react-router-dom";
 import { router } from "pages";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
@@ -16,15 +16,15 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <AppStatusOverlay />
-      <PreferencesProvider>
+    <PreferencesProvider>
+      <AppThemeProvider>
+        <CssBaseline />
+        <AppStatusOverlay />
         <AlertProvider>
           <RouterProvider router={router} />
         </AlertProvider>
-      </PreferencesProvider>
-    </ThemeProvider>
+      </AppThemeProvider>
+    </PreferencesProvider>
   </React.StrictMode>
 );
 
