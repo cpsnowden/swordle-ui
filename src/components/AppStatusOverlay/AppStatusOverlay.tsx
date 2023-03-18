@@ -1,10 +1,11 @@
 import { Backdrop, CircularProgress, Typography } from "@mui/material";
-import { useApiPing } from "hooks/useApiPing";
+import { usePing } from "hooks/usePing";
 import { API_POLL_INTERVAL_MS } from "services/params";
 import { Stack } from "@mui/system";
+import { ping } from "services/api";
 
 export const AppStatusOverlay = () => {
-  const { pingState } = useApiPing(API_POLL_INTERVAL_MS);
+  const { pingState } = usePing(API_POLL_INTERVAL_MS, ping);
   return (
     <Backdrop
       sx={{

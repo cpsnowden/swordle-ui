@@ -7,7 +7,7 @@ import { CELL_REVEAL_MS } from "services/params";
 import { useCountdown } from "usehooks-ts";
 import AlertSnackbar from "components/AlertSnackbar";
 import WebcamContainer from "components/WebcamContainer";
-import BaseLayout from "layout/BaseLayout";
+import { PageLayout } from "features/layout/page-layout";
 import GameRulesDialog from "./components/GameRulesDialog";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import GameFinishDialog from "./components/GameFinishDialog";
@@ -136,7 +136,7 @@ export const Wordle: React.FC<WordleProps> = ({
   );
 
   return (
-    <BaseLayout rightHeaderPanel={ruleButton}>
+    <PageLayout rightHeaderPanel={ruleButton}>
       <AlertSnackbar error={error} onClose={() => setError(null)} />
       <GameFinishDialog
         finishState={finishState}
@@ -203,6 +203,6 @@ export const Wordle: React.FC<WordleProps> = ({
           </GameButtonContainer>
         </Grid>
       </Grid>
-    </BaseLayout>
+    </PageLayout>
   );
 };

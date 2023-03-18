@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import BaseLayout from "layout/BaseLayout";
+import { PageLayout } from "features/layout/page-layout";
 import { games } from "pages";
 import { FC } from "react";
 import { Link } from "react-router-dom";
@@ -39,7 +39,7 @@ const GameCard: FC<GameCardProps> = ({ path, tagLine, name }) => {
 };
 
 export const AboutPage = () => (
-  <BaseLayout>
+  <PageLayout>
     <Container maxWidth="sm">
       <Stack spacing={2}>
         {games.map((game, index) => (
@@ -52,5 +52,5 @@ export const AboutPage = () => (
         ))}
       </Stack>
     </Container>
-  </BaseLayout>
+  </PageLayout>
 );

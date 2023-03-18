@@ -1,21 +1,20 @@
 import { useState, useRef, useCallback } from "react";
-import { ping } from "services/api";
 import { useEffectOnce } from "./useEffectOnce";
 
-export type ApiPingState = "waiting" | "ok" | "error";
+export type PingState = "waiting" | "ok" | "error";
 
-export const useApiPing = (interval: number) => {
-  const [pingState, setPingState] = useState<ApiPingState>("waiting");
+export const usePing = (interval: number, pingFn: () => Promise<Boolean>) => {
+  const [pingState, setPingState] = useState<PingState>("waiting");
   const timerRef = useRef<NodeJS.Timeout>();
   const mountedRef = useRef(false);
 
   const doPingAndReschedule = useCallback(async () => {
-    const result = await ping();
+    const result = await pingFn();
     if (mountedRef.current) {
       setPingState(result ? "ok" : "error");
       timerRef.current = setTimeout(doPingAndReschedule, interval);
     }
-  }, [setPingState, interval]);
+  }, [setPingState, interval, pingFn]);
 
   useEffectOnce(() => {
     mountedRef.current = true;

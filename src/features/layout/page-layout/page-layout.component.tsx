@@ -2,16 +2,16 @@ import { Container } from "@mui/material";
 import HandReferenceOverlay from "components/HandReferenceOverlay";
 import PreferencesForm from "components/UserPreferences";
 import AppMenu from "components/AppMenu";
-import Header from "layout/Header";
+import { Header } from "features/layout/header";
 import { FC } from "react";
 import { useBoolean } from "usehooks-ts";
 
-export interface BaseLayoutProps {
+export interface PageLayoutProps {
   rightHeaderPanel?: React.ReactNode;
   children: React.ReactNode;
 }
 
-export const BaseLayout: FC<BaseLayoutProps> = ({
+export const PageLayout: FC<PageLayoutProps> = ({
   rightHeaderPanel,
   children,
 }) => {
