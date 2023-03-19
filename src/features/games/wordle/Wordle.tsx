@@ -122,7 +122,7 @@ export const Wordle: React.FC<WordleProps> = ({
 
   const ruleButton = (
     <Tooltip title="Open Rules">
-      <IconButton onClick={() => setSettingOpen(true)}>
+      <IconButton onClick={() => setSettingOpen(true)} sx={{ color: "white" }}>
         <InfoOutlinedIcon />
       </IconButton>
     </Tooltip>

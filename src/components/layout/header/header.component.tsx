@@ -3,7 +3,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { ReactComponent as Logo } from "assets/swordle-logo.svg";
 import { Link } from "react-router-dom";
 import { FC } from "react";
-
 export interface HeaderProps {
   rightPanel?: React.ReactNode;
   onAppMenuClick: () => void;
@@ -19,7 +18,7 @@ export const Header: FC<HeaderProps> = ({ rightPanel, onAppMenuClick }) => {
               size="large"
               edge="start"
               onClick={onAppMenuClick}
-              sx={{ mr: 2 }}
+              sx={{ mr: 2, color: "white" }}
             >
               <MenuIcon />
             </IconButton>

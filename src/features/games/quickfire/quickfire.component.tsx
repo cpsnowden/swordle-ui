@@ -281,7 +281,7 @@ export const QuickFire = () => {
 
   const ruleButton = (
     <Tooltip title="Open Rules">
-      <IconButton onClick={() => setSettingOpen(true)}>
+      <IconButton onClick={() => setSettingOpen(true)} sx={{ color: "white" }}>
         <InfoOutlinedIcon />
       </IconButton>
     </Tooltip>
