@@ -6,7 +6,7 @@ sign-language, specifically fingure spelling using American Sign Language (ASL).
 The live application can be found at: https://swordle.dev/
 
 <p align="center">
-  <img height="300" src="docs/images/home.jpg)">
+  <img height="300" src="docs/images/home.jpg">
 </p>
 
 The UI was built using React, React Webcam, Material UI, Tailwind.
@@ -30,7 +30,7 @@ will be chosen and you have a fixed time to sign them. Try out different levels
 to test your progress.
 
 <p align="center">
-  <img height="300" src="docs/images/quickfire.gif)">
+  <img height="300" src="docs/images/quickfire.gif">
 </p>
 
 ### SWordle
@@ -39,7 +39,7 @@ Play the popular word game by but without a keyboard! Use your sign to enter you
 word guess. Implementation based on [Reactle](https://github.com/cwackerfuss/react-wordle)
 
 <p align="center">
-  <img height="300" src="docs/images/swordle.jpg)">
+  <img height="300" src="docs/images/swordle.jpg">
 </p>
 
 ## Development
