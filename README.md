@@ -42,6 +42,11 @@ word guess. Implementation based on [Reactle](https://github.com/cwackerfuss/rea
   <img height="300" src="docs/images/swordle.jpg">
 </p>
 
+## Production CICD
+
+The `main` branch of the repository is build and deployed via Github Actions and
+hosted on Github pages.
+
 ## Development
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
