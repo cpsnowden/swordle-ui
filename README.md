@@ -5,7 +5,9 @@ sign-language, specifically fingure spelling using American Sign Language (ASL).
 
 The live application can be found at: https://swordle.dev/
 
-![](docs/images/home.jpg)
+<p align="center">
+  <img height="300" src="docs/images/home.jpg)">
+</p>
 
 The UI was built using React, React Webcam, Material UI, Tailwind.
 
@@ -17,7 +19,9 @@ Less of a game but more online feedback. You can sign a letter and the online
 interpreter (cough... Convolutional Neural Network) will predict which ASL letter
 it is.
 
-![](docs/images/single-sign.jpg)
+<p align="center">
+  <img height="300" src="docs/images/single-sign.jpg">
+</p>
 
 ### QuickFire
 
@@ -25,14 +29,18 @@ Test your new found ASL knowledge against the clock. A set of random letter prom
 will be chosen and you have a fixed time to sign them. Try out different levels
 to test your progress.
 
-![](docs/images/quickfire.gif)
+<p align="center">
+  <img height="300" src="docs/images/quickfire.gif)">
+</p>
 
 ### SWordle
 
 Play the popular word game by but without a keyboard! Use your sign to enter your
 word guess. Implementation based on [Reactle](https://github.com/cwackerfuss/react-wordle)
 
-![](docs/images/swordle.jpg)
+<p align="center">
+  <img height="300" src="docs/images/swordle.jpg)">
+</p>
 
 ## Development
 
