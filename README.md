@@ -30,7 +30,7 @@ will be chosen and you have a fixed time to sign them. Try out different levels
 to test your progress.
 
 <p align="center">
-  <img height="300" src="docs/images/quickfire.gif">
+  <img src="docs/images/quickfire.gif">
 </p>
 
 ### SWordle
