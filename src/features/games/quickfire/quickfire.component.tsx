@@ -12,10 +12,13 @@ import { GameStatsContainer } from "./game-stats-container";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { SignCorrect, SignIncorrect, NoHand } from "./sign-feedback";
 import { GameScoreDialog } from "./game-score-dialog";
-import { PageLayout } from "components/layout/page-layout";
-import { GameButton, GameButtonContainer } from "features/games/common";
+import { PageLayout } from "components/page-layout";
+import {
+  GameButton,
+  GameButtonContainer,
+  GameLayout,
+} from "features/games/common";
 import { useAlert } from "features/alerts";
-import { GameLayout } from "../common/game-layout";
 
 // TODO Clean this class up
 

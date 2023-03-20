@@ -1,5 +1,5 @@
 import { Container, Stack } from "@mui/material";
-import { PageLayout } from "components/layout/page-layout";
+import { PageLayout } from "components/page-layout";
 import { GameCard } from "features/games/common";
 import { games } from "features/games";
 

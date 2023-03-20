@@ -1,17 +1,17 @@
 import { Box, IconButton } from "@mui/material";
 import { WebcamContainer } from "features/webcam";
-import { PageLayout } from "components/layout/page-layout";
+import { PageLayout } from "components/page-layout";
 import { useRef, useState } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 import Webcam from "react-webcam";
 import { LetterPrediction, predict_letter } from "services/api";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { useAlert } from "features/alerts";
-import { GameLayout } from "../common/game-layout";
-import { CountdownFeedback } from "./countdown/countdown.component";
-import { Prediction } from "./prediction/prediction.component";
+import { GameLayout } from "features/games/common";
+import { CountdownFeedback } from "./countdown";
+import { Prediction } from "./prediction";
 import { GameStatus } from "./types";
-import { ControlPanel } from "./control-panel/control-panel.component";
+import { ControlPanel } from "./control-panel";
 
 // To see how much game logic can be moved into hook
 export const SingleSign = () => {

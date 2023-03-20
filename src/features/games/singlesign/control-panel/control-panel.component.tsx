@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { GameButtonContainer, GameButton } from "../../common";
+import { GameButtonContainer, GameButton } from "features/games/common";
 import { GameStatus } from "../types";
 
 export interface ControlPanelProps {

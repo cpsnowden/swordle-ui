@@ -1,8 +1,8 @@
 import { Container } from "@mui/material";
 import { SignReference } from "features/sign-reference";
 import { PreferencesDialog } from "features/preferences";
-import { NavMenu } from "components/layout/nav-menu";
-import { Header } from "components/layout/header";
+import { NavMenu } from "components/nav-menu";
+import { Header } from "components/header";
 import { FC } from "react";
 import { useBoolean } from "usehooks-ts";
 import { AlertContainer } from "features/alerts";

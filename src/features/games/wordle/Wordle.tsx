@@ -6,15 +6,17 @@ import Webcam from "react-webcam";
 import { CELL_REVEAL_MS } from "config";
 import { useCountdown } from "usehooks-ts";
 import { WebcamContainer } from "features/webcam";
-import { PageLayout } from "components/layout/page-layout";
+import { PageLayout } from "components/page-layout";
 import { GameRulesDialog } from "./rules-dialog";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { ResultDialog } from "./result-dialog";
 import { FinishState, GameStatus } from "./types";
-import { GameButton, GameButtonContainer } from "features/games/common";
+import {
+  GameButton,
+  GameButtonContainer,
+  GameLayout,
+} from "features/games/common";
 import { useAlert } from "features/alerts";
-import { GameLayout } from "../common/game-layout";
-
 export interface WordleProps {
   solution?: string;
   numberOfAttempts?: number;
