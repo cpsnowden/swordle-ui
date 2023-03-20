@@ -57,8 +57,8 @@ In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
-and open [http://localhost:3000](http://localhost:3000) to view it in the browser
+Runs the app in the development mode and opens [http://localhost:3000](http://localhost:3000)
+to view it in the browser
 
 Requires you to have the apis running locally at [http://localhost:8000](http://localhost:8000)
 
