@@ -1,8 +1,40 @@
 # Swordle UI
 
-The production deployed version is at https://swordle.dev/
+This is the UI for SWordle, a set of games which aim to improve knowledge of
+sign-language, specifically fingure spelling using American Sign Language (ASL).
 
-# Development
+The live application can be found at: https://swordle.dev/
+
+![](docs/images/home.jpg)
+
+The UI was built using React, React Webcam, Material UI, Tailwind.
+
+## Games
+
+### SingleSign
+
+Less of a game but more online feedback. You can sign a letter and the online
+interpreter (cough... Convolutional Neural Network) will predict which ASL letter
+it is.
+
+![](docs/images/single-sign.jpg)
+
+### QuickFire
+
+Test your new found ASL knowledge against the clock. A set of random letter prompts
+will be chosen and you have a fixed time to sign them. Try out different levels
+to test your progress.
+
+![](docs/images/quickfire.gif)
+
+### SWordle
+
+Play the popular word game by but without a keyboard! Use your sign to enter your
+word guess. Implementation based on [Reactle](https://github.com/cwackerfuss/react-wordle)
+
+![](docs/images/swordle.jpg)
+
+## Development
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
