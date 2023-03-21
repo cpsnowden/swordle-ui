@@ -11,6 +11,8 @@ The live application can be found at: https://swordle.dev/
 
 The UI was built using React, React Webcam, Material UI, Tailwind.
 
+The backend and model generation can be found in https://github.com/cpsnowden/swordle
+
 ## Games
 
 ### SingleSign
