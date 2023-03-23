@@ -16,6 +16,8 @@ import { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
 import SettingsIcon from "@mui/icons-material/Settings";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import { GITHUB_URL } from "config";
 
 interface NavMenuProps {
   isOpen: boolean;
@@ -85,6 +87,13 @@ export const NavMenu: FC<NavMenuProps> = ({
                 label="Sign Reference"
                 icon={<MenuBookIcon />}
                 onClick={onHandReferenceClick}
+              />
+              <BottomNavigationAction
+                label="Github"
+                icon={<GitHubIcon />}
+                href={GITHUB_URL}
+                target="_blank"
+                rel="noopener noreferrer"
               />
             </BottomNavigation>
           </Paper>
