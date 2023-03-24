@@ -6,6 +6,7 @@ import { Header } from "components/header";
 import { FC } from "react";
 import { useBoolean } from "usehooks-ts";
 import { AlertContainer } from "features/alerts";
+import { GithubLinks } from "features/github-links";
 
 export interface PageLayoutProps {
   rightHeaderPanel?: React.ReactNode;
@@ -31,6 +32,11 @@ export const PageLayout: FC<PageLayoutProps> = ({
     setTrue: openPeferences,
     setFalse: closePreferences,
   } = useBoolean(false);
+  const {
+    value: isGitHubLinksOpen,
+    setTrue: openGitHubLinks,
+    setFalse: closeGitHubLinks,
+  } = useBoolean(false);
   return (
     <>
       <Header rightPanel={rightHeaderPanel} onAppMenuClick={openAppMenu} />
@@ -49,6 +55,10 @@ export const PageLayout: FC<PageLayoutProps> = ({
           closeAppMenu();
           openPeferences();
         }}
+        onGitHubLinksClick={() => {
+          closeAppMenu();
+          openGitHubLinks();
+        }}
       />
       <SignReference
         isOpen={isSignReferenceOpen}
@@ -58,6 +68,7 @@ export const PageLayout: FC<PageLayoutProps> = ({
         isOpen={isPreferencesOpen}
         onClose={closePreferences}
       />
+      <GithubLinks isOpen={isGitHubLinksOpen} onClose={closeGitHubLinks} />
     </>
   );
 };

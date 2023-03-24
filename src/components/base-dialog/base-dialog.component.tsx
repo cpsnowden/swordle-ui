@@ -22,7 +22,7 @@ export const BaseDialog: FC<BaseDialogProps> = ({
   onClose,
   children,
 }) => (
-  <Dialog open={isOpen} fullWidth maxWidth="sm">
+  <Dialog open={isOpen} fullWidth maxWidth="sm" onClose={onClose}>
     <DialogTitle>{title}</DialogTitle>
     <DialogContent>{children}</DialogContent>
     <DialogActions>

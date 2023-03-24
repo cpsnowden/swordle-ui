@@ -17,13 +17,13 @@ import { Link, useLocation } from "react-router-dom";
 import SettingsIcon from "@mui/icons-material/Settings";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import { GITHUB_URL } from "config";
 
 interface NavMenuProps {
   isOpen: boolean;
   onClose: () => void;
   onHandReferenceClick: () => void;
   onPreferenceClick: () => void;
+  onGitHubLinksClick: () => void;
 }
 
 export const NavMenu: FC<NavMenuProps> = ({
@@ -31,6 +31,7 @@ export const NavMenu: FC<NavMenuProps> = ({
   onClose,
   onHandReferenceClick,
   onPreferenceClick,
+  onGitHubLinksClick,
 }) => {
   const match = useLocation();
   const selectedPage = games.findIndex((item) => item.path === match.pathname);
@@ -56,7 +57,7 @@ export const NavMenu: FC<NavMenuProps> = ({
             height: "100vh",
           }}
         >
-          <List>
+          <List disablePadding>
             {games.map((page, index) => (
               <div key={index}>
                 <ListItem disablePadding>
@@ -84,16 +85,14 @@ export const NavMenu: FC<NavMenuProps> = ({
                 onClick={onPreferenceClick}
               />
               <BottomNavigationAction
-                label="Sign Reference"
+                label="ASL Reference"
                 icon={<MenuBookIcon />}
                 onClick={onHandReferenceClick}
               />
               <BottomNavigationAction
                 label="Github"
                 icon={<GitHubIcon />}
-                href={GITHUB_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={onGitHubLinksClick}
               />
             </BottomNavigation>
           </Paper>
