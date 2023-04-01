@@ -2,7 +2,7 @@ import { DialogContentText, List, ListItemText, Slider } from "@mui/material";
 import { BaseDialog } from "components/base-dialog";
 import { Level } from "features/games/quickfire/types";
 
-interface GameRulesDialogProps {
+interface RulesDialogProps {
   isOpen: boolean;
   onClose: () => void;
   level: Level;
@@ -29,12 +29,12 @@ const marks = [
   },
 ];
 
-export const GameRulesDialog = ({
+export const RulesDialog = ({
   isOpen,
   onClose: handleClose,
   level,
   onLevelChange: handleLevel,
-}: GameRulesDialogProps) => {
+}: RulesDialogProps) => {
   return (
     <BaseDialog
       title="How to play"

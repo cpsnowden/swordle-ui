@@ -18,14 +18,14 @@ const ScoreSquare: FC<ScoreSquareProps> = ({
   </Paper>
 );
 
-export interface GameScoreDialogProps {
+export interface ResultDialogProps {
   isOpen: boolean;
   gameStats: GameStats;
   level: Level;
   onNextGame: () => void;
 }
 
-export const GameScoreDialog: React.FC<GameScoreDialogProps> = ({
+export const ResultDialog: FC<ResultDialogProps> = ({
   isOpen,
   onNextGame,
   gameStats,

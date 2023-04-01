@@ -6,12 +6,12 @@ import { useReducer, useRef, useState } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 import Webcam from "react-webcam";
 import { LetterPrediction, predict_letter } from "services/api";
-import { GameRules } from "./game-rules-dialog";
+import { RulesDialog } from "./rules-dialog";
 import { GameStats, getLevelSettings, Level, LevelSettings } from "./types";
 import { GameStatsContainer } from "./game-stats-container";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { SignCorrect, SignIncorrect, NoHand } from "./sign-feedback";
-import { GameScoreDialog } from "./game-score-dialog";
+import { ResultDialog } from "./result-dialog";
 import { PageLayout } from "components/page-layout";
 import {
   GameButton,
@@ -292,13 +292,13 @@ export const QuickFire = () => {
 
   return (
     <PageLayout rightHeaderPanel={ruleButton}>
-      <GameRules
+      <RulesDialog
         isOpen={isSettingsOpen}
         onClose={() => setSettingOpen(false)}
         level={state.levelSettings.level}
         onLevelChange={handleSetLevel}
       />
-      <GameScoreDialog
+      <ResultDialog
         isOpen={state.status === "Complete"}
         onNextGame={handleNextGame}
         gameStats={state.stats}
