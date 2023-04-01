@@ -1,4 +1,4 @@
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, Tooltip } from "@mui/material";
 import { WebcamContainer } from "features/webcam";
 import { PageLayout } from "components/page-layout";
 import { useRef, useState } from "react";
@@ -12,9 +12,16 @@ import { CountdownFeedback } from "./countdown";
 import { Prediction } from "./prediction";
 import { GameStatus } from "./types";
 import { ControlPanel } from "./control-panel";
+import { useBoolean } from "usehooks-ts";
+import { RulesDialog } from "./rules-dialog";
 
 // To see how much game logic can be moved into hook
 export const SingleSign = () => {
+  const {
+    value: isRulesOpen,
+    setTrue: openRules,
+    setFalse: closeRules,
+  } = useBoolean(true);
   const [countDownKey, setCountdownKey] = useState(0);
   const resetCountDown = () => setCountdownKey((prev) => prev + 1);
 
@@ -73,13 +80,16 @@ export const SingleSign = () => {
   };
 
   const ruleButton = (
-    <IconButton disabled>
-      <InfoOutlinedIcon />
-    </IconButton>
+    <Tooltip title="Open Instructions">
+      <IconButton onClick={openRules} sx={{ color: "white" }}>
+        <InfoOutlinedIcon />
+      </IconButton>
+    </Tooltip>
   );
 
   return (
     <PageLayout rightHeaderPanel={ruleButton}>
+      <RulesDialog isOpen={isRulesOpen} onClose={closeRules} />
       <GameLayout
         feedbackPanel={
           <Box display="flex" justifyContent="center" alignItems="center">

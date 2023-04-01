@@ -2,7 +2,7 @@ import { Box, IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import StopIcon from "@mui/icons-material/Stop";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { WebcamContainer } from "features/webcam";
-import { useReducer, useRef, useState } from "react";
+import { useReducer, useRef } from "react";
 import { CountdownCircleTimer, TimeProps } from "react-countdown-circle-timer";
 import Webcam from "react-webcam";
 import { LetterPrediction, predict_letter } from "services/api";
@@ -19,6 +19,7 @@ import {
   GameLayout,
 } from "features/games/common";
 import { useAlert } from "features/alerts";
+import { useBoolean } from "usehooks-ts";
 
 // TODO Clean this class up
 
@@ -199,7 +200,12 @@ export const QuickFire = () => {
     levelSettings: getLevelSettings(Level.Medium),
     countDownKey: 0,
   });
-  const [isSettingsOpen, setSettingOpen] = useState(true);
+  const {
+    value: isRulesOpen,
+    setTrue: openRules,
+    setFalse: closeRules,
+  } = useBoolean(true);
+
   const videoRef = useRef<Webcam | null>(null);
   const { showError } = useAlert();
 
@@ -284,7 +290,7 @@ export const QuickFire = () => {
 
   const ruleButton = (
     <Tooltip title="Open Rules">
-      <IconButton onClick={() => setSettingOpen(true)} sx={{ color: "white" }}>
+      <IconButton onClick={openRules} sx={{ color: "white" }}>
         <InfoOutlinedIcon />
       </IconButton>
     </Tooltip>
@@ -293,8 +299,8 @@ export const QuickFire = () => {
   return (
     <PageLayout rightHeaderPanel={ruleButton}>
       <RulesDialog
-        isOpen={isSettingsOpen}
-        onClose={() => setSettingOpen(false)}
+        isOpen={isRulesOpen}
+        onClose={closeRules}
         level={state.levelSettings.level}
         onLevelChange={handleSetLevel}
       />
@@ -343,7 +349,7 @@ export const QuickFire = () => {
             <GameStatsContainer
               level={state.levelSettings.level}
               stats={state.stats}
-              onLevelClick={() => setSettingOpen(true)}
+              onLevelClick={openRules}
             />
           </Stack>
         }
