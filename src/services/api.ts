@@ -11,8 +11,8 @@ export const predict_letter = async (
   img: string
 ): Promise<LetterPrediction> => {
   return axiosClient
-    .post<LetterPrediction>("letter-prediction/frame-sequence", {
-      frames: [img],
+    .post<LetterPrediction>("letter-prediction/b64-frame", {
+      b64_frame: img,
     })
     .then((response) => response.data);
 };
